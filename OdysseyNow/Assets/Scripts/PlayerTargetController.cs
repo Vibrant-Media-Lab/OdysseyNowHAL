@@ -25,10 +25,10 @@ public class PlayerTargetController : MonoBehaviour {
         if (Input.GetKey(down) && y > -6) {
             y -= adjustedspeed;
         }
-        if (Input.GetKey(left) && x > -7) {
+        if (Input.GetKey(left) && x > -8) {
             x -= adjustedspeed;
         }
-        if (Input.GetKey(right) && x < 7) {
+        if (Input.GetKey(right) && x < 8) {
             x += adjustedspeed;
         }
 

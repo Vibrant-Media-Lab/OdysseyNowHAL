@@ -8,6 +8,8 @@ public class BallController : MonoBehaviour {
 
     public GameObject player1EnglishTarget;
     public GameObject player2EnglishTarget;
+    public KeyCode resetbuttonPlayer1;
+    public KeyCode resetbuttonPlayer2;
 
     // TODO: Implement quirk where both resets pressed forces ball to middle of screen
     
@@ -49,5 +51,23 @@ public class BallController : MonoBehaviour {
 
         gameObject.transform.position = new Vector3(newx, newy, gameObject.transform.position.z);
 
+        // Also need to check for key presses
+        // Each just set the state - they don't actually perform any logic beyond thatdd
+        if (Input.GetKey(resetbuttonPlayer1) && Input.GetKey(resetbuttonPlayer2)) ballpossesssion = possession.BOTH;
+        else if (Input.GetKey(resetbuttonPlayer1)) ballpossesssion = possession.PLAYER1;
+        else if (Input.GetKey(resetbuttonPlayer2)) ballpossesssion = possession.PLAYER2;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        // Basically when you run into the player, you turn around and the player takes possession
+        if (collision.gameObject.name == "Player1Body")
+        {
+            ballpossesssion = possession.PLAYER1;
+        }
+        else if (collision.gameObject.name == "Player2Body") {
+            ballpossesssion = possession.PLAYER2;
+        }
     }
 }

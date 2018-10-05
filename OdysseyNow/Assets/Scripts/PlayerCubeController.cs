@@ -15,7 +15,7 @@ public class PlayerCubeController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (!d.instance.paused){
             float tgtx = tgt.transform.position.x;
             float tgty = tgt.transform.position.y;
