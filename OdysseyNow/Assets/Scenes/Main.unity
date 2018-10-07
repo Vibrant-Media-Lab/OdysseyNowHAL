@@ -139,7 +139,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 33593229}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -215,7 +215,7 @@ MonoBehaviour:
   resetbuttonPlayer1: 114
   resetbuttonPlayer2: 116
   full_speed: 1
-  ball_english_lag: 8
+  ball_english_lag: 10
 --- !u!1 &91276483
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 91276485}
   - component: {fileID: 91276484}
   - component: {fileID: 91276488}
+  - component: {fileID: 91276489}
   m_Layer: 0
   m_Name: Player1Body
   m_TagString: Untagged
@@ -315,6 +316,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tgt: {fileID: 1897102176}
   lagfactor: 10
+--- !u!54 &91276489
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 91276483}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &183802842
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +390,7 @@ GameObject:
   - component: {fileID: 366528409}
   - component: {fileID: 366528408}
   - component: {fileID: 366528407}
+  - component: {fileID: 366528411}
   m_Layer: 0
   m_Name: Player2Body
   m_TagString: Untagged
@@ -414,7 +431,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 366528405}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -461,6 +478,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 366528405}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &366528411
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 366528405}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &426611532
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +779,6 @@ GameObject:
   - component: {fileID: 1812372606}
   - component: {fileID: 1812372610}
   - component: {fileID: 1812372609}
-  - component: {fileID: 1812372608}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -768,18 +799,6 @@ Transform:
   m_Father: {fileID: 426611533}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1812372608
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1812372605}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1812372609
 MeshRenderer:
   m_ObjectHideFlags: 0
