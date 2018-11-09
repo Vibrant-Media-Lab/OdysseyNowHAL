@@ -12,7 +12,10 @@ public class BOTTargetControl : MonoBehaviour {
 	
 	void Update () {
         //Always follows the ball(LagFactor reduced to allow the AI catch up to the ball)
-        float y = ball.transform.position.y;
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, y, gameObject.transform.position.z);
+        if (ball.transform.position.x>0)
+        {
+            float y = ball.transform.position.y;
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, y, gameObject.transform.position.z);
+        }
 	}
 }

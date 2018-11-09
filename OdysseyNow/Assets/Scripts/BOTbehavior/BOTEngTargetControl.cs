@@ -6,7 +6,7 @@ public class BOTEngTargetControl : MonoBehaviour {
 
     public float startx, starty;
     static float targetY;
-    public float speed;
+    public float speed=10;
     public GameObject opponent;
     public GameObject ball;
 
@@ -36,7 +36,7 @@ public class BOTEngTargetControl : MonoBehaviour {
         {
             //no ridiculous movement
             targetY = Random.Range(-8, 8);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.4f);
         }
     }
     
