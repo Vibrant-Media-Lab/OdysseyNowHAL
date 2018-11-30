@@ -7,14 +7,13 @@ public class BOTCubeController : MonoBehaviour {
 
     private Vector3 newPos;
     public GameObject tgt;
-    static private int lagfactor = 5;
+    static public int lagfactor = 5;
     static private float offset = 0;
 
 
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(RandomMovement());
     }
 
     // Update is called once per frame
@@ -39,14 +38,4 @@ public class BOTCubeController : MonoBehaviour {
         }
     }
 
-    IEnumerator RandomMovement()
-    {
-        while (true)
-        {
-
-            lagfactor = Random.Range(4, 10);
-            offset = Random.Range(-0.3f, 0.3f);
-            yield return new WaitForSeconds(0.4f);
-        }
-    }
 }
