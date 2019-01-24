@@ -9,7 +9,7 @@ public class PlayerTargetController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        gameObject.transform.position = new Vector3(startx, starty, gameObject.transform.position.z);
+        //gameObject.transform.position = new Vector3(startx, starty, gameObject.transform.position.z);
 	}
 	
 	// Update is called once per frame

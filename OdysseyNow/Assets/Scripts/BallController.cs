@@ -69,7 +69,7 @@ public class BallController : MonoBehaviour {
         else if (Input.GetKeyDown(resetbuttonPlayer1)) ballpossesssion = possession.PLAYER1;
         else if (Input.GetKeyDown(resetbuttonPlayer2)) ballpossesssion = possession.PLAYER2;
 
-        Debug.Log(ballpossesssion);
+        //Debug.Log(ballpossesssion);
     }
 
     private void OnTriggerEnter(Collider other)
