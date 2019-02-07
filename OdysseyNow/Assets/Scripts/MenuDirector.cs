@@ -97,7 +97,6 @@ public class MenuDirector : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public void UpdateOnResetExtinguish(Dropdown dr){
         onResetExtinguish = dr.options[dr.value].text;
         //TODO: Set reset behavior based on variable
@@ -111,26 +110,4 @@ public class MenuDirector : MonoBehaviour
 
         }
     }
-
-=======
-    // toggle the active state of gameObject
-    public void ToggleGameObject(GameObject gameObject)
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
-    }
-
-    // need to have method per GameObject because buttons can only call functions with one or zero parameters -_-
-    // maybe you can create a utility class with multiple parameters and pass that in as the only argument?
-    public void MoveWallHorizontally(Slider slider)
-    {
-        GameObject wall = GameObject.Find("Wall");
-        wall.transform.position = new Vector3(slider.value, wall.transform.position.y, wall.transform.position.z);
-    }
-
-    public void MoveWallVertically(Slider slider)
-    {
-        GameObject wall = GameObject.Find("Wall");
-        wall.transform.position = new Vector3(wall.transform.position.x, slider.value, wall.transform.position.z);
-    }
->>>>>>> 27a2cb96c8cf6c2a619abdbc0712381f3e3aca95
 }
