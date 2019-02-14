@@ -20,12 +20,6 @@ public class MenuDirector : MonoBehaviour
     public GameObject ball;
     public GameObject wall;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     /* The following methods update card variables.
      * These methods are called by the UI elements in the menu.
     */
@@ -37,53 +31,56 @@ public class MenuDirector : MonoBehaviour
 
     public void UpdateIncludeBall(Toggle tg){
         includeBall = tg.isOn;
-        ball.SetActive(secondPlayer);
+        ball.SetActive(includeBall);
     }
 
     public void UpdateIncludeWall(Toggle tg){
         includeWall = tg.isOn;
-        wall.SetActive(secondPlayer);
+        wall.SetActive(includeWall);
     }
 
     public void UpdateWallPosition(Slider sl){
         wallPosition = (int) sl.value;
-        //TODO: Set wall position based on variable
+        wall.GetComponent<WallBehavior>().setHorizontal(wallPosition);
     }
 
     public void UpdateWallHeight(Slider sl){
         wallHeight = (int) sl.value;
-        //TODO: Set wall height based on variable
+        wall.GetComponent<WallBehavior>().setHeight(wallHeight);
     }
 
     public void UpdateWallBallCollision(Dropdown dr){
         wallBallCollision = dr.options[dr.value].text;
-        //TODO: Set wall-ball collision behavior based on variable
-        if(wallBallCollision.Equals("Pass")){
-
+        BallController b = ball.GetComponent<BallController>();
+        if (wallBallCollision.Equals("Pass")){
+            b.wallBounce = false;
+            b.wallExtinguish = false;
         } else if (wallBallCollision.Equals("Extinguish")) {
-
+            b.wallBounce = false;
+            b.wallExtinguish = true;
         } else if (wallBallCollision.Equals("Bounce")){
-
+            b.wallBounce = true;
+            b.wallExtinguish = false;
         }
     }
 
     public void UpdateP1P2Collision(Dropdown dr){
         p1P2Collision = dr.options[dr.value].text;
-        //TODO: Set player-player collision behavior based on variable
+        PlayerCubeController p = p2.GetComponentInChildren<PlayerCubeController>();
         if (p1P2Collision.Equals("None")){
-
+            p.playerExtinguish = false;
         } else if (p1P2Collision.Equals("Extinguish")){
-
+            p.playerExtinguish = true;
         }
     }
 
     public void UpdateP2BallCollision(Dropdown dr){
         p2BallCollision = dr.options[dr.value].text;
-        //TODO: Set player-ball collision behavior based on variable
+        BallController b = ball.GetComponent<BallController>();
         if (p2BallCollision.Equals("Bounce")){
-
+            b.playerExtinguish = false;
         } else if (p2BallCollision.Equals("Extinguish")){
-
+            b.playerExtinguish = true;
         }
     }
 
@@ -100,6 +97,7 @@ public class MenuDirector : MonoBehaviour
     public void UpdateOnResetExtinguish(Dropdown dr){
         onResetExtinguish = dr.options[dr.value].text;
         //TODO: Set reset behavior based on variable
+        //DEPENDENCY: Make reset clicks work.
         if (onResetExtinguish.Equals("None")) {
 
         } else if (onResetExtinguish.Equals("P1 & P2")) {

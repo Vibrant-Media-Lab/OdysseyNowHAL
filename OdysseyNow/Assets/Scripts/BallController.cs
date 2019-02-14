@@ -16,8 +16,11 @@ public class BallController : MonoBehaviour {
     const float minMaxSpeed = 0.1f;
     const float maxMaxSpeed = 0.5f;
     public float full_speed = 5f;
-
     public float ball_english_lag = 10;
+
+    public bool wallBounce = false;
+    public bool wallExtinguish = false;
+    public bool playerExtinguish = false;
 
     // Use this for initialization
     void Start ()
@@ -72,15 +75,52 @@ public class BallController : MonoBehaviour {
         //Debug.Log(ballpossesssion);
     }
 
+    void swapPossession(){
+        if(ballpossesssion == possession.PLAYER1){
+            ballpossesssion = possession.PLAYER2;
+        } else if (ballpossesssion == possession.PLAYER2){
+            ballpossesssion = possession.PLAYER1;
+        }
+    }
+
+    //called resetButton instead of reset as to not mess with Reset function built into unity
+    public void resetButton(string player){
+        if (!((ballpossesssion == possession.PLAYER1 && player.Equals("Player1")) || (ballpossesssion == possession.PLAYER2 && player.Equals("Player2")))) {
+            unExtinguish();
+            swapPossession();
+        }
+    }
+
+    void unExtinguish(){
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    void extinguish(){
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Basically when you run into the player, you turn around and the player takes possession
-        if (other.gameObject.name == "Player1Body")
+        if (other.gameObject.tag == "Player1")
         {
             ballpossesssion = possession.PLAYER1;
         }
-        else if (other.gameObject.name == "Player2Body") {
-            ballpossesssion = possession.PLAYER2;
+        else if (other.gameObject.tag == "Player2") {
+            if (playerExtinguish){
+                other.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            } else {
+                ballpossesssion = possession.PLAYER2;
+            }
+        }
+        else if(other.gameObject.tag == "Wall"){
+            if(wallBounce){
+                swapPossession();
+            } else if (wallExtinguish){
+                extinguish();
+            }
         }
     }
 }

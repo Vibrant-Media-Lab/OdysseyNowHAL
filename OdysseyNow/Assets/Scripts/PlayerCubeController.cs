@@ -8,13 +8,10 @@ public class PlayerCubeController : MonoBehaviour {
     public GameObject tgt;
     public int lagfactor = 10;
 
+    public bool playerExtinguish = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
+    //TODO: Handle reset button clicks
+
 	void FixedUpdate () {
         if (!d.instance.paused){
             float tgtx = tgt.transform.position.x;
@@ -31,6 +28,17 @@ public class PlayerCubeController : MonoBehaviour {
             if (Mathf.Abs(oldy - desty) < 0.05) desty = oldy;
             newPos = new Vector3(destx, desty, gameObject.transform.position.z);
             gameObject.transform.SetPositionAndRotation(newPos, gameObject.transform.rotation);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player1")
+        {
+            if (playerExtinguish)
+            {
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+            }
         }
     }
 }
