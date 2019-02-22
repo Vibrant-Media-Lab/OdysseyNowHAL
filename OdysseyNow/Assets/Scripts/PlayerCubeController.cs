@@ -6,14 +6,20 @@ using d = Director;
 public class PlayerCubeController : MonoBehaviour {
     private Vector3 newPos;
     public GameObject tgt;
-    public int lagfactor = 10;
-
+    public float lagfactor;
+    float normalLag = 10;
+    float slowLag = 50;
+    public bool inertia = false;
     public bool playerExtinguish = false;
-
-    //TODO: Handle reset button clicks
 
 	void FixedUpdate () {
         if (!d.instance.paused){
+            if(inertia){
+                lagfactor = slowLag;
+            } else {
+                lagfactor = normalLag;
+            }
+
             float tgtx = tgt.transform.position.x;
             float tgty = tgt.transform.position.y;
 
@@ -21,11 +27,11 @@ public class PlayerCubeController : MonoBehaviour {
             // Also if the target distance is pretty close, stop moving. Close enough counts in horseshoes, hand grenades, and the Magnavox Odyssey
             float oldx = gameObject.transform.position.x;
             float destx = (tgtx - oldx) / lagfactor + gameObject.transform.position.x;
-            if (Mathf.Abs(oldx - destx) < 0.05) destx = oldx;
+            //if (Mathf.Abs(oldx - destx) < 0.05) destx = oldx;
 
             float oldy = gameObject.transform.position.y;
             float desty = (tgty - oldy) / lagfactor + gameObject.transform.position.y;
-            if (Mathf.Abs(oldy - desty) < 0.05) desty = oldy;
+            //if (Mathf.Abs(oldy - desty) < 0.05) desty = oldy;
             newPos = new Vector3(destx, desty, gameObject.transform.position.z);
             gameObject.transform.SetPositionAndRotation(newPos, gameObject.transform.rotation);
         }
@@ -37,8 +43,20 @@ public class PlayerCubeController : MonoBehaviour {
         {
             if (playerExtinguish)
             {
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                extinguish();
             }
         }
+    }
+
+    void unExtinguish()
+    {
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    void extinguish()
+    {
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 }
