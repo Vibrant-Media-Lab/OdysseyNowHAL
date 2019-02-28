@@ -4,29 +4,59 @@ using UnityEngine;
 using d = Director;
 
 public class PlayerCubeController : MonoBehaviour {
-    private Vector3 mousePosition, newPos;
-    private float x, y, z;
-    public float moveSpeed = 3;
+    private Vector3 newPos;
+    public GameObject tgt;
+    public float lagfactor;
+    float normalLag = 10;
+    float slowLag = 50;
+    public bool inertia = false;
+    public bool playerExtinguish = false;
 
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	void FixedUpdate () {
         if (!d.instance.paused){
-            /*x = Input.GetAxis("Horizontal");
-            y = Input.GetAxis("Vertical");
-            z = gameObject.transform.position.z;
-            newPos = new Vector3(x, y, z);
-            gameObject.transform.SetPositionAndRotation(newPos, gameObject.transform.rotation);*/
+            if(inertia){
+                lagfactor = slowLag;
+            } else {
+                lagfactor = normalLag;
+            }
 
+            float tgtx = tgt.transform.position.x;
+            float tgty = tgt.transform.position.y;
 
-            mousePosition = Input.mousePosition;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+            // Goes 1/8 of the distance to the target (hopefully will have some lag)
+            // Also if the target distance is pretty close, stop moving. Close enough counts in horseshoes, hand grenades, and the Magnavox Odyssey
+            float oldx = gameObject.transform.position.x;
+            float destx = (tgtx - oldx) / lagfactor + gameObject.transform.position.x;
+            //if (Mathf.Abs(oldx - destx) < 0.05) destx = oldx;
+
+            float oldy = gameObject.transform.position.y;
+            float desty = (tgty - oldy) / lagfactor + gameObject.transform.position.y;
+            //if (Mathf.Abs(oldy - desty) < 0.05) desty = oldy;
+            newPos = new Vector3(destx, desty, gameObject.transform.position.z);
+            gameObject.transform.SetPositionAndRotation(newPos, gameObject.transform.rotation);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player1")
+        {
+            if (playerExtinguish)
+            {
+                extinguish();
+            }
+        }
+    }
+
+    void unExtinguish()
+    {
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    void extinguish()
+    {
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 }
