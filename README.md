@@ -6,13 +6,20 @@ You can find builds in the build folder. Currently we have builds for OSX
 
 ## Keyboard controls
 If you want to play the game with keyboard controls (which is not really recommended), here are the controls
-###Left Player:
+
+### Left Player:
 *WASD movement*
+
 *Q and E to change ball 'english'*
+
 *F to reset*
-###Right Player:
+
+
+### Right Player:
 *IJKL movement*
+
 *U and O to change ball 'english'*
+
 *H to reset*
 
 ## Team Members
