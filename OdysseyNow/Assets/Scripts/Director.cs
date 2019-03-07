@@ -12,6 +12,9 @@ public class Director : MonoBehaviour
     public GameObject plainMenu;
     public int cardNumber;
 
+    public enum ControlScheme { Keyboard, Traditional, OdysseyCon };
+    public ControlScheme p1Scheme = ControlScheme.Keyboard;
+    public ControlScheme p2Scheme = ControlScheme.Keyboard;
 
     private void Awake()
     {
@@ -118,5 +121,9 @@ public class Director : MonoBehaviour
 
     public void MainMenu(){
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void UpdateControls(int player, string scheme){
+
     }
 }
