@@ -8,6 +8,8 @@ TagManager:
   - Player2
   - Wall
   - Ball
+  - Player1English
+  - Player2English
   layers:
   - Default
   - TransparentFX

@@ -24,26 +24,32 @@ public class PlayerTargetController : MonoBehaviour {
             case "Player2":
                 player = 2;
                 break;
+            case "Player1English":
+                player = 3;
+                break;
+            case "Player2English":
+                player = 4;
+                break;
         }
 
         try
         {
-            print("Inputs: " + InputManager.Devices.Count);
-            print(InputManager.Devices[0].DeviceClass);
-            con = InputManager.Devices[player - 1];
+            print("Inputs: " + InputManager.ActiveDevices.Count);
+            print(InputManager.ActiveDevices[0].DeviceClass);
+            con = InputManager.ActiveDevices[(player-1)%2];
         }catch(Exception e){
             Debug.Log(e.Message);
-            Debug.Log("Missing gamepad!");
+            Debug.Log("Missing gamepad: " + ((player-1)%2));
         }
     }
 
     int GetControlScheme(){
         LocalInputManager.ControlScheme scheme = LocalInputManager.ControlScheme.Keyboard;
 
-        if (player == 1){
+        if (player == 1 || player == 3){
             scheme = LocalInputManager.instance.p1Scheme;
         }
-        else if (player == 1)
+        else if (player == 2 || player == 4)
         {
             scheme = LocalInputManager.instance.p2Scheme;
         }
@@ -66,6 +72,7 @@ public class PlayerTargetController : MonoBehaviour {
         {
             if (GetControlScheme() == 0)
             {
+                //player target & english control for keyboard controls
                 float x = gameObject.transform.position.x;
                 float y = gameObject.transform.position.y;
 
@@ -101,17 +108,51 @@ public class PlayerTargetController : MonoBehaviour {
                 }
             }
 
+            else if (GetControlScheme() == 1 && player < 3){
+                //Player target controll for traditional gamepad
+                if (con.LeftStickX.RawValue != 0 || con.LeftStickY.RawValue != 0 || con.RightStickX.RawValue != 0)
+                {
+                    gameObject.transform.position = new Vector3(10 * con.LeftStickX.RawValue, -10 * con.LeftStickY.RawValue, transform.position.z);
+                }
+                else{
+                    gameObject.transform.position = new Vector3(10 * con.ReadRawAnalogValue(0), -10 * con.ReadRawAnalogValue(1), transform.position.z);
+                }
+
+                if(con.Action1.WasPressed)
+                {
+                    print("Blah!!!");
+                    ResetButtonDown();
+                }
+
+                if(con.Action2.WasReleased){
+                    print("Up!!!");
+                    ResetButtonUp();
+                }
+            }
+
             else if (GetControlScheme() == 1){
-                gameObject.transform.position = new Vector3(con.LeftStickX.RawValue, con.RightStickY.RawValue, transform.position.z);
+                //Control for english with gamepad
+                if (con.RightStickX.RawValue != 0)
+                {
+                    gameObject.transform.position = new Vector3(transform.position.x, 6 * con.RightStickX.RawValue, transform.position.z);
+                }
+                else
+                {
+                    gameObject.transform.position = new Vector3(transform.position.x, -6 * con.ReadRawAnalogValue(3), transform.position.z);
+                }
+            }
+
+            else if (GetControlScheme() == 2 && player < 3){
+                //control for player target with OdysseyCon
             }
         }
 	}
 
     private void ResetButtonDown(){
-        GameObject.FindWithTag("Ball").GetComponent<BallController>().resetButton(gameObject.tag);
         if(resetExtinguish){
             extinguish();
         }
+        GameObject.FindWithTag("Ball").GetComponent<BallController>().resetButton(gameObject.tag);
     }
 
     private void ResetButtonUp(){
