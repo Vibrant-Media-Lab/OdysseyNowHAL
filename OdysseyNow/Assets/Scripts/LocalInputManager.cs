@@ -40,6 +40,12 @@ public class LocalInputManager : MonoBehaviour
         {
             p1Option = GameObject.Find("P1ControllerDropdown");
             p2Option = GameObject.Find("P2ControllerDropdown");
+
+            if (p1Option == null || p2Option == null){
+                Debug.Log("Trouble initing!");
+                Init();
+                return;
+            }
         }
 
         switch (p1Scheme)

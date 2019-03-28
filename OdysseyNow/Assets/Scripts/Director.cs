@@ -102,6 +102,10 @@ public class Director : MonoBehaviour
         if (cardNumber > 0){
             menu = plainMenu;
         }
+
+        if(ElementSettings.instance != null){
+            ElementSettings.instance.updateAllSizes();
+        }
     }
 
     // Update is called once per frame

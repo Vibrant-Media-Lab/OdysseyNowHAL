@@ -34,12 +34,12 @@ public class PlayerTargetController : MonoBehaviour {
 
         try
         {
-            print("Inputs: " + InputManager.ActiveDevices.Count);
-            print(InputManager.ActiveDevices[0].DeviceClass);
+            //print("Inputs: " + InputManager.ActiveDevices.Count);
+            //print(InputManager.ActiveDevices[0].DeviceClass);
             con = InputManager.ActiveDevices[(player-1)%2];
         }catch(Exception e){
-            Debug.Log(e.Message);
-            Debug.Log("Missing gamepad: " + ((player-1)%2));
+            //Debug.Log(e.Message);
+            //Debug.Log("Missing gamepad: " + ((player-1)%2));
         }
     }
 
