@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LocalInputManager : MonoBehaviour
 {
     public static LocalInputManager instance;
-    public enum ControlScheme { Keyboard, Traditional, OdysseyCon };
+    public enum ControlScheme { Keyboard, Traditional, OdysseyCon, OriginalConsole, AI};
     public ControlScheme p1Scheme = ControlScheme.Keyboard;
     public ControlScheme p2Scheme = ControlScheme.Keyboard;
 
@@ -59,6 +59,12 @@ public class LocalInputManager : MonoBehaviour
             case ControlScheme.OdysseyCon:
                 p1Option.GetComponent<Dropdown>().value = 2;
                 break;
+            case ControlScheme.OriginalConsole:
+                p1Option.GetComponent<Dropdown>().value = 3;
+                break;
+            case ControlScheme.AI:
+                p1Option.GetComponent<Dropdown>().value = 4;
+                break;
         }
 
         switch (p2Scheme)
@@ -71,6 +77,12 @@ public class LocalInputManager : MonoBehaviour
                 break;
             case ControlScheme.OdysseyCon:
                 p2Option.GetComponent<Dropdown>().value = 2;
+                break;
+            case ControlScheme.OriginalConsole:
+                p2Option.GetComponent<Dropdown>().value = 3;
+                break;
+            case ControlScheme.AI:
+                p2Option.GetComponent<Dropdown>().value = 4;
                 break;
         }
     }
@@ -97,6 +109,12 @@ public class LocalInputManager : MonoBehaviour
             case 2:
                 p1Scheme = ControlScheme.Keyboard;
                 break;
+            case 3:
+                p1Scheme = ControlScheme.OriginalConsole;
+                break;
+            case 4:
+                p1Scheme = ControlScheme.AI;
+                break;
         }
 
         switch (p2Option.GetComponent<Dropdown>().value)
@@ -109,6 +127,12 @@ public class LocalInputManager : MonoBehaviour
                 break;
             case 2:
                 p2Scheme = ControlScheme.Keyboard;
+                break;
+            case 3:
+                p2Scheme = ControlScheme.OriginalConsole;
+                break;
+            case 4:
+                p2Scheme = ControlScheme.AI;
                 break;
         }
     }

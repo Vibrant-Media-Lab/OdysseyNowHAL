@@ -34,12 +34,12 @@ public class PlayerTargetController : MonoBehaviour {
 
         try
         {
-            //print("Inputs: " + InputManager.ActiveDevices.Count);
-            //print(InputManager.ActiveDevices[0].DeviceClass);
+            print("Inputs: " + InputManager.ActiveDevices.Count);
+            print(InputManager.ActiveDevices[0].DeviceClass);
             con = InputManager.ActiveDevices[(player-1)%2];
         }catch(Exception e){
-            //Debug.Log(e.Message);
-            //Debug.Log("Missing gamepad: " + ((player-1)%2));
+            Debug.Log(e.Message);
+            Debug.Log("Missing gamepad: " + ((player-1)%2));
         }
     }
 
@@ -61,6 +61,10 @@ public class PlayerTargetController : MonoBehaviour {
                 return 1;
             case LocalInputManager.ControlScheme.OdysseyCon:
                 return 2;
+            case LocalInputManager.ControlScheme.OriginalConsole:
+                return 3;
+            case LocalInputManager.ControlScheme.AI:
+                return 4;
         }
 
         return 0;
@@ -144,6 +148,15 @@ public class PlayerTargetController : MonoBehaviour {
 
             else if (GetControlScheme() == 2 && player < 3){
                 //control for player target with OdysseyCon
+            }
+            else if (GetControlScheme() == 3 && player < 3){
+                ConsoleMirror.instance.pluggedIn = true;
+                if(player == 1){
+                    ConsoleMirror.instance.p1Console = true;
+                }
+                if(player == 2){
+                    ConsoleMirror.instance.p2Console = true;
+                }
             }
         }
 	}
