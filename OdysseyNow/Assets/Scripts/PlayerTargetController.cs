@@ -171,6 +171,8 @@ public class PlayerTargetController : MonoBehaviour {
     private void ResetButtonUp(){
         GameObject.FindWithTag("Ball").GetComponent<BallController>().resetButtonUp(gameObject.tag);
         unExtinguish();
+        if(gameObject.CompareTag("Player1"))
+            ConsoleMirror.instance.p1Reset();
     }
 
     void unExtinguish()
