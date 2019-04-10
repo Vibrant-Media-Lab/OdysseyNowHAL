@@ -4,11 +4,16 @@
 #define SD_ChipSelectPin 53  //example uses hardware SS pin 53 on Mega2560
 #include <TMRpcm.h>           //  also need to include this library...
 #include <SPI.h>
-//#include <SoftwareSerial.h>
-//#include <SerialCommand.h>
+#include <SoftwareSerial.h>
+#include <SerialCommand.h>
 
+#define READ_ANALOG_PRINT(x) Serial.print("  \"" #x "\":"); Serial.print(analogRead(x)); Serial.print(",");
+#define READ_DIGITAL_PRINT(x) Serial.print("  \"" #x "\":"); Serial.print(digitalRead(x)); Serial.print(",");
 
-//SerialCommand sCmd;
+#define READ_ANALOG_FROM_VOLT(x) Serial.print("  \"" #x "\":"); Serial.print(analogRead(x) / 4); Serial.print(",");
+    
+
+SerialCommand sCmd;
 
 TMRpcm tmrpcm;   // create an object for use in this sketch
 
@@ -45,8 +50,8 @@ const int P1_RESET = 12; // Set to output and low in order to reset the Odyssey,
 const int P1_CROWBAR_RESET = 13; // Set to output and low normally, set high to reset the crowbar circuit
 
 // make global so update from serial
-//int x_counts;
-//int y_counts;
+int x_counts;
+int y_counts;
 
 void p1_reset() {
   pinMode(P1_RESET, OUTPUT);
@@ -75,8 +80,8 @@ void setup() {
   analogWrite( P1_CROWBAR_PWM, 255 * 3 / 6); // Set P1 english to middle of screen
 
   Serial.begin(115200);
-  //sCmd.addCommand("setP1", p1Handler);
-  //sCmd.addCommand("p1Reset", p1_reset);
+  sCmd.addCommand("setP1", p1Handler);
+  sCmd.addCommand("p1Reset", p1_reset);
 
   tmrpcm.speakerPin = 11;
 
@@ -88,10 +93,10 @@ void setup() {
   }
 }
 
-/*void p1Handler() {
+void p1Handler() {
     x_counts = atoi(sCmd.next());    // Get the next argument from the SerialCommand object buffer
     y_counts = atoi(sCmd.next());
-}*/
+}
 
 // Move the player in a circle
 void loop() {
@@ -131,11 +136,6 @@ void loop() {
     analogWrite(P1_X_PWM, x_counts);
     analogWrite(P1_Y_PWM, y_counts);
 
-    #define READ_ANALOG_PRINT(x) Serial.print("  \"" #x "\":"); Serial.print(analogRead(x)); Serial.print(",");
-    #define READ_DIGITAL_PRINT(x) Serial.print("  \"" #x "\":"); Serial.print(digitalRead(x)); Serial.print(",");
-
-    #define READ_ANALOG_FROM_VOLT(x) Serial.print("  \"" #x "\":"); Serial.print(analogRead(x) / 4); Serial.print(",");
-    
     //READ_ANALOG_PRINT(P2_X_READ);
     //READ_ANALOG_PRINT(P2_Y_READ);
     READ_ANALOG_FROM_VOLT(P2_X_READ);
@@ -175,13 +175,9 @@ void loop() {
       last_crowbar_high = false;
       tmrpcm.play("crowbar.wav");
     }
-
-    if(Serial.available()){    
-      if(Serial.read() == 'r'){ // send r over the monitor to reset
-        p1_reset();
-      }
-    }
-
+    
+    sCmd.readSerial();
+    
     delay(update_period * 1000);
   }
 }

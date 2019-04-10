@@ -54,8 +54,8 @@ public class ConsoleMirror : MonoBehaviour
         {
             if (!p1Console)
             {
-                //sc.SendSerialMessage("setP1 " + xConvertToConsole(p1.position.x) + " " + yConvertToConsole(p1.position.y));
-            } 
+                //sc.SendSerialMessage("setP1 " + xConvertToConsole(p1.position.x) + " " + yConvertToConsole(p1.position.y) + " ");
+            }
 
             if (!p2Console)
             {

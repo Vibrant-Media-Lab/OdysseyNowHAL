@@ -352,7 +352,7 @@ MonoBehaviour:
   xInputOverrideBufferSize: 0
   xInputBufferSize: 0
   enableNativeInput: 1
-  nativeInputEnableXInput: 1
+  nativeInputEnableXInput: 0
   nativeInputPreventSleep: 0
   nativeInputOverrideUpdateRate: 0
   nativeInputUpdateRate: 0

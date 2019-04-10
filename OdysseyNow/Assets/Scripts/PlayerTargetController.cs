@@ -32,14 +32,18 @@ public class PlayerTargetController : MonoBehaviour {
                 break;
         }
 
+        ConnectController();
+    }
+
+    void ConnectController() {
         try
         {
-            print("Inputs: " + InputManager.ActiveDevices.Count);
-            print(InputManager.ActiveDevices[0].DeviceClass);
-            con = InputManager.ActiveDevices[(player-1)%2];
-        }catch(Exception e){
-            Debug.Log(e.Message);
-            Debug.Log("Missing gamepad: " + ((player-1)%2));
+            con = InputManager.ActiveDevices[(player - 1) % 2];
+        }
+        catch (Exception e)
+        {
+            //Debug.Log(e.Message);
+            //Debug.Log("Missing gamepad: " + ((player - 1) % 2));
         }
     }
 
@@ -72,6 +76,10 @@ public class PlayerTargetController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if(InputManager.ActiveDevices.Count > 0 && con == null) {
+            ConnectController();
+        }
+
         if (!Director.instance.paused)
         {
             if (GetControlScheme() == 0)
@@ -114,36 +122,46 @@ public class PlayerTargetController : MonoBehaviour {
 
             else if (GetControlScheme() == 1 && player < 3){
                 //Player target controll for traditional gamepad
-                if (con.LeftStickX.RawValue != 0 || con.LeftStickY.RawValue != 0 || con.RightStickX.RawValue != 0)
+                try
                 {
-                    gameObject.transform.position = new Vector3(10 * con.LeftStickX.RawValue, -10 * con.LeftStickY.RawValue, transform.position.z);
-                }
-                else{
-                    gameObject.transform.position = new Vector3(10 * con.ReadRawAnalogValue(0), -10 * con.ReadRawAnalogValue(1), transform.position.z);
-                }
+                    if (Math.Abs(con.LeftStickX.RawValue) < 0.05f || Math.Abs(con.LeftStickY.RawValue) < 0.05f || Math.Abs(con.RightStickX.RawValue) < 0.05f)
+                    {
+                        gameObject.transform.position = new Vector3(10 * con.LeftStickX.RawValue, 10 * con.LeftStickY.RawValue, transform.position.z);
+                    }
+                    else
+                    {
+                        gameObject.transform.position = new Vector3(10 * con.ReadRawAnalogValue(0), -10 * con.ReadRawAnalogValue(1), transform.position.z);
+                    }
 
-                if(con.Action1.WasPressed)
-                {
-                    print("Blah!!!");
-                    ResetButtonDown();
-                }
+                    if (con.Action1.WasPressed)
+                    {
+                        print("Blah!!!");
+                        ResetButtonDown();
+                    }
 
-                if(con.Action2.WasReleased){
-                    print("Up!!!");
-                    ResetButtonUp();
+                    if (con.Action2.WasReleased)
+                    {
+                        print("Up!!!");
+                        ResetButtonUp();
+                    }
                 }
+                catch (Exception e) {}
             }
 
             else if (GetControlScheme() == 1){
                 //Control for english with gamepad
-                if (con.RightStickX.RawValue != 0)
+                try
                 {
-                    gameObject.transform.position = new Vector3(transform.position.x, 6 * con.RightStickX.RawValue, transform.position.z);
+                    if (con.RightStickX.RawValue != 0)
+                    {
+                        gameObject.transform.position = new Vector3(transform.position.x, 6 * con.RightStickX.RawValue, transform.position.z);
+                    }
+                    else
+                    {
+                        gameObject.transform.position = new Vector3(transform.position.x, -6 * con.ReadRawAnalogValue(3), transform.position.z);
+                    }
                 }
-                else
-                {
-                    gameObject.transform.position = new Vector3(transform.position.x, -6 * con.ReadRawAnalogValue(3), transform.position.z);
-                }
+                catch(Exception e) {}
             }
 
             else if (GetControlScheme() == 2 && player < 3){
