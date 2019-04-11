@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &867101119943316239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5491611572265231832}
+  - component: {fileID: 4794631817878458854}
+  - component: {fileID: 9221508098410755043}
+  m_Layer: 0
+  m_Name: OdysseyConDirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5491611572265231832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867101119943316239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5755280645187453072}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4794631817878458854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867101119943316239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923d05a95650446ca7e3b93058e48d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p1: {fileID: 5755280646094463702}
+  p2: {fileID: 621243040746300459}
+  p1English: {fileID: 5755280646255919724}
+  p2English: {fileID: 621243042463614097}
+  p1Con: 0
+  p2Con: 0
+  pluggedIn: 0
+--- !u!114 &9221508098410755043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867101119943316239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portName: /dev/cu.usbmodem123451
+  baudRate: 115200
+  messageListener: {fileID: 867101119943316239}
+  reconnectionDelay: 1000
+  maxUnreadMessages: 1
 --- !u!1 &5297681485937152687
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +437,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5755280646457188663}
+  - {fileID: 5491611572265231832}
   m_Father: {fileID: 5755280646492669491}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8463,6 +8532,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 420394249864676328}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &621243042463614097 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 957739596588189561, guid: 3a576e61233364e359bdda8f95a04c40,
+    type: 3}
+  m_PrefabInstance: {fileID: 420394249864676328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &621243042463614096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 957739596588189560, guid: 3a576e61233364e359bdda8f95a04c40,
@@ -8490,6 +8565,12 @@ Transform:
 --- !u!1 &621243042690390921 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 957739596529227873, guid: 3a576e61233364e359bdda8f95a04c40,
+    type: 3}
+  m_PrefabInstance: {fileID: 420394249864676328}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5755280646255919724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5335453937934713220, guid: 3a576e61233364e359bdda8f95a04c40,
     type: 3}
   m_PrefabInstance: {fileID: 420394249864676328}
   m_PrefabAsset: {fileID: 0}

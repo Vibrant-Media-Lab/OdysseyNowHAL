@@ -181,6 +181,15 @@ namespace Actors
                 else if (GetControlScheme() == 2 && player < 3)
                 {
                     //control for player target with OdysseyCon
+                    OdysseyConDirector.instance.pluggedIn = true;
+                    if (player == 1)
+                    {
+                        OdysseyConDirector.instance.p1Con = true;
+                    }
+                    if (player == 2)
+                    {
+                        OdysseyConDirector.instance.p2Con = true;
+                    }
                 }
                 else if (GetControlScheme() == 3 && player < 3)
                 {

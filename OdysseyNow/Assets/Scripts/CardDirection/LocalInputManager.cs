@@ -115,7 +115,7 @@ namespace CardDirection
                     p1Scheme = ControlScheme.Traditional;
                     break;
                 case 2:
-                    p1Scheme = ControlScheme.Keyboard;
+                    p1Scheme = ControlScheme.OdysseyCon;
                     break;
                 case 3:
                     p1Scheme = ControlScheme.OriginalConsole;
@@ -134,7 +134,7 @@ namespace CardDirection
                     p2Scheme = ControlScheme.Traditional;
                     break;
                 case 2:
-                    p2Scheme = ControlScheme.Keyboard;
+                    p2Scheme = ControlScheme.OdysseyCon;
                     break;
                 case 3:
                     p2Scheme = ControlScheme.OriginalConsole;
