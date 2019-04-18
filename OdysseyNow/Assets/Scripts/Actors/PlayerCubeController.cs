@@ -66,6 +66,7 @@ namespace Actors
         {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider>().enabled = false;
+            CardDirection.SoundFXManager.instance.playSound("Crowbar");
         }
     }
 }

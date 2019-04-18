@@ -118,6 +118,7 @@ namespace Actors
         {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider>().enabled = false;
+            CardDirection.SoundFXManager.instance.playSound("Crowbar");
         }
 
         private void OnTriggerEnter(Collider other)
@@ -125,7 +126,11 @@ namespace Actors
             // Basically when you run into the player, you turn around and the player takes possession
             if (other.gameObject.tag == "Player1")
             {
-                ballpossesssion = possession.PLAYER1;
+                if (ballpossesssion != possession.PLAYER1)
+                {
+                    ballpossesssion = possession.PLAYER1;
+                    CardDirection.SoundFXManager.instance.playSound("Bounce");
+                }
             }
             else if (other.gameObject.tag == "Player2")
             {
@@ -133,20 +138,23 @@ namespace Actors
                 {
                     other.gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
-                else
+                else if (ballpossesssion != possession.PLAYER2)
                 {
                     ballpossesssion = possession.PLAYER2;
+                    CardDirection.SoundFXManager.instance.playSound("Bounce");
                 }
             }
             else if (other.gameObject.tag == "Wall")
             {
                 if (wallBounce)
                 {
+                    CardDirection.SoundFXManager.instance.playSound("Bounce");
                     swapPossession();
                 }
                 else if (wallExtinguish)
                 {
                     extinguish();
+                    CardDirection.SoundFXManager.instance.playSound("Crowbar");
                 }
             }
         }
