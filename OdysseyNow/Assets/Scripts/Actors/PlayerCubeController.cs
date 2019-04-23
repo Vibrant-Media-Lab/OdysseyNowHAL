@@ -15,10 +15,36 @@ namespace Actors
         public bool inertia = false;
         public bool playerExtinguish = false;
 
+        Rigidbody rb;
+
+
+        private void Start()
+        {
+            rb = gameObject.GetComponent<Rigidbody>();
+        }
+
         void FixedUpdate()
         {
             if (!d.instance.paused)
             {
+                /*
+                if (inertia)
+                {
+                    return;
+                }
+
+                float tgtX = tgt.transform.position.x;
+                float tgtY = tgt.transform.position.y;
+
+                //x-domain: -8 to 8
+                //y-range: -6 to 6
+
+                float xAlpha = (tgtX + 8) / 16f;
+                float yAlpha = (tgtY + 6) / 12f;
+
+                //float dVx =
+                */
+
                 if (inertia)
                 {
                     lagfactor = slowLag;

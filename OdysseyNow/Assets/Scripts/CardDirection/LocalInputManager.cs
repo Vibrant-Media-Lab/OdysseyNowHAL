@@ -8,7 +8,7 @@ namespace CardDirection
     public class LocalInputManager : MonoBehaviour
     {
         public static LocalInputManager instance;
-        public enum ControlScheme { Keyboard, Traditional, OdysseyCon, OriginalConsole, AI };
+        public enum ControlScheme { Keyboard, Traditional, OdysseyCon, OriginalConsole, AI, OdysseyConLegacy };
         public ControlScheme p1Scheme = ControlScheme.Keyboard;
         public ControlScheme p2Scheme = ControlScheme.Keyboard;
 
@@ -71,6 +71,9 @@ namespace CardDirection
                 case ControlScheme.AI:
                     p1Option.GetComponent<Dropdown>().value = 4;
                     break;
+                case ControlScheme.OdysseyConLegacy:
+                    p1Option.GetComponent<Dropdown>().value = 5;
+                    break;
             }
 
             switch (p2Scheme)
@@ -89,6 +92,9 @@ namespace CardDirection
                     break;
                 case ControlScheme.AI:
                     p2Option.GetComponent<Dropdown>().value = 4;
+                    break;
+                case ControlScheme.OdysseyConLegacy:
+                    p2Option.GetComponent<Dropdown>().value = 5;
                     break;
             }
         }
@@ -123,6 +129,9 @@ namespace CardDirection
                 case 4:
                     p1Scheme = ControlScheme.AI;
                     break;
+                case 5:
+                    p1Scheme = ControlScheme.OdysseyConLegacy;
+                    break;
             }
 
             switch (p2Option.GetComponent<Dropdown>().value)
@@ -141,6 +150,9 @@ namespace CardDirection
                     break;
                 case 4:
                     p2Scheme = ControlScheme.AI;
+                    break;
+                case 5:
+                    p2Scheme = ControlScheme.OdysseyConLegacy;
                     break;
             }
         }

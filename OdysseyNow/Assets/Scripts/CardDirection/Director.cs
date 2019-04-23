@@ -14,10 +14,6 @@ namespace CardDirection
         public GameObject plainMenu;
         public int cardNumber;
 
-        public enum ControlScheme { Keyboard, Traditional, OdysseyCon };
-        public ControlScheme p1Scheme = ControlScheme.Keyboard;
-        public ControlScheme p2Scheme = ControlScheme.Keyboard;
-
         private void Awake()
         {
             if (Director.instance != null)

@@ -15,8 +15,8 @@ namespace Actors
 
         // TODO: Implement quirk where both resets pressed forces ball to middle of screen
 
-        const float minMaxSpeed = 0.1f;
-        const float maxMaxSpeed = 0.5f;
+        public float minMaxSpeed = 0.1f;
+        public float maxMaxSpeed = 0.5f;
         public float full_speed = 5f;
         public float ball_english_lag = 10;
 

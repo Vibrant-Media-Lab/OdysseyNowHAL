@@ -3405,6 +3405,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: AI
       m_Image: {fileID: 0}
+    - m_Text: OdysseyConLegacy
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3781,6 +3783,8 @@ MonoBehaviour:
     - m_Text: Original Console
       m_Image: {fileID: 0}
     - m_Text: AI
+      m_Image: {fileID: 0}
+    - m_Text: OdysseyConLegacy
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

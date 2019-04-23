@@ -79,6 +79,8 @@ namespace Actors
                     return 3;
                 case LocalInputManager.ControlScheme.AI:
                     return 4;
+                case LocalInputManager.ControlScheme.OdysseyConLegacy:
+                    return 5;
             }
 
             return 0;
@@ -131,7 +133,6 @@ namespace Actors
                         ResetButtonUp();
                     }
                 }
-
                 else if (GetControlScheme() == 1 && player < 3)
                 {
                     //Player target controll for traditional gamepad
@@ -160,7 +161,6 @@ namespace Actors
                     }
                     catch (Exception e) { }
                 }
-
                 else if (GetControlScheme() == 1)
                 {
                     //Control for english with gamepad
@@ -177,7 +177,6 @@ namespace Actors
                     }
                     catch (Exception e) { }
                 }
-
                 else if (GetControlScheme() == 2 && player < 3)
                 {
                     //control for player target with OdysseyCon
@@ -201,6 +200,19 @@ namespace Actors
                     if (player == 2)
                     {
                         ConsoleMirror.instance.p2Console = true;
+                    }
+                }
+                else if (GetControlScheme() == 5 && player < 3)
+                {
+                    //control for player target with OdysseyCon
+                    OdysseyConLegacyDirector.instance.pluggedIn = true;
+                    if (player == 1)
+                    {
+                        OdysseyConLegacyDirector.instance.p1Con = true;
+                    }
+                    if (player == 2)
+                    {
+                        OdysseyConLegacyDirector.instance.p2Con = true;
                     }
                 }
             }

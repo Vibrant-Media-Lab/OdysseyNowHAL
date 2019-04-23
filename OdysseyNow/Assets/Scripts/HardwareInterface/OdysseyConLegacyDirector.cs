@@ -1,20 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Actors;
 
 namespace HardwareInterface
 {
-    public class OdysseyConDirector : MonoBehaviour
+    public class OdysseyConLegacyDirector : MonoBehaviour
     {
-        public static OdysseyConDirector instance;
+        public static OdysseyConLegacyDirector instance;
 
         public Transform p1;
         public Transform p2;
         public Transform p1English;
         public Transform p2English;
-
-        public BallController bc;
 
         public bool p1Con;
         public bool p2Con;
@@ -39,7 +36,7 @@ namespace HardwareInterface
 
         private void Awake()
         {
-            if (OdysseyConDirector.instance != null)
+            if (OdysseyConLegacyDirector.instance != null)
             {
                 Destroy(gameObject);
             }
@@ -70,41 +67,28 @@ namespace HardwareInterface
             }
         }
 
-        float xConvertToUnity(float x)
+        float xConvertToUnity(string x)
         {
-            float percent = (x - 140) / 560.0f;
+            float percent = float.Parse(x) / 1023.0f;
             return -((percent*16f) - 8f);
         }
 
-        float yConvertToUnity(float y)
+        float yConvertToUnity(string y)
         {
-            float percent = (y-180) / 620.0f;
+            float percent = float.Parse(y) / 1023.0f;
             return (percent * 12f) - 6f;
-        }
-
-        float englishConvertToUnity(float y)
-        {
-            float percent = (y - 90) / 840.0f;
-            return (percent* 12f) - 6f;
-        }
-
-        float convertSpeed(float s){
-            float percent = s / 255.0f;
-            return (percent * (bc.maxMaxSpeed - bc.minMaxSpeed)) + bc.minMaxSpeed;
         }
 
         void OnMessageArrived(string msg)
         {
-            OdysseyConData data = JsonUtility.FromJson<OdysseyConData>(msg);
-            p1X = xConvertToUnity(data.P1_X_READ);
-            p1Y = yConvertToUnity(data.P1_Y_READ);
-            p2X = xConvertToUnity(data.P2_X_READ);
-            p2Y = yConvertToUnity(data.P2_Y_READ);
-            p1E = englishConvertToUnity(data.P1_ENG_READ);
-            p2E = englishConvertToUnity(data.P2_ENG_READ);
-            bc.full_speed = convertSpeed(data.BALL_SPEED_READ);
-
-            print(bc.full_speed);
+            print(msg);
+            string[] splitMsg = msg.Split(',');
+            p1E = yConvertToUnity(splitMsg[0]);
+            p1X = xConvertToUnity(splitMsg[1]);
+            p1Y = yConvertToUnity(splitMsg[2]);
+            p2E = yConvertToUnity(splitMsg[3]);
+            p2X = xConvertToUnity(splitMsg[4]);
+            p2Y = yConvertToUnity(splitMsg[5]);
         }
 
         void OnConnectionEvent(bool success)
