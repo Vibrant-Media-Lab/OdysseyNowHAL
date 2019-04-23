@@ -149,7 +149,7 @@ void loop() {
 
   //delay(1000); //remove later
   
-  /*
+  
   //edge detection for controller 1 reset
   buttonState1 = digitalRead(resetPin1);
 
@@ -238,5 +238,5 @@ void loop() {
     }
     delay(50);
   }
-  lastButtonState6 = buttonState6;*/
+  lastButtonState6 = buttonState6;
 }
