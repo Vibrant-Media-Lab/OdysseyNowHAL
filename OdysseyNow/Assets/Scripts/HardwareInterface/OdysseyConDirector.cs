@@ -29,12 +29,69 @@ namespace HardwareInterface
         float p1E = 0f;
         float p2E = 0f;
 
+        float prev_crowbar = 0;
+        float prev_crowbar_reset = 0;
+        float prev_enter = 0;
+        float prev_select = 0;
+        float prev_encoder = 0;
+        float prev_p1_reset = 0;
+        float prev_p2_reset = 0;
+
         SerialController sc;
 
-        public void p1Reset()
+        void p1Reset()
         {
-            //if(pluggedIn)
-            //sc.SendSerialMessage("p1Reset");
+            if(p1Con){
+
+            }
+        }
+
+        void p2Reset()
+        {
+            if (p2Con)
+            {
+
+            }
+        }
+
+        void p1ResetUp()
+        {
+            if (p1Con)
+            {
+
+            }
+        }
+
+        void p2ResetUp()
+        {
+            if (p2Con)
+            {
+
+            }
+        }
+
+        void enterButton(){
+            print("Enter!");
+        }
+
+        void selectButton(){
+            print("Select!");
+        }
+
+        void encoderUp(){
+            print("encoderUp!");
+        }
+
+        void encoderDown(){
+            print("EncoderDown!");
+        }
+
+        void crowbar(){
+            print("Crowbar!");
+        }
+
+        void crowbarReset(){
+            print("Crowbar reset!");
         }
 
         private void Awake()
@@ -104,7 +161,47 @@ namespace HardwareInterface
             p2E = englishConvertToUnity(data.P2_ENG_READ);
             bc.full_speed = convertSpeed(data.BALL_SPEED_READ);
 
-            print(bc.full_speed);
+            if(prev_crowbar == 0 && data.CROWBAR_READ == 1){
+                crowbar();
+            }
+
+            if (prev_crowbar_reset == 0 && data.CROWBAR_RESET_READ == 1){
+                crowbarReset();
+            }
+
+            if(prev_encoder < data.ENCODER_READ){
+                encoderUp();
+            } else if(prev_encoder > data.ENCODER_READ){
+                encoderDown();
+            }
+
+            if (prev_enter == 0 && data.ENTER_READ == 1){
+                enterButton();
+            }
+
+            if (prev_select == 0 && data.SELECT_READ == 1){
+                selectButton();
+            }
+
+            if (prev_p1_reset == 0 && data.P1_RESET_READ == 1){
+                p1Reset();
+            } else if (prev_p1_reset == 1 && data.P1_RESET_READ == 0){
+                p1ResetUp();
+            }
+
+            if (prev_p2_reset == 0 && data.P2_RESET_READ == 1){
+                p2Reset();
+            } else if (prev_p2_reset == 1 && data.P2_RESET_READ == 0){
+                p2ResetUp();
+            }
+
+            prev_select = data.SELECT_READ;
+            prev_crowbar = data.CROWBAR_READ;
+            prev_crowbar_reset = data.CROWBAR_RESET_READ;
+            prev_encoder = data.ENCODER_READ;
+            prev_enter = data.ENTER_READ;
+            prev_p1_reset = data.P1_RESET_READ;
+            prev_p2_reset = data.P2_RESET_READ;
         }
 
         void OnConnectionEvent(bool success)

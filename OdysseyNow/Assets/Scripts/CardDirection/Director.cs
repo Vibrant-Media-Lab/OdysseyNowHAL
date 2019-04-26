@@ -109,12 +109,30 @@ namespace CardDirection
             }
         }
 
+        void LoadCard(int num){
+            if (num > 16)
+                num = 1;
+            else if (num <= 0)
+                num = 16;
+
+            SceneManager.LoadScene("Card" + num);
+        }
+
         // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 accessMenu();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftBracket)){
+                LoadCard(cardNumber - 1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightBracket))
+            {
+                LoadCard(cardNumber + 1);
             }
         }
 
