@@ -58,8 +58,9 @@ namespace Actors
         {
             LocalInputManager.ControlScheme scheme = LocalInputManager.ControlScheme.Keyboard;
 
-            if (player == 1 || player == 3)
-            {
+            if (LocalInputManager.instance == null) {
+                scheme = LocalInputManager.ControlScheme.Keyboard;
+            } else if (player == 1 || player == 3){
                 scheme = LocalInputManager.instance.p1Scheme;
             }
             else if (player == 2 || player == 4)
@@ -89,7 +90,8 @@ namespace Actors
         // Update is called once per frame
         void Update()
         {
-            if (InputManager.ActiveDevices.Count > 0 && con == null)
+
+            if (InputManager.ActiveDevices != null && InputManager.ActiveDevices.Count > 0 && con == null)
             {
                 ConnectController();
             }
