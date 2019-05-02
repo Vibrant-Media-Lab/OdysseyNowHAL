@@ -1,6 +1,6 @@
 # Odyssey Now HAL
 ### An attempt to re-create the analog masterpiece of the Magnavox Odyssey over digital media.
-## Developed in Unity 2018.3.12f1
+## Developed in Unity 2018.3.14f1
 
 ## Playable Build
 You can find builds in the build folder. Currently we have builds for OSX
