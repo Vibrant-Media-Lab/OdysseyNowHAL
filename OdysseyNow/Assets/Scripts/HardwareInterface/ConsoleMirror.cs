@@ -42,6 +42,8 @@ namespace HardwareInterface
 
         //TODO: Handle sending messages back to the console. We want one to be able to play with one person playing through Unity and another through the console.
 
+        public void p1Reset() { }
+
         /// <summary>
         /// On awake, make singleton and get SerialController instance.
         /// </summary>
