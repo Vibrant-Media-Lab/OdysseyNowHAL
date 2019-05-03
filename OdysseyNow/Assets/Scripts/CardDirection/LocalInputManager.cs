@@ -5,16 +5,26 @@ using UnityEngine.UI;
 
 namespace CardDirection
 {
+    /// <summary>
+    /// Manages the configuration of input methods.
+    /// </summary>
     public class LocalInputManager : MonoBehaviour
     {
+        //Singleton instance.
         public static LocalInputManager instance;
+        //The possible control schemes
         public enum ControlScheme { Keyboard, Traditional, OdysseyCon, OriginalConsole, AI, OdysseyConLegacy };
+        //Control schemes for both players
         public ControlScheme p1Scheme = ControlScheme.Keyboard;
         public ControlScheme p2Scheme = ControlScheme.Keyboard;
 
+        //Dropdown's for the two options
         GameObject p1Option;
         GameObject p2Option;
 
+        /// <summary>
+        /// On awake, make a singleton
+        /// </summary>
         private void Awake()
         {
             if (LocalInputManager.instance != null)
@@ -28,17 +38,27 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// Public method that initializes the input manager, starting a coroutine. This had to be separate from the coroutine itself so that the coroutine would belong to this object.
+        /// </summary>
         public void Init()
         {
             StartCoroutine(InitSoon());
         }
 
+        /// <summary>
+        /// Wait one second and then init the menu controls.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator InitSoon()
         {
             yield return new WaitForSeconds(1f);
             InitialControls();
         }
 
+        /// <summary>
+        /// Sets up the previously selected options for control schemes. This is basically just necessary for when one chooses a control scheme, plays a card, and then returns to the main menu. Updates the dropdowns.
+        /// </summary>
         void InitialControls()
         {
             if (p1Option == null || p2Option == null)
@@ -99,11 +119,17 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// When the input manager is destroyed, be sure to initialize a new one.
+        /// </summary>
         private void OnDestroy()
         {
             LocalInputManager.instance.Init();
         }
 
+        /// <summary>
+        /// Update the control scheme based on options selected on the dropdowns.
+        /// </summary>
         public void UpdateControls()
         {
             if (p1Option == null || p2Option == null)

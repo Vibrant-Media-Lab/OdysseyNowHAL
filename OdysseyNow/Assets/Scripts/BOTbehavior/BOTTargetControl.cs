@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace BOT
 {
+    /// <summary>
+    /// This is from the original AI demo. It is bad and you should not use it.
+    /// If one is to make an AI to play one of these games, you should ONLY need a script like this that controls the player target, since the player target (and english target) are the only things players impact.
+    /// We need at least one target controller script for every game AI.
+    /// </summary>
     public class BOTTargetControl : MonoBehaviour
     {
         public float startx, starty;

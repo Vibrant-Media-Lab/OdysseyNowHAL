@@ -5,6 +5,9 @@ using d = CardDirection.Director;
 
 namespace BOT
 {
+    /// <summary>
+    /// This is basically a copy of PlayerCubeController. It's bad and you shouldn't use any of it.
+    /// </summary>
     public class BOTCubeController : MonoBehaviour
     {
 

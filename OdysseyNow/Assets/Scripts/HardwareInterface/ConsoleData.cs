@@ -2,6 +2,9 @@
 
 namespace HardwareInterface
 {
+    /// <summary>
+    /// Simple POJO object to read in json of console data from arduino serial message.
+    /// </summary>
     [System.Serializable]
     public class ConsoleData
     {

@@ -6,19 +6,33 @@ using Actors;
 
 namespace CardDirection
 {
+    /// <summary>
+    /// Handles the playground menu options.
+    /// </summary>
     public class MenuDirector : MonoBehaviour
     {
+        //Whether the second player is included or not
         bool secondPlayer = true;
+        //true if there is a ball
         bool includeBall = true;
+        //true if there is a wall
         bool includeWall = true;
+        //current position of the wall
         int wallPosition = 1;
+        //current height of the wall (see wall's script)
         int wallHeight = 1;
+        //What happens when a ball hits a wall
         string wallBallCollision = "Pass";
+        //what happens when two players collide
         string p1P2Collision = "None";
+        //what happens when p2 hits the ball
         string p2BallCollision = "Bounce";
+        //true if p2 moves slower than normal
         bool p2Inertia = false;
+        //handles what extinguishes if the reset button is clicked
         string onResetExtinguish = "None";
 
+        //references to all of the actors
         public GameObject p1;
         public GameObject p2;
         public PlayerTargetController p1Target;
@@ -26,6 +40,9 @@ namespace CardDirection
         public GameObject ball;
         public GameObject wall;
 
+        /// <summary>
+        /// Update all of the actors based on settings.
+        /// </summary>
         public void UpdateAll()
         {
             //UpdateSecondPlayer
@@ -103,6 +120,19 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// Update all of the configuration parameters.
+        /// </summary>
+        /// <param name="_secondPlayer"></param>
+        /// <param name="_includeBall"></param>
+        /// <param name="_includeWall"></param>
+        /// <param name="_wallPosition"></param>
+        /// <param name="_wallHeight"></param>
+        /// <param name="_wallBallCollision"></param>
+        /// <param name="_p1P2Collision"></param>
+        /// <param name="_p2BallCollision"></param>
+        /// <param name="_p2Inertia"></param>
+        /// <param name="_onResetExtinguish"></param>
         public void UpdateAll(bool _secondPlayer, bool _includeBall, bool _includeWall, int _wallPosition, int _wallHeight, string _wallBallCollision, string _p1P2Collision, string _p2BallCollision, bool _p2Inertia, string _onResetExtinguish)
         {
             secondPlayer = _secondPlayer;
@@ -118,6 +148,9 @@ namespace CardDirection
             UpdateAll();
         }
 
+        /// <summary>
+        /// Redundant method; TODO: review dependancies and delete.
+        /// </summary>
         void RemoveOptions()
         {
 
@@ -127,36 +160,60 @@ namespace CardDirection
          * These methods are called by the UI elements in the menu.
         */
 
+        /// <summary>
+        /// Updates the 'secondPlayer' variable based on menu selection.
+        /// </summary>
+        /// <param name="tg">The toggle object that is true or false.</param>
         public void UpdateSecondPlayer(Toggle tg)
         {
             secondPlayer = tg.isOn;
             p1.SetActive(secondPlayer);
         }
 
+        /// <summary>
+        /// Updates the 'includeBall' variable based on menu selection.
+        /// </summary>
+        /// <param name="tg">The toggle object that is true or false.</param>
         public void UpdateIncludeBall(Toggle tg)
         {
             includeBall = tg.isOn;
             ball.SetActive(includeBall);
         }
 
+        /// <summary>
+        /// Updates the 'includeWall' variable based on menu selection.
+        /// </summary>
+        /// <param name="tg">The toggle object that is true or false.</param>
         public void UpdateIncludeWall(Toggle tg)
         {
             includeWall = tg.isOn;
             wall.SetActive(includeWall);
         }
 
+        /// <summary>
+        /// Updates the wall position variable based on the setting on the wall position slider.
+        /// </summary>
+        /// <param name="sl">The wall position slider object</param>
         public void UpdateWallPosition(Slider sl)
         {
             wallPosition = (int)sl.value;
             wall.GetComponent<WallBehavior>().setHorizontal(wallPosition);
         }
 
+        /// <summary>
+        /// Updates the wall height variable based on the setting on the wall height slider.
+        /// </summary>
+        /// <param name="sl">The wall height slider object</param>
         public void UpdateWallHeight(Slider sl)
         {
             wallHeight = (int)sl.value;
             wall.GetComponent<WallBehavior>().setHeight(wallHeight);
         }
 
+        /// <summary>
+        /// Update the wallBallCollision options based on the menu's dropdown
+        /// </summary>
+        /// <param name="dr">The dropdown for wallBallCollision</param>
         public void UpdateWallBallCollision(Dropdown dr)
         {
             wallBallCollision = dr.options[dr.value].text;
@@ -178,6 +235,10 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// Update the collision option between the two players.
+        /// </summary>
+        /// <param name="dr">Dropdown with the p1p2 collision options</param>
         public void UpdateP1P2Collision(Dropdown dr)
         {
             p1P2Collision = dr.options[dr.value].text;
@@ -192,6 +253,10 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// Update the p2-ball collision option based on menu dropdown.
+        /// </summary>
+        /// <param name="dr">Dropdown containing the p2-ball collision option</param>
         public void UpdateP2BallCollision(Dropdown dr)
         {
             p2BallCollision = dr.options[dr.value].text;
@@ -206,12 +271,20 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// update the p2 inertia variable based on option selected in menu.
+        /// </summary>
+        /// <param name="tg">The toggle holding the p2 inertia option</param>
         public void UpdateP2Inertia(Toggle tg)
         {
             p2Inertia = tg.isOn;
             p2.GetComponent<PlayerCubeController>().inertia = p2Inertia;
         }
 
+        /// <summary>
+        /// Update the on-reset-extinguish variable based on the menu dropdown.
+        /// </summary>
+        /// <param name="dr">The dropdown containing the menu option for on-reset-extinguish</param>
         public void UpdateOnResetExtinguish(Dropdown dr)
         {
             onResetExtinguish = dr.options[dr.value].text;

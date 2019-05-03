@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Graphics
 {
-
+    /// <summary>
+    /// Handles the slight moving HAL logo in the main menu.
+    /// This isn't complicated enough to warrent additional documentation - it works!
+    /// </summary>
     public class HoverText : MonoBehaviour
     {
         float startY;

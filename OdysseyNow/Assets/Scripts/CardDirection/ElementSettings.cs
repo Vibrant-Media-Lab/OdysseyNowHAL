@@ -5,14 +5,23 @@ using UnityEngine.UI;
 
 namespace CardDirection
 {
+    /// <summary>
+    /// Manages the size settings of actors.
+    /// </summary>
     public class ElementSettings : MonoBehaviour
     {
+        //Singleton instance
         public static ElementSettings instance;
+
+        //size settings for each actor
         public float p1Size;
         public float p2Size;
         public float wallSize;
         public float ballSize;
 
+        /// <summary>
+        /// On awake, set initial sizes, grab previous sizes if this isn't the first ElementSettings object, and make this a singleton
+        /// </summary>
         private void Awake()
         {
             p1Size = 1f;
@@ -33,6 +42,12 @@ namespace CardDirection
             DontDestroyOnLoad(gameObject);
         }
 
+        /// <summary>
+        /// Finds an object with a given name and tag. This is a helper method.
+        /// </summary>
+        /// <param name="name">Name of the object we're searching for.</param>
+        /// <param name="tag">The tag on the object we're searching for.</param>
+        /// <returns>The object we're searching for, or null.</returns>
         GameObject FindFromNameAndTag(string name, string tag)
         {
             GameObject[] withTag = GameObject.FindGameObjectsWithTag(tag);
@@ -46,6 +61,9 @@ namespace CardDirection
             return null;
         }
 
+        /// <summary>
+        /// Updates all of the sizes of visible elements
+        /// </summary>
         public void updateAllSizes()
         {
             GameObject p1 = FindFromNameAndTag("PlayerBody", "Player1");
@@ -61,6 +79,9 @@ namespace CardDirection
             ball.transform.localScale = new Vector3(ballSize, ballSize, ballSize);
         }
 
+        /// <summary>
+        /// Gets values and updates the size variables with those values.
+        /// </summary>
         public void setAllSizes()
         {
             float masterSize = GameObject.Find("OverallSize").GetComponent<Slider>().value;
@@ -76,24 +97,36 @@ namespace CardDirection
             updateAllSizes();
         }
 
+        /// <summary>
+        /// Set the p1 size (called when p1 slider is adjusted)
+        /// </summary>
         public void setP1Size()
         {
             p1Size = GameObject.Find("P1Size").GetComponent<Slider>().value / 15.0f;
             updateAllSizes();
         }
 
+        /// <summary>
+        /// Set the p2 size (called when p2 slider is adjusted)
+        /// </summary>
         public void setP2Size()
         {
             p2Size = GameObject.Find("P2Size").GetComponent<Slider>().value / 15.0f;
             updateAllSizes();
         }
 
+        /// <summary>
+        /// Set the wall size (called when wall slider is adjusted)
+        /// </summary>
         public void setWallSize()
         {
             wallSize = GameObject.Find("WallSize").GetComponent<Slider>().value / 30.0f;
             updateAllSizes();
         }
 
+        /// <summary>
+        /// Set the ball size (called when ball slider is adjusted)
+        /// </summary>
         public void setBallSize()
         {
             ballSize = GameObject.Find("BallSize").GetComponent<Slider>().value / 30.0f;

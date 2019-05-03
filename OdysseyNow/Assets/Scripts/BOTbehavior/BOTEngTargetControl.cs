@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace BOT
 {
+    /// <summary>
+    /// This is from the original AI demo. It is bad and you should not use it.
+    /// </summary>
     public class BOTEngTargetControl : MonoBehaviour
     {
 

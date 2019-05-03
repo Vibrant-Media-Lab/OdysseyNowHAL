@@ -2,6 +2,10 @@
 
 namespace HardwareInterface
 {
+    /// <summary>
+    /// A simple POJO used when reading in JSONified arduino serial message.
+    /// This holds all data the OdysseyCon sends to unity
+    /// </summary>
     [System.Serializable]
     public class OdysseyConData
     {

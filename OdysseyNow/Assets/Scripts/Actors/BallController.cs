@@ -5,28 +5,44 @@ using CardDirection;
 
 namespace Actors
 {
+    /// <summary>
+    /// This controls the ball. Since the player does not directly move the ball, this should be called 'BallBehavior'.
+    /// </summary>
     public class BallController : MonoBehaviour
     {
+        //The three possible possession states. This may need to change with added players.
         enum possession { PLAYER1, PLAYER2, BOTH };
+        //By default, ball begins in P1's possession
         possession ballpossesssion = possession.PLAYER1;
 
+        //The two english targets for the two players
+        //TODO: Add behavior for p3 and p4
         public GameObject player1EnglishTarget;
         public GameObject player2EnglishTarget;
 
         // TODO: Implement quirk where both resets pressed forces ball to middle of screen
 
+        //The minimum set ball speed, adjusted by the player to at minimum hit this value
         public float minMaxSpeed = 0.1f;
+        //The maximum set ball speed, adjusted by the player to at maximum hit this value
         public float maxMaxSpeed = 0.5f;
+        //the practical 'full' speed of the ball
         public float full_speed = 5f;
+        //The lag moving to the english target
         public float ball_english_lag = 10;
 
+        //true if the ball should bounce off the wall
         public bool wallBounce = false;
+        //true if the ball should extinguish if it hits the wall
         public bool wallExtinguish = false;
+        //true if the blayer should extinguish the ball on collision
         public bool playerExtinguish = false;
-
+        //true if hitting reset extinguishes the ball
         public bool resetExtinguishBall = false;
 
-        // Use this for initialization
+        /// <summary>
+        /// On start, set the speed of the ball
+        /// </summary>
         void Start()
         {
             full_speed /= 10;
@@ -34,7 +50,9 @@ namespace Actors
             if (full_speed < minMaxSpeed) full_speed = minMaxSpeed;
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// On fixed update, if the game isn't paused, move the ball
+        /// </summary>
         void FixedUpdate()
         {
             if (!Director.instance.paused)
@@ -77,6 +95,9 @@ namespace Actors
             }
         }
 
+        /// <summary>
+        /// Swap possession of the ball from p1 to p2 or the inverse.
+        /// </summary>
         void swapPossession()
         {
             if (ballpossesssion == possession.PLAYER1)
@@ -90,6 +111,10 @@ namespace Actors
         }
 
         //called resetButton instead of reset as to not mess with Reset function built into unity
+        /// <summary>
+        /// Handles reset button behavior.
+        /// </summary>
+        /// <param name="player"></param>
         public void resetButton(string player)
         {
             if (!((ballpossesssion == possession.PLAYER1 && player.Equals("Player1")) || (ballpossesssion == possession.PLAYER2 && player.Equals("Player2"))))
@@ -103,17 +128,27 @@ namespace Actors
             }
         }
 
+        /// <summary>
+        /// Handles what happens when the reset button is lifted
+        /// </summary>
+        /// <param name="player"></param>
         public void resetButtonUp(string player)
         {
             unExtinguish();
         }
 
+        /// <summary>
+        /// Make the ball visible and interactable
+        /// </summary>
         void unExtinguish()
         {
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             gameObject.GetComponent<BoxCollider>().enabled = true;
         }
 
+        /// <summary>
+        /// Make the ball invisible, uninteractable, and play the crowbar noise.
+        /// </summary>
         void extinguish()
         {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -121,6 +156,12 @@ namespace Actors
             CardDirection.SoundFXManager.instance.playSound("Crowbar");
         }
 
+        /// <summary>
+        /// On trigger enter, handle that 'collision'
+        /// If the ball hit p1 or p2, swap possession and play the bounce noise
+        /// If the ball hit the wall, do what it's supposed to do (bounce, extinguish, or nothing) with associated sound effects.
+        /// </summary>
+        /// <param name="other"></param>
         private void OnTriggerEnter(Collider other)
         {
             // Basically when you run into the player, you turn around and the player takes possession

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5134600554786278393}
+  - component: {fileID: 5179124233777173855}
   - component: {fileID: 5134600554786278392}
   - component: {fileID: 5134600554786278395}
   - component: {fileID: 5134600554786278394}
@@ -35,6 +36,19 @@ Transform:
   m_Father: {fileID: 5134600556259124287}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5179124233777173855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134600554786278397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca34e179737d5544aa07676c13720bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notes: This is the visible body (the square) of the player block.
 --- !u!33 &5134600554786278392
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tgt: {fileID: 5134600556201702494}
   lagfactor: 10
+  inertia: 0
   playerExtinguish: 0
 --- !u!54 &5134600554786278391
 Rigidbody:
@@ -133,6 +148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5134600554928608485}
+  - component: {fileID: 6347752857855185453}
   - component: {fileID: 5134600554928608482}
   m_Layer: 0
   m_Name: PlayerEnglishTarget
@@ -155,6 +171,22 @@ Transform:
   m_Father: {fileID: 5134600556259124287}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6347752857855185453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134600554928608484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca34e179737d5544aa07676c13720bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notes: 'This is effectively the ball''s target for a given player. Our hypothesis
+    of how english works is that the english is effectively setting a target for the
+    ball somewhere off screen, simply moving it up and down. This logic likely needs
+    tweaking. '
 --- !u!114 &5134600554928608482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5134600556201702495}
+  - component: {fileID: 4894308655918083026}
   - component: {fileID: 5134600556201702492}
   m_Layer: 0
   m_Name: PlayerTarget
@@ -208,6 +241,20 @@ Transform:
   m_Father: {fileID: 5134600556259124287}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4894308655918083026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134600556201702494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca34e179737d5544aa07676c13720bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notes: 'This is the player''s movement target: where they are trying to go. All
+    input from the player moves this target: block movement to the target is automatic.'
 --- !u!114 &5134600556201702492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5134600556259124287}
+  - component: {fileID: 7230112169142265924}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -263,3 +311,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7230112169142265924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134600556259124286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca34e179737d5544aa07676c13720bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notes: This is a player object. It contains all components necessary for typical
+    player movement and other interaction.

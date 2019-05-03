@@ -8,17 +8,29 @@ using HardwareInterface;
 
 namespace Actors
 {
+    /// <summary>
+    /// This controls the player target: where the player box is trying to move to. It has to account for most possible input methods.
+    /// This also controls the english target, though we may want to change that as this script continues to expand in complexity.
+    /// </summary>
     public class PlayerTargetController : MonoBehaviour
     {
+        //This is the visible player block.
         public GameObject playerCube;
+        //The start location of the target.
         public float startx, starty;
+        //The initial speed... might be redundant at this point...
         public float speed = 5f;
+        //Key configurations for keyboard controls... this is not the best way to do this.
         public KeyCode up, down, left, right, reset;
+        //bool of whether hitting reset will extinguish the player block
         public bool resetExtinguish;
+        //player number (most likely player 1 or player 2)
         int player;
 
+        //The input device assigned to this player, for traditional gamepad input.
         InputDevice con;
 
+        ///On start, set the player number and connect the controller.
         private void Start()
         {
             player = 1;
@@ -41,6 +53,9 @@ namespace Actors
             ConnectController();
         }
 
+        /// <summary>
+        /// If possible, get a traditional gamepad for this player.
+        /// </summary>
         void ConnectController()
         {
             try
@@ -54,6 +69,10 @@ namespace Actors
             }
         }
 
+        /// <summary>
+        /// Gets the control scheme based on what was selected in the LocalInputManager. Default is keyboard controls.
+        /// </summary>
+        /// <returns> A number corresponding to the control scheme </returns>
         int GetControlScheme()
         {
             LocalInputManager.ControlScheme scheme = LocalInputManager.ControlScheme.Keyboard;
@@ -87,17 +106,21 @@ namespace Actors
             return 0;
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// On update, try to connect the controller if it isn't already connected & move if the game isn't paused.
+        /// </summary>
         void Update()
         {
-
+            //If you aren't connected and you can connect, try to connect.
             if (InputManager.ActiveDevices != null && InputManager.ActiveDevices.Count > 0 && con == null)
             {
                 ConnectController();
             }
-
+            
+            //If the game isn't paused, move.
             if (!Director.instance.paused)
             {
+                //If you have keyboard controls...
                 if (GetControlScheme() == 0)
                 {
                     //player target & english control for keyboard controls
@@ -135,9 +158,10 @@ namespace Actors
                         ResetButtonUp();
                     }
                 }
+                //if you have traditional gamepad controls
                 else if (GetControlScheme() == 1 && player < 3)
                 {
-                    //Player target controll for traditional gamepad
+                    //Player target controller for traditional gamepad
                     try
                     {
                         if (Math.Abs(con.LeftStickX.RawValue) < 0.05f || Math.Abs(con.LeftStickY.RawValue) < 0.05f || Math.Abs(con.RightStickX.RawValue) < 0.05f)
@@ -149,20 +173,21 @@ namespace Actors
                             gameObject.transform.position = new Vector3(10 * con.ReadRawAnalogValue(0), -10 * con.ReadRawAnalogValue(1), transform.position.z);
                         }
 
+                        //TODO: handle reset button for all gamepads. One can probably do this with con, an InControl object.
+
                         if (con.Action1.WasPressed)
                         {
-                            print("Blah!!!");
                             ResetButtonDown();
                         }
 
                         if (con.Action2.WasReleased)
                         {
-                            print("Up!!!");
                             ResetButtonUp();
                         }
                     }
                     catch (Exception e) { }
                 }
+                //If you have traditional gamepad controls & this is attached to the english target
                 else if (GetControlScheme() == 1)
                 {
                     //Control for english with gamepad
@@ -179,6 +204,7 @@ namespace Actors
                     }
                     catch (Exception e) { }
                 }
+                //If you have a new OdysseyCon (the arduino one)
                 else if (GetControlScheme() == 2 && player < 3)
                 {
                     //control for player target with OdysseyCon
@@ -191,7 +217,10 @@ namespace Actors
                     {
                         OdysseyConDirector.instance.p2Con = true;
                     }
+                    //TODO: Handle reset buttons
                 }
+                //If you're controlling with an original console.
+                //This basically just lets the console mirror handle everything. The Unity simulation is a slave.
                 else if (GetControlScheme() == 3 && player < 3)
                 {
                     ConsoleMirror.instance.pluggedIn = true;
@@ -204,6 +233,7 @@ namespace Actors
                         ConsoleMirror.instance.p2Console = true;
                     }
                 }
+                //If you have an older legacy OdysseyCon (the older arduino controller)
                 else if (GetControlScheme() == 5 && player < 3)
                 {
                     //control for player target with OdysseyCon
@@ -220,6 +250,11 @@ namespace Actors
             }
         }
 
+        /// <summary>
+        /// Handles if the reset button is pressed down.
+        /// If you extinguish on reset down, call extinguish.
+        /// Call the reset action on the ball.
+        /// </summary>
         private void ResetButtonDown()
         {
             if (resetExtinguish)
@@ -229,6 +264,9 @@ namespace Actors
             GameObject.FindWithTag("Ball").GetComponent<BallController>().resetButton(gameObject.tag);
         }
 
+        /// <summary>
+        /// Handles when the reset button is let back up
+        /// </summary>
         private void ResetButtonUp()
         {
             GameObject.FindWithTag("Ball").GetComponent<BallController>().resetButtonUp(gameObject.tag);
@@ -237,12 +275,18 @@ namespace Actors
                 ConsoleMirror.instance.p1Reset();
         }
 
+        /// <summary>
+        /// On unextinguish, make the player visible and collidable again.
+        /// </summary>
         void unExtinguish()
         {
             playerCube.GetComponent<MeshRenderer>().enabled = true;
             playerCube.GetComponent<BoxCollider>().enabled = true;
         }
 
+        /// <summary>
+        /// On extinguish, make the ball invisible and uncollidable.
+        /// </summary>
         void extinguish()
         {
             playerCube.GetComponent<MeshRenderer>().enabled = false;

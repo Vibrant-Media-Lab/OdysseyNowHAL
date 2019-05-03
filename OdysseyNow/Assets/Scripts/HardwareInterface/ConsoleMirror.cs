@@ -4,19 +4,28 @@ using UnityEngine;
 
 namespace HardwareInterface
 {
+    /// <summary>
+    /// Handles communication with original console, through arduino.
+    /// </summary>
     public class ConsoleMirror : MonoBehaviour
     {
+        //Singleton instance
         public static ConsoleMirror instance;
 
+        //transforms of visible game objects
         public Transform p1;
         public Transform p2;
         public Transform ball;
         public Transform line;
+
+        //true if either player is controlled by console
         public bool p1Console;
         public bool p2Console;
 
+        //true if console is plugged in
         public bool pluggedIn;
 
+        //Data from the console
         float p1X = 0f;
         float p1Y = 0f;
 
@@ -28,14 +37,14 @@ namespace HardwareInterface
 
         float wallX = 0f;
 
+        //Ardity Serial Controller object for communication with the arduino -> console
         SerialController sc;
 
-        public void p1Reset()
-        {
-            //if(pluggedIn)
-            //sc.SendSerialMessage("p1Reset");
-        }
+        //TODO: Handle sending messages back to the console. We want one to be able to play with one person playing through Unity and another through the console.
 
+        /// <summary>
+        /// On awake, make singleton and get SerialController instance.
+        /// </summary>
         private void Awake()
         {
             if (ConsoleMirror.instance != null)
@@ -51,6 +60,9 @@ namespace HardwareInterface
             sc = gameObject.GetComponent<SerialController>();
         }
 
+        /// <summary>
+        /// On update, set locations to whatever the console sent to us, and (TODO) send messages to the console
+        /// </summary>
         private void LateUpdate()
         {
             if (pluggedIn)
@@ -72,6 +84,11 @@ namespace HardwareInterface
             }
         }
 
+        /// <summary>
+        /// Convert from TV pixel x to Unity x
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         float xConvertToUnity(float x)
         {
             x = x - 115.0f;
@@ -79,6 +96,11 @@ namespace HardwareInterface
             return x;
         }
 
+        /// <summary>
+        /// Convert from unity x to TV pixel x
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         float xConvertToConsole(float x)
         {
             x = (x / -6.75f) * 47.0f;
@@ -86,6 +108,11 @@ namespace HardwareInterface
             return x;
         }
 
+        /// <summary>
+        /// Convert from TV pixel y to Unity y
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
         float yConvertToUnity(float y)
         {
             y = y - 126.0f;
@@ -93,6 +120,11 @@ namespace HardwareInterface
             return y;
         }
 
+        /// <summary>
+        /// Convert from Unity y to TV pixel y
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
         float yConvertToConsole(float y)
         {
             y = (y / 5.0f) * 52.0f;
@@ -100,6 +132,10 @@ namespace HardwareInterface
             return y;
         }
 
+        /// <summary>
+        /// Handles messages recieved from the arduino, setting the appropriate variables. Required by Ardity.
+        /// </summary>
+        /// <param name="msg"></param>
         void OnMessageArrived(string msg)
         {
             msg = msg.Substring(0, msg.Length - 3) + "}";
@@ -113,6 +149,10 @@ namespace HardwareInterface
             wallX = xConvertToUnity(data.WALL_X_READ);
         }
 
+        /// <summary>
+        /// Handles connection event. Required by ardity.
+        /// </summary>
+        /// <param name="success"></param>
         void OnConnectionEvent(bool success)
         {
             if (!success)

@@ -5,21 +5,31 @@ using Actors;
 
 namespace HardwareInterface
 {
+    /// <summary>
+    /// Handles all communication with the OdysseyCon arduino controller
+    /// </summary>
     public class OdysseyConDirector : MonoBehaviour
     {
+        //Singleton instance
         public static OdysseyConDirector instance;
 
+        //transforms of both targets and english targets for players
         public Transform p1;
         public Transform p2;
         public Transform p1English;
         public Transform p2English;
 
+        //The ball controller script
         public BallController bc;
 
+        //true if p1 or p2 are using this controller
         public bool p1Con;
         public bool p2Con;
+
+        //true if the odysseyCon is connected
         public bool pluggedIn;
 
+        //Inputs from the controller
         float p1X = 0f;
         float p1Y = 0f;
 
@@ -29,6 +39,8 @@ namespace HardwareInterface
         float p1E = 0f;
         float p2E = 0f;
 
+        //inputs from controller on previous frame; this is important for these since they create events based on change 
+        //(ie, we only care about the frame a button is pressed, not all the time a button is down.)
         float prev_crowbar = 0;
         float prev_crowbar_reset = 0;
         float prev_enter = 0;
@@ -38,6 +50,8 @@ namespace HardwareInterface
         float prev_p2_reset = 0;
 
         SerialController sc;
+
+        //TODO: Handle all of these button inputs properly...
 
         void p1Reset()
         {
@@ -94,6 +108,11 @@ namespace HardwareInterface
             print("Crowbar reset!");
         }
 
+        //end TODO
+
+        /// <summary>
+        /// On awake, make a singleton and get the serialcontroller (Ardity object).
+        /// </summary>
         private void Awake()
         {
             if (OdysseyConDirector.instance != null)
@@ -109,6 +128,9 @@ namespace HardwareInterface
             sc = gameObject.GetComponent<SerialController>();
         }
 
+        /// <summary>
+        /// If using this controller, set locations based on player input.
+        /// </summary>
         private void LateUpdate()
         {
             if (pluggedIn)
@@ -127,29 +149,54 @@ namespace HardwareInterface
             }
         }
 
+        /// <summary>
+        /// Convert controller given to Unity X
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         float xConvertToUnity(float x)
         {
             float percent = (x - 140) / 560.0f;
             return -((percent*16f) - 8f);
         }
 
+        /// <summary>
+        /// Convert controller given to Unity Y
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
         float yConvertToUnity(float y)
         {
             float percent = (y-180) / 620.0f;
             return (percent * 12f) - 6f;
         }
 
+        /// <summary>
+        /// Convert english value from controller to usable Unity Y
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
         float englishConvertToUnity(float y)
         {
             float percent = (y - 90) / 840.0f;
             return (percent* 12f) - 6f;
         }
 
+        /// <summary>
+        /// Converts controller's given ball speed to a value usable by unity.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         float convertSpeed(float s){
             float percent = s / 255.0f;
             return (percent * (bc.maxMaxSpeed - bc.minMaxSpeed)) + bc.minMaxSpeed;
         }
 
+        /// <summary>
+        /// Required method from Ardity. Handles received message from arduino.
+        /// Takes in arduino input and set variables.
+        /// </summary>
+        /// <param name="msg"></param>
         void OnMessageArrived(string msg)
         {
             OdysseyConData data = JsonUtility.FromJson<OdysseyConData>(msg);
@@ -204,6 +251,10 @@ namespace HardwareInterface
             prev_p2_reset = data.P2_RESET_READ;
         }
 
+        /// <summary>
+        /// Handles connection with arduino. Required by ardity.
+        /// </summary>
+        /// <param name="success">True if connected to controller</param>
         void OnConnectionEvent(bool success)
         {
             if (!success)

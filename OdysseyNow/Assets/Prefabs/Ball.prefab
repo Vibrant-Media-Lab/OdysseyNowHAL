@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7954745110161408545}
+  - component: {fileID: 7664199932924411814}
   - component: {fileID: 7954745110161408544}
   - component: {fileID: 7954745110161408575}
   - component: {fileID: 7954745110161408574}
@@ -34,6 +35,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7664199932924411814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954745110161408573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca34e179737d5544aa07676c13720bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notes: This is the ball featured in many Odyssey cards.
 --- !u!33 &7954745110161408544
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -106,6 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1EnglishTarget: {fileID: 0}
   player2EnglishTarget: {fileID: 0}
+  minMaxSpeed: 0.1
+  maxMaxSpeed: 0.5
   full_speed: 5
   ball_english_lag: 10
   wallBounce: 0

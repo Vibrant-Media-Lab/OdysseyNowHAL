@@ -6,14 +6,22 @@ using UnityEngine.SceneManagement;
 
 namespace CardDirection
 {
+    /// <summary>
+    /// The primary director of card scenes. This manages a lot of things.
+    /// </summary>
     public class Director : MonoBehaviour
     {
+        //instance for a singleton
         public static Director instance;
+        //keeps track of whether the game is paused; referenced by other classes
         public bool paused = false;
+        //references to the two pause menus; one for playground, another for all cards
         public GameObject menu;
         public GameObject plainMenu;
+        //the card number; if it's not a valid number, the director will assume this is the playground.
         public int cardNumber;
 
+        //Makes this a singleton
         private void Awake()
         {
             if (Director.instance != null)
@@ -40,7 +48,10 @@ namespace CardDirection
          *      string _onResetExtinguish : None, P1 & P2, P2. Ball
          * )
          */
-
+        
+        /// <summary>
+        /// On start, set parameters based on card number, set settings based on main menu configuration, and choose the right pause menu
+        /// </summary>
         private void Start()
         {
             switch (cardNumber)
@@ -109,6 +120,10 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// Loads neighboring scene; used by '[]' controls to dynamically iterate through cards
+        /// </summary>
+        /// <param name="num"></param>
         void LoadCard(int num){
             if (num > 16)
                 num = 1;
@@ -118,7 +133,11 @@ namespace CardDirection
             SceneManager.LoadScene("Card" + num);
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Handles all player input related to scene navigation.
+        /// If the player presses escape, pause the game.
+        /// If the player presses [ or ], iterate to previous or next scene.
+        /// </summary>
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -136,17 +155,28 @@ namespace CardDirection
             }
         }
 
+        /// <summary>
+        /// Pause or unpause the game
+        /// </summary>
         public void accessMenu()
         {
             paused = !paused;
             menu.SetActive(paused);
         }
 
+        /// <summary>
+        /// Return to main menu scene.
+        /// </summary>
         public void MainMenu()
         {
             SceneManager.LoadScene("MainMenu");
         }
 
+        /// <summary>
+        /// Redundant method; TODO: review code to check dependancies then remove
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="scheme"></param>
         public void UpdateControls(int player, string scheme)
         {
 

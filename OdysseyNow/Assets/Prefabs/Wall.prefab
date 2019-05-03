@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3873317058706896431}
+  - component: {fileID: 5800594955940470533}
   - component: {fileID: 3873317058706896595}
   - component: {fileID: 3873317058706896592}
   - component: {fileID: 3873317058706896430}
@@ -35,6 +36,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5800594955940470533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873317058706896428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca34e179737d5544aa07676c13720bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notes: 'This is the wall. One would not expect it to be very dynamic but it actually
+    needs to be able to move based on played input and adjust height. '
 --- !u!33 &3873317058706896595
 MeshFilter:
   m_ObjectHideFlags: 0
