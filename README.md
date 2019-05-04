@@ -3,7 +3,7 @@
 ## Developed in Unity 2018.3.14f1
 
 ## Playable Build
-You can find builds in the build folder. Currently we have builds for OSX
+Check out our [itch.io page](https://pathealy.itch.io/odyssey-now-hal)
 
 ## Keyboard controls
 If you want to play the game with keyboard controls (which is not really recommended), here are the controls
@@ -26,6 +26,6 @@ If you want to play the game with keyboard controls (which is not really recomme
 ## Team Members
 #### **Creative Director**: Zachary Horton, z.horton@pitt.edu
 #### **Lead Developer**: Patrick Healy, pat.healy@pitt.edu
-  
-*Vibrant Media Lab | University of Pittsburgh | 2018*
-More info at *vml.pitt.edu*
+
+##### *Vibrant Media Lab | University of Pittsburgh | 2019*
+##### More info at *vml.pitt.edu*
