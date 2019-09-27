@@ -199,6 +199,7 @@ namespace HardwareInterface
         /// <param name="msg"></param>
         void OnMessageArrived(string msg)
         {
+            Debug.Log("OnMessageArrived(string msg): " + msg);
             OdysseyConData data = JsonUtility.FromJson<OdysseyConData>(msg);
             p1X = xConvertToUnity(data.P1_X_READ);
             p1Y = yConvertToUnity(data.P1_Y_READ);

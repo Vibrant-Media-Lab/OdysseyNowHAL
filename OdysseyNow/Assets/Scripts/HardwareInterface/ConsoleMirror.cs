@@ -25,6 +25,51 @@ namespace HardwareInterface
         //true if console is plugged in
         public bool pluggedIn;
 
+        // for calibration
+        public float _calib_votage_x_min = 617;
+        public float _calib_votage_x_max = 300;
+        public float _calib_votage_y_min = 711;
+        public float _calib_votage_y_max = 379;
+        public float _calib_unity_x_min = -7.7f;
+        public float _calib_unity_x_max = 7.7f;
+        public float _calib_unity_y_min = 4.4f;
+        public float _calib_unity_y_max = -4.4f;
+
+        //public float calib_votage_x_min
+        //{
+        //    get { return _calib_votage_x_min; }
+        //    set { _calib_votage_x_min = value; _calib_calc_param_x(); }
+        //}
+        //public float calib_votage_x_max
+        //{
+        //    get { return _calib_votage_x_max; }
+        //    set { _calib_votage_x_max = value; _calib_calc_param_x(); }
+        //}
+        //public float calib_votage_y_min
+        //{
+        //    get { return _calib_votage_y_min; }
+        //    set { _calib_votage_y_min = value; _calib_calc_param_y(); }
+        //}
+        //public float calib_votage_y_max
+        //{
+        //    get { return _calib_votage_y_max; }
+        //    set { _calib_votage_y_max = value; _calib_calc_param_y(); }
+        //}
+
+        public float _calib_x_mul = -1;
+        public float _calib_x_offset = -1;
+        public float _calib_y_mul = -1;
+        public float _calib_y_offset = -1;
+
+        void _calib_calc_param_x() {
+            _calib_x_mul = (_calib_unity_x_max - _calib_unity_x_min) / (_calib_votage_x_max - _calib_votage_x_min);
+            _calib_x_offset = _calib_unity_x_min - _calib_votage_x_min * _calib_x_mul;
+        }
+        void _calib_calc_param_y() {
+            _calib_y_mul = (_calib_unity_y_max - _calib_unity_y_min) / (_calib_votage_y_max - _calib_votage_y_min);
+            _calib_y_offset = _calib_unity_y_min - _calib_votage_y_min * _calib_y_mul;
+        }
+
         //Data from the console
         float p1X = 0f;
         float p1Y = 0f;
@@ -93,9 +138,8 @@ namespace HardwareInterface
         /// <returns></returns>
         float xConvertToUnity(float x)
         {
-            x = x - 115.0f;
-            x = (x / 47.0f) * -6.75f;
-            return x;
+            _calib_calc_param_x();
+            return x * _calib_x_mul + _calib_x_offset;
         }
 
         /// <summary>
@@ -117,9 +161,8 @@ namespace HardwareInterface
         /// <returns></returns>
         float yConvertToUnity(float y)
         {
-            y = y - 126.0f;
-            y = (y / 52.0f) * 5.0f;
-            return y;
+            _calib_calc_param_y();
+            return y * _calib_y_mul + _calib_y_offset;
         }
 
         /// <summary>
@@ -140,7 +183,8 @@ namespace HardwareInterface
         /// <param name="msg"></param>
         void OnMessageArrived(string msg)
         {
-            msg = msg.Substring(0, msg.Length - 3) + "}";
+            //msg = msg.Substring(0, msg.Length - 3) + "}";
+            Debug.Log("ConsoleMirror.OnMessageArrived(msg): " + msg);
             ConsoleData data = JsonUtility.FromJson<ConsoleData>(msg);
             p1X = xConvertToUnity(data.P1_X_READ);
             p1Y = yConvertToUnity(data.P1_Y_READ);
@@ -162,5 +206,22 @@ namespace HardwareInterface
                 pluggedIn = false;
             }
         }
+
+        /// <summary>
+        /// Start calibration to map votage level from Arduino to unity value
+        /// </summary>
+        public void StartCalibration()
+        {
+            p1.position = new Vector2(p1X, p1Y);
+            p2.position = new Vector2(p2X, p2Y);
+            ball.position = new Vector2(ballX, ballY);
+            line.position = new Vector2(wallX, line.position.y);
+
+            // todo Prompt to ask user to tune the knobs and move the p1/p2 position
+
+
+
+        }
+
     }
 }
