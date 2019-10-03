@@ -138,7 +138,6 @@ namespace HardwareInterface
         /// <returns></returns>
         float xConvertToUnity(float x)
         {
-            _calib_calc_param_x();
             return x * _calib_x_mul + _calib_x_offset;
         }
 
@@ -161,7 +160,6 @@ namespace HardwareInterface
         /// <returns></returns>
         float yConvertToUnity(float y)
         {
-            _calib_calc_param_y();
             return y * _calib_y_mul + _calib_y_offset;
         }
 
@@ -177,6 +175,14 @@ namespace HardwareInterface
             return y;
         }
 
+        // TODO: Make proper abstrations of console-read,
+        //    since we have a calibration routine that want to consume the data
+        private ConsoleData mLastConsoleData;
+        public ConsoleData getControllerRawData()
+        {
+            return mLastConsoleData;
+        }
+
         /// <summary>
         /// Handles messages recieved from the arduino, setting the appropriate variables. Required by Ardity.
         /// </summary>
@@ -185,14 +191,16 @@ namespace HardwareInterface
         {
             //msg = msg.Substring(0, msg.Length - 3) + "}";
             Debug.Log("ConsoleMirror.OnMessageArrived(msg): " + msg);
-            ConsoleData data = JsonUtility.FromJson<ConsoleData>(msg);
-            p1X = xConvertToUnity(data.P1_X_READ);
-            p1Y = yConvertToUnity(data.P1_Y_READ);
-            p2X = xConvertToUnity(data.P2_X_READ);
-            p2Y = yConvertToUnity(data.P2_Y_READ);
-            ballX = xConvertToUnity(data.BALL_X_READ);
-            ballY = yConvertToUnity(data.BALL_Y_READ);
-            wallX = xConvertToUnity(data.WALL_X_READ);
+            mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
+            _calib_calc_param_x();
+            _calib_calc_param_y();
+            p1X = xConvertToUnity(mLastConsoleData.P1_X_READ);
+            p1Y = yConvertToUnity(mLastConsoleData.P1_Y_READ);
+            p2X = xConvertToUnity(mLastConsoleData.P2_X_READ);
+            p2Y = yConvertToUnity(mLastConsoleData.P2_Y_READ);
+            ballX = xConvertToUnity(mLastConsoleData.BALL_X_READ);
+            ballY = yConvertToUnity(mLastConsoleData.BALL_Y_READ);
+            wallX = xConvertToUnity(mLastConsoleData.WALL_X_READ);
         }
 
         /// <summary>
@@ -212,10 +220,18 @@ namespace HardwareInterface
         /// </summary>
         public void StartCalibration()
         {
-            p1.position = new Vector2(p1X, p1Y);
-            p2.position = new Vector2(p2X, p2Y);
-            ball.position = new Vector2(ballX, ballY);
-            line.position = new Vector2(wallX, line.position.y);
+
+
+            p1.position = new Vector2(_calib_unity_x_min, _calib_unity_y_min);
+
+            // Please move the player 1 to the upper-left coner, as shown on the HAL screen
+
+            p1.position = new Vector2(_calib_unity_x_max, _calib_unity_y_max);
+
+            // Please move the player 1 to the upper-left coner, as shown on the HAL screen
+
+            //ball.position = new Vector2(ballX, ballY);
+            //line.position = new Vector2(wallX, line.position.y);
 
             // todo Prompt to ask user to tune the knobs and move the p1/p2 position
 
