@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Card16.unity
     guid: c9e5d55bfb4da421bad322caf9c54dae
+  - enabled: 1
+    path: Assets/Scenes/Calibration.unity
+    guid: 781b66e5a5f4b43d48c8a40043c9e127
   m_configObjects: {}

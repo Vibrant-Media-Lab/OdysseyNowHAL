@@ -155,6 +155,7 @@ public class CalibrationDirector : MonoBehaviour
                     break;
                 }
 
+                // Move the p1 to top-left corner
                 p1.position = new Vector2(_calib_unity_x_min, _calib_unity_y_min);
 
                 if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next) {
@@ -164,7 +165,7 @@ public class CalibrationDirector : MonoBehaviour
 
                     mCalibStates++;
                 } else if (extra_btn_prev) {
-                    mCalibStates--;
+                    exit_scene();
                 }
 
                 update_camera_look();
@@ -208,6 +209,7 @@ public class CalibrationDirector : MonoBehaviour
 
                 if (cancel_calibration || extra_btn_next) {
                     // Keep a note of the time the movement started.
+                    mTextInstruction.text = "";
                     mAnimStartTime = Time.time;
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
                 }
@@ -246,6 +248,8 @@ public class CalibrationDirector : MonoBehaviour
                     mCalibStates = CalibrationStates.NOT_STARTED;
                     mPlayerBlinkAnimation.enabled = false;
                     enableCalibrationScene = false;
+
+                    exit_scene();
                 }
 
                 break;
@@ -269,5 +273,14 @@ public class CalibrationDirector : MonoBehaviour
     public void on_next_button()
     {
         calibration_state_update(false, true);
+    }
+
+    /// <summary>
+    /// Exit the calibration scene
+    /// </summary>
+    void exit_scene()
+    {
+        // Go back to the main menu
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

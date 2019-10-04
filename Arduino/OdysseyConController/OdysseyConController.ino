@@ -8,130 +8,66 @@
 // * 9-24-19 - Unity adoption - Grayson Wen
 // * 10-4-19 - Communication protocol; Code refactoring;  - Grayson Wen
 /////////////////////////////////////////////////////////////////////////////////////////
-
 #include "OdysseyHardware.h"
 #include "Sound.h"
+
+#include <ArduinoJson.h>
 
 float update_period = 1.0 / 120.0;
 
 void setup() {
-  Serial.begin(115200);
+    Serial.begin(115200);
 
-  // Initialize for sound
-  if (! init_audio() ) {
-    Serial.println("Audio initialization fail (SD card failed).");
-  }
+    // Initialize for sound
+    if (!init_audio()) {
+        Serial.println("Audio initialization fail (SD card failed).");
+    }
 
-  // Init P1 and P2 pins, all other spots are implicitly read only
-  init_player_as_reading(&p1_spot);
-  init_player_as_reading(&p2_spot);
+    // Init P1 and P2 pins, all other spots are implicitly read only
+    init_player_as_reading(&p1_spot);
+    init_player_as_reading(&p2_spot);
 }
 
+// Change the size as needed. A handy link for this: https://arduinojson.org/v6/assistant/
+const size_t msgCapacity = JSON_OBJECT_SIZE(9);
+DynamicJsonDocument doc(msgCapacity);
 int tmp_x, tmp_y;
+
 void loop() {
 
-  // Read/Write the player data accordingly
-  if ( p1_spot.writing ) {
+    // Read/Write the player data accordingly
+    if (p1_spot.writing) {
 
-  } else {
+    } else {
 
-  }
+    }
 
-  // Construct one piece of JSON message
+    // Construct one piece of JSON message
+    read_player_position(&p1_spot, &tmp_x, &tmp_y);
+    doc["P1_X_READ"] = tmp_x;
+    doc["P1_Y_READ"] = tmp_y;
 
-  read_player_position(&p1_spot, &tmp_x, &tmp_y);
-  Serial.print("{");
-  Serial.print("\"P1_X_READ\": ");
-  Serial.print(tmp_x);
-  Serial.print(", ");
+    read_player_position(&p2_spot, &tmp_x, &tmp_y);
+    doc["P2_X_READ"] = tmp_x;
+    doc["P2_Y_READ"] = tmp_y;
 
-  Serial.print("\"P1_Y_READ\": ");
-  Serial.print(tmp_y);
-  Serial.print(", ");
+    read_player_position(&ball_spot, &tmp_x, &tmp_y);
+    doc["BALL_X_READ"] = tmp_x;
+    doc["BALL_Y_READ"] = tmp_y;
 
-  // Serial.print("\"P1_ENG_READ\": ");
-  // Serial.print(0); //todo
-  // Serial.print(", ");
+    read_player_position(&wall_spot, &tmp_x, &tmp_y);
+    doc["WALL_X_READ"] = tmp_x;
 
-  // Serial.print("\"P1_RESET_READ\": ");
-  // Serial.print(read_player_reset(&p1_spot)); 
-  // Serial.print(", ");
+    doc["P1_RESET_READ"] = read_player_reset(&p1_spot);
+    doc["P2_RESET_READ"] = read_player_reset(&p2_spot);
 
-  read_player_position(&p2_spot, &tmp_x, &tmp_y);
-  Serial.print("\"P2_X_READ\": ");
-  Serial.print(tmp_x);
-  Serial.print(", ");
-  
-  Serial.print("\"P2_Y_READ\": ");
-  Serial.print(tmp_y);
-  Serial.print(", ");
-
-  // Serial.print("\"P2_ENG_READ\": ");
-  // Serial.print(0); //todo
-  // Serial.print(", ");
-
-  // Serial.print("\"P2_RESET_READ\": ");
-  // Serial.print(read_player_reset(&p2_spot)); 
-  // Serial.print(", ");
-
-  read_player_position(&ball_spot, &tmp_x, &tmp_y);
-  Serial.print("\"BALL_X_READ\": ");
-  Serial.print(tmp_x); 
-  Serial.print(", ");
-
-  Serial.print("\"BALL_Y_READ\": ");
-  Serial.print(tmp_y); 
-  Serial.print(", ");
-
-  // Serial.print("\"BALL_SPEED_READ\": ");
-  // Serial.print(1); // todo
-  // Serial.print(", ");
-
-  read_player_position(&wall_spot, &tmp_x, &tmp_y);
-  Serial.print("\"WALL_X_READ\": ");
-  Serial.print(tmp_x); 
-  // Serial.print(", ");
-
-  // Serial.print("\"SELECT_READ\": ");
-  // Serial.print(0);
-  // Serial.print(", ");
-
-  // Serial.print("\"ENTER_READ\": ");
-  // Serial.print(0);
-  // Serial.print(", ");
-
-  // Serial.print("\"CROWBAR_READ\": ");
-  // Serial.print(0);
-  // Serial.print(", ");
-
-  // Serial.print("\"CROWBAR_RESET_READ\": ");
-  // Serial.print(0);
-  // Serial.print(", ");
-
-  // Serial.print("\"ENCODER_READ\": ");
-  // Serial.print(0);
-
-  Serial.print("}");
-  Serial.println();
- 
-    // #define READ_SPOT_PRINT(x) read_player_position(spot, &tmp_x, &tmp_y);
-    // READ_SPOT_PRINT(&p1_spot)
-    // READ_SPOT_PRINT(&p2_spot)
-    // READ_SPOT_PRINT(&p3_spot)
-    // READ_SPOT_PRINT(&p4_spot)
-    // READ_SPOT_PRINT(&ball_spot)
-    // READ_SPOT_PRINT(&wall_spot)
-    // #define PRINT_DIGITAL(x) Serial.print(#x ": "); Serial.print(x); Serial.print("   ");
-    // PRINT_DIGITAL(READ_CROWBAR)
-    // PRINT_DIGITAL(READ_ENGLISH_FLIP_FLOP)
-    // PRINT_DIGITAL(READ_BALL_FLIP_FLOP)
-    // PRINT_DIGITAL(read_player_reset(&p1_spot))
-    // PRINT_DIGITAL(read_player_reset(&p2_spot))
-    // Serial.println();
+    // Write json message to serial (->Unity3D)
+    serializeJson(doc, Serial);
+    Serial.println();
 
     serve_audio();
     serve_english();
- 
+
     /* // Enter characters in serial monitor to call different functions
     if(Serial.available() >= 2){
       char cmd = Serial.read();
@@ -166,5 +102,5 @@ void loop() {
 
     // TODO Replace with true rate limiting
     delay(update_period * 1000);
-  
+
 }
