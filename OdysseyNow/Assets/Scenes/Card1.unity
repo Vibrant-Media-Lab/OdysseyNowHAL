@@ -570,86 +570,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card
       objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: p1Console
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: p2Console
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_votage_x_max
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_votage_y_min
-      value: 711
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_votage_y_max
-      value: 379
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_unity_screen_h
-      value: 473
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_unity_screen_w
-      value: 798
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_x_mul
-      value: -2.5173502
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_x_offset
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_y_mul
-      value: -1.4246988
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_y_offset
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_unity_x_min
-      value: -7.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_unity_x_max
-      value: 7.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_unity_y_min
-      value: 4.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_unity_y_max
-      value: -4.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_votage_x_min
-      value: 617
-      objectReference: {fileID: 0}
     - target: {fileID: 5755280646492669491, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -810,6 +730,96 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.0000009536743
       objectReference: {fileID: 0}
+    - target: {fileID: 5755280646830917911, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: p1Console
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: p2Console
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_votage_x_max
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_votage_y_min
+      value: 711
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_votage_y_max
+      value: 379
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_unity_screen_h
+      value: 473
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_unity_screen_w
+      value: 798
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_x_mul
+      value: -2.5173502
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_x_offset
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_y_mul
+      value: -1.4246988
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_y_offset
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_unity_x_min
+      value: -7.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_unity_x_max
+      value: 7.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_unity_y_min
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_unity_y_max
+      value: -4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: _calib_votage_x_min
+      value: 617
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: pluggedIn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8034478068871909218, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}
       propertyPath: portName
@@ -824,61 +834,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280646559001771, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -13.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280646559001771, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 87.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280645423056057, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -9.500061
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280645423056057, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 84.1475
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280646507700250, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -10.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280646507700250, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 45.1475
-      objectReference: {fileID: 0}
-    - target: {fileID: 385543177065343860, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: portName
-      value: /dev/cu.usbmodem14401
-      objectReference: {fileID: 0}
-    - target: {fileID: 385543177065343860, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8443639402876645004, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: fadeSpeed
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280646830917911, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755280647151452986, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5755280646576224166, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}
@@ -899,6 +854,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280646559001771, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -13.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280646559001771, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 87.7
       objectReference: {fileID: 0}
     - target: {fileID: 5755280645979218529, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}
@@ -949,6 +914,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.000008
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280645423056057, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.500061
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280645423056057, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 84.1475
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280646507700250, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280646507700250, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 45.1475
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755280647151452986, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 385543177065343860, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: portName
+      value: /dev/cu.usbmodem14401
+      objectReference: {fileID: 0}
+    - target: {fileID: 385543177065343860, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8443639402876645004, guid: 6335a3f5d84d6421eb04d6f447784f85,
+        type: 3}
+      propertyPath: fadeSpeed
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4355017754498894467, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}

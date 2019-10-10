@@ -12,8 +12,10 @@
 #include "Sound.h"
 
 #include <ArduinoJson.h>
+#include <StreamUtils.h>
 
-float update_period = 1.0 / 120.0;
+unsigned long update_period = 1000.0f / 45.0f; // in ms
+unsigned long tsLastLoop = millis(), tsUsed; // in ms
 
 void setup() {
     Serial.begin(115200);
@@ -29,78 +31,146 @@ void setup() {
 }
 
 // Change the size as needed. A handy link for this: https://arduinojson.org/v6/assistant/
-const size_t msgCapacity = JSON_OBJECT_SIZE(9);
-DynamicJsonDocument doc(msgCapacity);
-int tmp_x, tmp_y;
+DynamicJsonDocument docIn(JSON_OBJECT_SIZE(12));
+DynamicJsonDocument docOut(JSON_OBJECT_SIZE(12));
 
-void loop() {
+// Temp static variables
+static int tmp_x, tmp_y;
+static DeserializationError parseError;
 
-    // Read/Write the player data accordingly
-    if (p1_spot.writing) {
+#define MAKE_WRITE(p) ( !p.writing ? init_player_as_writeable(&p) : void() )
+#define MAKE_READ(p) ( p.writing ? init_player_as_reading(&p) : void() )
 
+const char RECV_START = '<';
+const char RECV_END = '>';
+const int RECV_BUF_SIZE = 128;
+char recvBuffer[RECV_BUF_SIZE];
+int currPos = 0;
+bool recvInProgress = false;
+/**
+ *
+ * @return Is data available (in recvBuffer);
+ */
+bool recvSerialWithStartEnd() {
+    while (Serial.available()) {
+        char r = Serial.read();
+        if (recvInProgress) {
+            if (r == RECV_END) {
+                recvInProgress = false;
+                if ( currPos+1 < RECV_BUF_SIZE )
+                    recvBuffer[currPos+1] = '\0';
+                return true;
+            } else {
+                if (currPos >= RECV_BUF_SIZE) {
+                    // error, message too long.
+                    //      TODO what to do? currently we are throwing away all the buffer message and wait for next new start.
+                    recvInProgress = false;
+                } else {
+                    recvBuffer[currPos++] = r;
+                }
+            }
+        } else if (r == RECV_START) {
+            recvInProgress = true;
+            currPos = 0;
+        }
+    }
+    return false;
+}
+
+void processInData() {
+    parseError = deserializeJson(docIn, recvBuffer);
+
+    if (parseError != NULL) {
+        docOut["error"] = parseError.c_str();
     } else {
 
+        if ( ! docIn["P1_W"].isNull() ) {
+            // Re-init the play as input/output, (and make sure we don't do it if it's already in the state)
+            docIn["P1_W"].as<bool>() ? MAKE_WRITE(p1_spot) : MAKE_READ(p1_spot);
+            reset_as_player(&p1_spot);
+        }
+        if ( ! docIn["P2_W"].isNull() ) {
+            docIn["P2_W"].as<bool>() ? MAKE_WRITE(p2_spot) : MAKE_READ(p2_spot);
+            reset_as_player(&p2_spot);
+        }
+
+        if (p1_spot.writing) {
+            if (!(docIn["P1_X"].isNull() || docIn["P1_X"].isNull())) {
+                tmp_x = docIn["P1_X"];
+                tmp_y = docIn["P1_Y"];
+                write_player_knobs(&p1_spot, tmp_x, tmp_y, 120); // todo - english
+            } // else { we have insufficient data received }
+        }
+        if (p2_spot.writing) {
+            if (!(docIn["P2_X"].isNull() || docIn["P2_X"].isNull())) {
+                tmp_x = docIn["P2_X"];
+                tmp_y = docIn["P2_Y"];
+                write_player_knobs(&p2_spot, tmp_x, tmp_y, 120);
+            } // else { we have insufficient data received }
+        }
+    }
+}
+
+void processOutData() {
+    // Construct one piece of JSON message
+    docOut["P1_IS_WRITING"] = p1_spot.writing;
+    docOut["P2_IS_WRITING"] = p2_spot.writing;
+
+    if ( ! p1_spot.writing ) {
+        // Read mode
+        read_player_position(&p1_spot, &tmp_x, &tmp_y);
+        docOut["P1_X_READ"] = tmp_x;
+        docOut["P1_Y_READ"] = tmp_y;
+        docOut["P1_RESET_READ"] = read_player_reset(&p1_spot);
     }
 
-    // Construct one piece of JSON message
-    read_player_position(&p1_spot, &tmp_x, &tmp_y);
-    doc["P1_X_READ"] = tmp_x;
-    doc["P1_Y_READ"] = tmp_y;
-
-    read_player_position(&p2_spot, &tmp_x, &tmp_y);
-    doc["P2_X_READ"] = tmp_x;
-    doc["P2_Y_READ"] = tmp_y;
+    if ( ! p2_spot.writing ) {
+        // Read mode
+        read_player_position(&p2_spot, &tmp_x, &tmp_y);
+        docOut["P2_X_READ"] = tmp_x;
+        docOut["P2_Y_READ"] = tmp_y;
+        docOut["P2_RESET_READ"] = read_player_reset(&p2_spot);
+    }
 
     read_player_position(&ball_spot, &tmp_x, &tmp_y);
-    doc["BALL_X_READ"] = tmp_x;
-    doc["BALL_Y_READ"] = tmp_y;
+    docOut["BALL_X_READ"] = tmp_x;
+    docOut["BALL_Y_READ"] = tmp_y;
 
     read_player_position(&wall_spot, &tmp_x, &tmp_y);
-    doc["WALL_X_READ"] = tmp_x;
-
-    doc["P1_RESET_READ"] = read_player_reset(&p1_spot);
-    doc["P2_RESET_READ"] = read_player_reset(&p2_spot);
+    docOut["WALL_X_READ"] = tmp_x;
 
     // Write json message to serial (->Unity3D)
-    serializeJson(doc, Serial);
+    serializeJson(docOut, Serial);
     Serial.println();
+}
+
+void loop() {
+    docOut.remove("error");
+
+    // Serial buffer has only 64-bytes. Gotta read message by blocks
+    if (recvSerialWithStartEnd()) {
+        // We have JSON available in recv_buffer
+        //        Serial.print("JSON available: ");
+        //        Serial.write(recvBuffer, RECV_BUF_SIZE);
+        //        Serial.println("");
+        processInData();
+    }
+
+    processOutData();
 
     serve_audio();
     serve_english();
 
-    /* // Enter characters in serial monitor to call different functions
-    if(Serial.available() >= 2){
-      char cmd = Serial.read();
-
-      // Disable control of player spot
-      if (cmd == 'd') {
-        char player = Serial.read();
-        if (player == '1') {
-          init_player_as_reading(&p1_spot);
-          Serial.println("Reading P1");
-        } else if(player == '2') {
-          init_player_as_reading(&p2_spot);
-          Serial.println("Reading P2");
-        }
-      }
-
-      if (cmd == 'r'){ // reset as a player
-        char player = Serial.read();
-        if (player == '1') {
-          reset_as_player(&p1_spot);
-          Serial.println("Reset as P1");
-        } else if(player == '2') {
-          reset_as_player(&p2_spot);
-          Serial.println("Reset as P2");
-        }
-      }
-
-      // Flush the input buffer
-      while(Serial.available()) Serial.read();
-      
-    } */
-
-    // TODO Replace with true rate limiting
-    delay(update_period * 1000);
+    // Rate limiting | TODO millis() overflow? (approx. 50 days)
+    //    Serial.print("loop time (ms):");
+    //    Serial.println(millis() - tsLastLoop);
+    tsUsed = millis() - tsLastLoop;
+    if (update_period > tsUsed) {
+        delay(update_period - tsUsed);
+    } else {
+        Serial.print("too slow: remain_t (ms) =");
+        Serial.println((long)update_period - tsUsed);
+    }
+    tsLastLoop = millis();
 
 }

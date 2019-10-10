@@ -35,27 +35,6 @@ namespace HardwareInterface
         public float _calib_unity_y_min = 4.4f;
         public float _calib_unity_y_max = -4.4f;
 
-        //public float calib_votage_x_min
-        //{
-        //    get { return _calib_votage_x_min; }
-        //    set { _calib_votage_x_min = value; _calib_calc_param_x(); }
-        //}
-        //public float calib_votage_x_max
-        //{
-        //    get { return _calib_votage_x_max; }
-        //    set { _calib_votage_x_max = value; _calib_calc_param_x(); }
-        //}
-        //public float calib_votage_y_min
-        //{
-        //    get { return _calib_votage_y_min; }
-        //    set { _calib_votage_y_min = value; _calib_calc_param_y(); }
-        //}
-        //public float calib_votage_y_max
-        //{
-        //    get { return _calib_votage_y_max; }
-        //    set { _calib_votage_y_max = value; _calib_calc_param_y(); }
-        //}
-
         public float _calib_x_mul = -1;
         public float _calib_x_offset = -1;
         public float _calib_y_mul = -1;
@@ -107,25 +86,47 @@ namespace HardwareInterface
             sc = gameObject.GetComponent<SerialController>();
         }
 
+        private float lastSendTime = 0;
+        private const float updatePeriod = 1.0f / 45.0f; // in second
+        private ConsoleDataWrite cdw = new ConsoleDataWrite();
+
         /// <summary>
-        /// On update, set locations to whatever the console sent to us, and (TODO) send messages to the console
+        /// On update, set locations to whatever the console sent to us, and send messages to the console
         /// </summary>
         private void LateUpdate()
         {
             if (pluggedIn)
             {
+                cdw.P1_W = !p1Console;
                 if (!p1Console)
                 {
-                    //sc.SendSerialMessage("setP1 " + xConvertToConsole(p1.position.x) + " " + yConvertToConsole(p1.position.y) + " ");
+                    //cdw.P1_X = (int)xConvertToConsole(p1.position.x);
+                    //cdw.P1_Y = (int)yConvertToConsole(p1.position.y);
+                    cdw.P1_X = (int)(p1.position.x);
+                    cdw.P1_Y = (int)(p1.position.y);
+                } else {
+                    p1.position = new Vector2(p1X, p1Y);
                 }
 
+                cdw.P2_W = !p2Console;
                 if (!p2Console)
                 {
-
+                    //cdw.P2_X = (int)xConvertToConsole(p2.position.x);
+                    //cdw.P2_Y = (int)yConvertToConsole(p2.position.y);
+                    cdw.P2_X = (int)(p2.position.x);
+                    cdw.P2_Y = (int)(p2.position.y);
+                } else {
+                    p2.position = new Vector2(p2X, p2Y);
                 }
 
-                p1.position = new Vector2(p1X, p1Y);
-                p2.position = new Vector2(p2X, p2Y);
+                if (Time.fixedUnscaledTime - lastSendTime > updatePeriod)
+                {
+                    string _s = "<" + JsonUtility.ToJson(cdw) + ">";
+                    Debug.Log("[]MSG write: " + _s);
+                    sc.SendSerialMessage(_s);
+                    lastSendTime = Time.fixedUnscaledTime;
+                }
+                
                 ball.position = new Vector2(ballX, ballY);
                 line.position = new Vector2(wallX, line.position.y);
             }
@@ -148,9 +149,7 @@ namespace HardwareInterface
         /// <returns></returns>
         float xConvertToConsole(float x)
         {
-            x = (x / -6.75f) * 47.0f;
-            x = x + 115.0f;
-            return x;
+            return (x - _calib_x_offset) / _calib_x_mul;
         }
 
         /// <summary>
@@ -170,9 +169,7 @@ namespace HardwareInterface
         /// <returns></returns>
         float yConvertToConsole(float y)
         {
-            y = (y / 5.0f) * 52.0f;
-            y = y + 126.0f;
-            return y;
+            return (y - _calib_y_offset) / _calib_y_mul;
         }
 
         // TODO: Make proper abstrations of console-read,
@@ -189,15 +186,25 @@ namespace HardwareInterface
         /// <param name="msg"></param>
         void OnMessageArrived(string msg)
         {
-            //msg = msg.Substring(0, msg.Length - 3) + "}";
+            
             Debug.Log("ConsoleMirror.OnMessageArrived(msg): " + msg);
             mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
+
             _calib_calc_param_x();
             _calib_calc_param_y();
-            p1X = xConvertToUnity(mLastConsoleData.P1_X_READ);
-            p1Y = yConvertToUnity(mLastConsoleData.P1_Y_READ);
-            p2X = xConvertToUnity(mLastConsoleData.P2_X_READ);
-            p2Y = yConvertToUnity(mLastConsoleData.P2_Y_READ);
+
+            if ( ! mLastConsoleData.P1_IS_WRITING)
+            {
+                p1X = xConvertToUnity(mLastConsoleData.P1_X_READ);
+                p1Y = yConvertToUnity(mLastConsoleData.P1_Y_READ);
+            }
+
+            if (! mLastConsoleData.P2_IS_WRITING)
+            {
+                p2X = xConvertToUnity(mLastConsoleData.P2_X_READ);
+                p2Y = yConvertToUnity(mLastConsoleData.P2_Y_READ);
+            }
+
             ballX = xConvertToUnity(mLastConsoleData.BALL_X_READ);
             ballY = yConvertToUnity(mLastConsoleData.BALL_Y_READ);
             wallX = xConvertToUnity(mLastConsoleData.WALL_X_READ);
@@ -215,29 +222,6 @@ namespace HardwareInterface
             }
         }
 
-        /// <summary>
-        /// Start calibration to map votage level from Arduino to unity value
-        /// </summary>
-        public void StartCalibration()
-        {
-
-
-            p1.position = new Vector2(_calib_unity_x_min, _calib_unity_y_min);
-
-            // Please move the player 1 to the upper-left coner, as shown on the HAL screen
-
-            p1.position = new Vector2(_calib_unity_x_max, _calib_unity_y_max);
-
-            // Please move the player 1 to the upper-left coner, as shown on the HAL screen
-
-            //ball.position = new Vector2(ballX, ballY);
-            //line.position = new Vector2(wallX, line.position.y);
-
-            // todo Prompt to ask user to tune the knobs and move the p1/p2 position
-
-
-
-        }
 
     }
 }

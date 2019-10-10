@@ -18,5 +18,20 @@ namespace HardwareInterface
             NOT_ENGLISH_WEAK_Q_READ,
             NOT_BALL_WEAK_Q_READ,
             NOT_CROWBAR_READ;
+        public bool
+            P1_IS_WRITING, P2_IS_WRITING;
     }
+
+    [System.Serializable]
+    public class ConsoleDataWrite
+    {
+        public int
+            P1_X, P1_Y,
+            P2_X, P2_Y
+            ;
+        public bool
+            P1_W, P2_W
+            ;
+    }
+
 }
