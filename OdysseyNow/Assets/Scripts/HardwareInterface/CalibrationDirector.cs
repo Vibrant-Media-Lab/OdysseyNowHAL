@@ -30,10 +30,17 @@ public class CalibrationDirector : MonoBehaviour
     private Vector3 mCamLookRotation;
 
     // Calibration Parameters
+    // -- Calibration params for Reading from Arduino
     public float _calib_votage_x_left = 617;
     public float _calib_votage_x_right = 300;
     public float _calib_votage_y_top = 711;
     public float _calib_votage_y_bottom = 379;
+    // -- Calibration parameters for Writing to Arduino
+    public float _calib_write_votage_x_left = 420;
+    public float _calib_write_votage_x_right = 302;
+    public float _calib_write_votage_y_top = 180;
+    public float _calib_write_votage_y_bottom = 80;
+    // -- 
     public float _calib_unity_x_min = -7.7f;
     public float _calib_unity_x_max = 7.7f;
     public float _calib_unity_y_min = 4.4f;
@@ -97,8 +104,11 @@ public class CalibrationDirector : MonoBehaviour
 
         bool cancel_calibration = (enableCalibrationScene == false);
         HardwareInterface.ConsoleData cData = consoleMirror.getControllerRawData();
-        textDBP1.text = string.Format("({0},{1})", cData.P1_X_READ, cData.P1_Y_READ);
-        textDBP2.text = string.Format("({0},{1})", cData.P2_X_READ, cData.P2_Y_READ);
+        if (cData != null)
+        {
+            textDBP1.text = string.Format("({0},{1})", cData.P1_X_READ, cData.P1_Y_READ);
+            textDBP2.text = string.Format("({0},{1})", cData.P2_X_READ, cData.P2_Y_READ);
+        }
 
         // Again, the process of calibration is a state-machine
         switch (mCalibStates)
@@ -217,10 +227,10 @@ public class CalibrationDirector : MonoBehaviour
                 if (extra_btn_next)
                 {
                     // On confirm, write the calibration data
-                    consoleMirror._calib_votage_x_min = _calib_votage_x_left;
-                    consoleMirror._calib_votage_x_max = _calib_votage_x_right;
-                    consoleMirror._calib_votage_y_min = _calib_votage_y_top;
-                    consoleMirror._calib_votage_y_max = _calib_votage_y_bottom;
+                    consoleMirror._calib_votage_x_left = _calib_votage_x_left;
+                    consoleMirror._calib_votage_x_right = _calib_votage_x_right;
+                    consoleMirror._calib_votage_y_top = _calib_votage_y_top;
+                    consoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
                 }
                 else if (extra_btn_prev) {
                     mCalibStates--;

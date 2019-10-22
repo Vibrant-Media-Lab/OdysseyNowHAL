@@ -14,8 +14,9 @@
 #include <ArduinoJson.h>
 #include <StreamUtils.h>
 
-unsigned long update_period = 1000.0f / 45.0f; // in ms
-unsigned long tsLastLoop = millis(), tsUsed; // in ms
+unsigned long update_period = 1000.0f / 50.0f; // in ms
+unsigned long tsLastLoop = millis();
+long tsUsed; // in ms
 
 void setup() {
     Serial.begin(115200);
@@ -166,6 +167,7 @@ void loop() {
     //    Serial.println(millis() - tsLastLoop);
     tsUsed = millis() - tsLastLoop;
     if (update_period > tsUsed) {
+        // we still have some time remained
         delay(update_period - tsUsed);
     } else {
         Serial.print("too slow: remain_t (ms) =");

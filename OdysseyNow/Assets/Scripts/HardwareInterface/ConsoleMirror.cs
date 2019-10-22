@@ -25,28 +25,54 @@ namespace HardwareInterface
         //true if console is plugged in
         public bool pluggedIn;
 
-        // for calibration
-        public float _calib_votage_x_min = 617;
-        public float _calib_votage_x_max = 300;
-        public float _calib_votage_y_min = 711;
-        public float _calib_votage_y_max = 379;
-        public float _calib_unity_x_min = -7.7f;
-        public float _calib_unity_x_max = 7.7f;
-        public float _calib_unity_y_min = 4.4f;
-        public float _calib_unity_y_max = -4.4f;
-
+        // Calibration Parameters
+        // -- Calibration params for Reading from Arduino
+        public float _calib_votage_x_left = 617;
+        public float _calib_votage_x_right = 300;
+        public float _calib_votage_y_top = 711;
+        public float _calib_votage_y_bottom = 379;
+        // ---- These will be calculated
         public float _calib_x_mul = -1;
         public float _calib_x_offset = -1;
         public float _calib_y_mul = -1;
         public float _calib_y_offset = -1;
+        // -- Calibration parameters for Writing to Arduino
+        public float _calib_write_votage_x_left = 420;
+        public float _calib_write_votage_x_right = 302;
+        public float _calib_write_votage_y_top = 180;
+        public float _calib_write_votage_y_bottom = 80;
+        // ---- These will be calculated
+        public float _calib_write_x_mul = -1;
+        public float _calib_write_x_offset = -1;
+        public float _calib_write_y_mul = -1;
+        public float _calib_write_y_offset = -1;
+        // -- Screen
+        public float _calib_unity_x_left = -7.7f;
+        public float _calib_unity_x_right = 7.7f;
+        public float _calib_unity_y_top = 4.4f;
+        public float _calib_unity_y_bottom = -4.4f;
 
-        void _calib_calc_param_x() {
-            _calib_x_mul = (_calib_unity_x_max - _calib_unity_x_min) / (_calib_votage_x_max - _calib_votage_x_min);
-            _calib_x_offset = _calib_unity_x_min - _calib_votage_x_min * _calib_x_mul;
+
+        void _calib_calc_param_x()
+        {
+            _calib_x_mul = (_calib_unity_x_right - _calib_unity_x_left) / (_calib_votage_x_right - _calib_votage_x_left);
+            _calib_x_offset = _calib_unity_x_left - _calib_votage_x_left * _calib_x_mul;
         }
-        void _calib_calc_param_y() {
-            _calib_y_mul = (_calib_unity_y_max - _calib_unity_y_min) / (_calib_votage_y_max - _calib_votage_y_min);
-            _calib_y_offset = _calib_unity_y_min - _calib_votage_y_min * _calib_y_mul;
+        void _calib_calc_param_y()
+        {
+            _calib_y_mul = (_calib_unity_y_bottom - _calib_unity_y_top) / (_calib_votage_y_bottom - _calib_votage_y_top);
+            _calib_y_offset = _calib_unity_y_top - _calib_votage_y_top * _calib_y_mul;
+        }
+
+        void _calib_write_calc_param_x()
+        {
+            _calib_write_x_mul = (_calib_unity_x_right - _calib_unity_x_left) / (_calib_write_votage_x_right - _calib_write_votage_x_left);
+            _calib_write_x_offset = _calib_unity_x_left - _calib_write_votage_x_left * _calib_write_x_mul;
+        }
+        void _calib_write_calc_param_y()
+        {
+            _calib_write_y_mul = (_calib_unity_y_bottom - _calib_unity_y_top) / (_calib_write_votage_y_bottom - _calib_write_votage_y_top);
+            _calib_write_y_offset = _calib_unity_y_top - _calib_write_votage_y_top * _calib_write_y_mul;
         }
 
         //Data from the console
@@ -87,7 +113,7 @@ namespace HardwareInterface
         }
 
         private float lastSendTime = 0;
-        private const float updatePeriod = 1.0f / 45.0f; // in second
+        private const float updatePeriod = 1.0f / 50.0f; // in second
         private ConsoleDataWrite cdw = new ConsoleDataWrite();
 
         /// <summary>
@@ -100,10 +126,10 @@ namespace HardwareInterface
                 cdw.P1_W = !p1Console;
                 if (!p1Console)
                 {
-                    //cdw.P1_X = (int)xConvertToConsole(p1.position.x);
-                    //cdw.P1_Y = (int)yConvertToConsole(p1.position.y);
-                    cdw.P1_X = (int)(p1.position.x);
-                    cdw.P1_Y = (int)(p1.position.y);
+                    cdw.P1_X = (int)xConvertToConsole(p1.position.x);
+                    cdw.P1_Y = (int)yConvertToConsole(p1.position.y);
+                    //cdw.P1_X = (int)(p1.position.x);
+                    //cdw.P1_Y = (int)(p1.position.y);
                 } else {
                     p1.position = new Vector2(p1X, p1Y);
                 }
@@ -111,20 +137,20 @@ namespace HardwareInterface
                 cdw.P2_W = !p2Console;
                 if (!p2Console)
                 {
-                    //cdw.P2_X = (int)xConvertToConsole(p2.position.x);
-                    //cdw.P2_Y = (int)yConvertToConsole(p2.position.y);
-                    cdw.P2_X = (int)(p2.position.x);
-                    cdw.P2_Y = (int)(p2.position.y);
+                    cdw.P2_X = (int)xConvertToConsole(p2.position.x);
+                    cdw.P2_Y = (int)yConvertToConsole(p2.position.y);
+                    //cdw.P2_X = (int)(p2.position.x);
+                    //cdw.P2_Y = (int)(p2.position.y);
                 } else {
                     p2.position = new Vector2(p2X, p2Y);
                 }
 
-                if (Time.fixedUnscaledTime - lastSendTime > updatePeriod)
+                if (Time.unscaledTime - lastSendTime >= updatePeriod)
                 {
                     string _s = "<" + JsonUtility.ToJson(cdw) + ">";
                     Debug.Log("[]MSG write: " + _s);
                     sc.SendSerialMessage(_s);
-                    lastSendTime = Time.fixedUnscaledTime;
+                    lastSendTime = Time.unscaledTime;
                 }
                 
                 ball.position = new Vector2(ballX, ballY);
@@ -149,7 +175,7 @@ namespace HardwareInterface
         /// <returns></returns>
         float xConvertToConsole(float x)
         {
-            return (x - _calib_x_offset) / _calib_x_mul;
+            return (x - _calib_write_x_offset) / _calib_write_x_mul;
         }
 
         /// <summary>
@@ -169,7 +195,7 @@ namespace HardwareInterface
         /// <returns></returns>
         float yConvertToConsole(float y)
         {
-            return (y - _calib_y_offset) / _calib_y_mul;
+            return (y - _calib_write_y_offset) / _calib_write_y_mul;
         }
 
         // TODO: Make proper abstrations of console-read,
@@ -192,6 +218,8 @@ namespace HardwareInterface
 
             _calib_calc_param_x();
             _calib_calc_param_y();
+            _calib_write_calc_param_x();
+            _calib_write_calc_param_y();
 
             if ( ! mLastConsoleData.P1_IS_WRITING)
             {
