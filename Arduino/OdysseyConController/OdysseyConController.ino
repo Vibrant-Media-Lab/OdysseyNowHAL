@@ -85,27 +85,27 @@ void processInData() {
         docOut["error"] = parseError.c_str();
     } else {
 
-        if ( ! docIn["P1_W"].isNull() ) {
+        if ( ! docIn["P1W"].isNull() ) {
             // Re-init the play as input/output, (and make sure we don't do it if it's already in the state)
-            docIn["P1_W"].as<bool>() ? MAKE_WRITE(p1_spot) : MAKE_READ(p1_spot);
+            docIn["P1W"].as<bool>() ? MAKE_WRITE(p1_spot) : MAKE_READ(p1_spot);
             reset_as_player(&p1_spot);
         }
-        if ( ! docIn["P2_W"].isNull() ) {
-            docIn["P2_W"].as<bool>() ? MAKE_WRITE(p2_spot) : MAKE_READ(p2_spot);
+        if ( ! docIn["P2W"].isNull() ) {
+            docIn["P2W"].as<bool>() ? MAKE_WRITE(p2_spot) : MAKE_READ(p2_spot);
             reset_as_player(&p2_spot);
         }
 
         if (p1_spot.writing) {
-            if (!(docIn["P1_X"].isNull() || docIn["P1_X"].isNull())) {
-                tmp_x = docIn["P1_X"];
-                tmp_y = docIn["P1_Y"];
+            if (!(docIn["P1X"].isNull() || docIn["P1X"].isNull())) {
+                tmp_x = docIn["P1X"];
+                tmp_y = docIn["P1Y"];
                 write_player_knobs(&p1_spot, tmp_x, tmp_y, 120); // todo - english
             } // else { we have insufficient data received }
         }
         if (p2_spot.writing) {
-            if (!(docIn["P2_X"].isNull() || docIn["P2_X"].isNull())) {
-                tmp_x = docIn["P2_X"];
-                tmp_y = docIn["P2_Y"];
+            if (!(docIn["P2X"].isNull() || docIn["P2X"].isNull())) {
+                tmp_x = docIn["P2X"];
+                tmp_y = docIn["P2Y"];
                 write_player_knobs(&p2_spot, tmp_x, tmp_y, 120);
             } // else { we have insufficient data received }
         }

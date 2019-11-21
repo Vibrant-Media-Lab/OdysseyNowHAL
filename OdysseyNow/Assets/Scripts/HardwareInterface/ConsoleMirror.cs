@@ -123,22 +123,22 @@ namespace HardwareInterface
         {
             if (pluggedIn)
             {
-                cdw.P1_W = !p1Console;
+                cdw.P1W = p1Console == false ? 1 : 0;
                 if (!p1Console)
                 {
-                    cdw.P1_X = (int)xConvertToConsole(p1.position.x);
-                    cdw.P1_Y = (int)yConvertToConsole(p1.position.y);
+                    cdw.P1X = (int)xConvertToConsole(p1.position.x);
+                    cdw.P1Y = (int)yConvertToConsole(p1.position.y);
                     //cdw.P1_X = (int)(p1.position.x);
                     //cdw.P1_Y = (int)(p1.position.y);
                 } else {
                     p1.position = new Vector2(p1X, p1Y);
                 }
 
-                cdw.P2_W = !p2Console;
+                cdw.P2W = p2Console == false ? 1 : 0;
                 if (!p2Console)
                 {
-                    cdw.P2_X = (int)xConvertToConsole(p2.position.x);
-                    cdw.P2_Y = (int)yConvertToConsole(p2.position.y);
+                    cdw.P2X = (int)xConvertToConsole(p2.position.x);
+                    cdw.P2Y = (int)yConvertToConsole(p2.position.y);
                     //cdw.P2_X = (int)(p2.position.x);
                     //cdw.P2_Y = (int)(p2.position.y);
                 } else {
@@ -163,7 +163,7 @@ namespace HardwareInterface
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        float xConvertToUnity(float x)
+        public float xConvertToUnity(float x)
         {
             return x * _calib_x_mul + _calib_x_offset;
         }
@@ -173,7 +173,7 @@ namespace HardwareInterface
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        float xConvertToConsole(float x)
+        public float xConvertToConsole(float x)
         {
             return (x - _calib_write_x_offset) / _calib_write_x_mul;
         }
@@ -183,7 +183,7 @@ namespace HardwareInterface
         /// </summary>
         /// <param name="y"></param>
         /// <returns></returns>
-        float yConvertToUnity(float y)
+        public float yConvertToUnity(float y)
         {
             return y * _calib_y_mul + _calib_y_offset;
         }
@@ -193,7 +193,7 @@ namespace HardwareInterface
         /// </summary>
         /// <param name="y"></param>
         /// <returns></returns>
-        float yConvertToConsole(float y)
+        public float yConvertToConsole(float y)
         {
             return (y - _calib_write_y_offset) / _calib_write_y_mul;
         }
@@ -201,10 +201,11 @@ namespace HardwareInterface
         // TODO: Make proper abstrations of console-read,
         //    since we have a calibration routine that want to consume the data
         private ConsoleData mLastConsoleData;
-        public ConsoleData getControllerRawData()
+        public ConsoleData readControllerRawData()
         {
             return mLastConsoleData;
         }
+        //public void writeController() {}
 
         /// <summary>
         /// Handles messages recieved from the arduino, setting the appropriate variables. Required by Ardity.

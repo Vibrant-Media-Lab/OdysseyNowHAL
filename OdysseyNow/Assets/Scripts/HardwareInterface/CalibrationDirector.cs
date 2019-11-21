@@ -19,6 +19,8 @@ public class CalibrationDirector : MonoBehaviour
     public TextMesh textDBP2;
     public GameObject textInstruction;
     public GameObject playerBlink;
+    public GameObject SimScreenActors;
+    public GameObject SimScreenOverlay;
 
     public float CamLookRate = 0.3f;
     public HardwareInterface.ConsoleMirror consoleMirror;
@@ -40,28 +42,31 @@ public class CalibrationDirector : MonoBehaviour
     public float _calib_write_votage_x_right = 302;
     public float _calib_write_votage_y_top = 180;
     public float _calib_write_votage_y_bottom = 80;
-    // -- 
-    public float _calib_unity_x_min = -7.7f;
-    public float _calib_unity_x_max = 7.7f;
-    public float _calib_unity_y_min = 4.4f;
-    public float _calib_unity_y_max = -4.4f;
 
     // Think of the process of calibration is a state-machine
     private enum CalibrationStates
     {
         NOT_STARTED = 0,
         ANIMMOTION_START = 1,
+
         PRE_CALIB = 2,
         CALIB_LEFT_TOP = 3,
         CALIB_RIGHT_BOTTOM = 4,
-        CALIB_FINISH = 5,
-        ANIMATION_FINISH = 6,
+
+        PRE_CALIB_WRITE = 5,
+        CALIB_WRITE_LEFT_TOP = 6,
+        CALIB_WRITE_RIGHT_BOTTOM = 7,
+
+        CALIB_FINISH = 8,
+        ANIMATION_FINISH = 9,
     };
 
     private CalibrationStates mCalibStates = CalibrationStates.NOT_STARTED;
 
     private float mAnimStartTime;
     private float mAnimJourneyLength;
+
+    private float mOriginalPlayerTargetSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -89,6 +94,12 @@ public class CalibrationDirector : MonoBehaviour
         mTextInstruction.text = "";
 
         mPlayerBlinkAnimation = playerBlink.GetComponent<Animation>();
+
+        SimScreenOverlay.SetActive(false);
+
+        mOriginalPlayerTargetSpeed = p1.GetComponent<Actors.PlayerTargetController>().speed;
+        // Set the speed of move for calibration only;
+        p1.GetComponent<Actors.PlayerTargetController>().speed = 0.75f;
     }
 
     float distCovered, progress;
@@ -103,7 +114,7 @@ public class CalibrationDirector : MonoBehaviour
     {
 
         bool cancel_calibration = (enableCalibrationScene == false);
-        HardwareInterface.ConsoleData cData = consoleMirror.getControllerRawData();
+        HardwareInterface.ConsoleData cData = consoleMirror.readControllerRawData();
         if (cData != null)
         {
             textDBP1.text = string.Format("({0},{1})", cData.P1_X_READ, cData.P1_Y_READ);
@@ -149,12 +160,20 @@ public class CalibrationDirector : MonoBehaviour
 
                 break;
             case CalibrationStates.PRE_CALIB:
+                // Set P1 to read mode
+                consoleMirror.p1Console = true;
+                consoleMirror.pluggedIn = false;
+                // Show "Screen" elements
+                //SimScreenActors.SetActive(true);
+                SimScreenOverlay.SetActive(false);
                 mCalibStates = CalibrationStates.CALIB_LEFT_TOP;
                 break;
             case CalibrationStates.CALIB_LEFT_TOP:
 
-                mTextInstruction.text = "Please move player 1 to the upper-left corner\n" +
-                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>";
+                mTextInstruction.text = "Please use the controller on Odessey, \n" +
+                    "move player 1 to the upper-left corner\n" +
+                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                    "(1/4)";
 
                 if (cancel_calibration)
                 {
@@ -166,7 +185,7 @@ public class CalibrationDirector : MonoBehaviour
                 }
 
                 // Move the p1 to top-left corner
-                p1.position = new Vector2(_calib_unity_x_min, _calib_unity_y_min);
+                p1.position = new Vector2(consoleMirror._calib_unity_x_left, consoleMirror._calib_unity_y_top);
 
                 if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next) {
                     // Save the calibration value
@@ -183,8 +202,9 @@ public class CalibrationDirector : MonoBehaviour
                 break;
             case CalibrationStates.CALIB_RIGHT_BOTTOM:
 
-                mTextInstruction.text = "Now, move player 1 to the lower-bottom corner\n" +
-                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>";
+                mTextInstruction.text = "Now, move player 1 to the LOWER-RIGHT corner\n" +
+                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                    "(2/4)";
 
                 if (cancel_calibration)
                 {
@@ -194,7 +214,7 @@ public class CalibrationDirector : MonoBehaviour
                     break;
                 }
 
-                p1.position = new Vector2(_calib_unity_x_max, _calib_unity_y_max);
+                p1.position = new Vector2(consoleMirror._calib_unity_x_right, consoleMirror._calib_unity_y_bottom);
 
                 if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                 {
@@ -212,12 +232,100 @@ public class CalibrationDirector : MonoBehaviour
 
                 update_camera_look();
                 break;
+
+            case CalibrationStates.PRE_CALIB_WRITE:
+                // Set P1 to write mode
+                consoleMirror.p1Console = false;
+                consoleMirror.pluggedIn = true;
+                // Hide "Screen" elements
+                //SimScreenActors.SetActive(false);
+                SimScreenOverlay.SetActive(true);
+                mCalibStates = CalibrationStates.CALIB_WRITE_LEFT_TOP;
+
+                // Set the p1 to an initial position (so that has the visibility on the screen)
+                p1.position = new Vector2(
+                    (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
+                    (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
+                );
+
+
+                break;
+
+            case CalibrationStates.CALIB_WRITE_LEFT_TOP:
+                mTextInstruction.text = "Use the controller on HAL," +
+                    "move the player to the upper-left corner\n" +
+                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                    "(3/4)";
+
+                if (cancel_calibration)
+                {
+                    // Keep a note of the time the movement started.
+                    mAnimStartTime = Time.time;
+                    mCalibStates = CalibrationStates.ANIMATION_FINISH;
+                    break;
+                }
+
+                if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
+                {
+                    // Save the calibration value
+                    _calib_write_votage_x_left = consoleMirror.xConvertToConsole(p1.position.x);
+                    _calib_write_votage_y_top = consoleMirror.xConvertToConsole(p1.position.y);
+
+                    mCalibStates++;
+                    textLeft.text = textRight.text = "";
+
+                    // Again, set the p1 to an initial position (so that has the visibility on the screen)
+                    p1.position = new Vector2(
+                        (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
+                        (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
+                    );
+                }
+                else if (extra_btn_prev)
+                {
+                    mCalibStates = CalibrationStates.PRE_CALIB;
+                }
+
+                update_camera_look();
+                break;
+
+            case CalibrationStates.CALIB_WRITE_RIGHT_BOTTOM:
+                mTextInstruction.text = "Now, use the controller on HAL," +
+                    "move the player to the lower-right corner\n" +
+                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                    "(4/4)";
+
+                if (cancel_calibration)
+                {
+                    // Keep a note of the time the movement started.
+                    mAnimStartTime = Time.time;
+                    mCalibStates = CalibrationStates.ANIMATION_FINISH;
+                    break;
+                }
+
+                if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
+                {
+                    // Save the calibration value
+                    _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p1.position.x);
+                    _calib_write_votage_y_bottom = consoleMirror.xConvertToConsole(p1.position.y);
+
+                    mCalibStates++;
+                    textLeft.text = textRight.text = "";
+                }
+                else if (extra_btn_prev)
+                {
+                    mCalibStates--;
+                }
+
+                update_camera_look();
+                break;
+
             case CalibrationStates.CALIB_FINISH:
 
                 mTextInstruction.text = "How well does the blocks on the TV follow?\n" +
                     "";
 
-                if (cancel_calibration || extra_btn_next) {
+                if (cancel_calibration || extra_btn_next)
+                {
                     // Keep a note of the time the movement started.
                     mTextInstruction.text = "";
                     mAnimStartTime = Time.time;
@@ -231,14 +339,22 @@ public class CalibrationDirector : MonoBehaviour
                     consoleMirror._calib_votage_x_right = _calib_votage_x_right;
                     consoleMirror._calib_votage_y_top = _calib_votage_y_top;
                     consoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
+                    consoleMirror._calib_write_votage_x_left = _calib_write_votage_x_left;
+                    consoleMirror._calib_write_votage_x_right = _calib_write_votage_x_right;
+                    consoleMirror._calib_write_votage_y_top = _calib_write_votage_y_top;
+                    consoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+
+                    // restore the player target speed
+                    p1.GetComponent<Actors.PlayerTargetController>().speed = mOriginalPlayerTargetSpeed;
                 }
-                else if (extra_btn_prev) {
+                else if (extra_btn_prev)
+                {
                     mCalibStates--;
                 }
 
                 update_camera_look();
-
                 break;
+
             case CalibrationStates.ANIMATION_FINISH:
                 // Distance moved equals elapsed time times speed..
                 distCovered = (Time.time - mAnimStartTime) * cameraAnimationSpeed;

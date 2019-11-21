@@ -26,12 +26,10 @@ namespace HardwareInterface
     public class ConsoleDataWrite
     {
         public int
-            P1_X, P1_Y,
-            P2_X, P2_Y
-            ;
-        public bool
-            P1_W, P2_W
-            ;
+            P1X, P1Y,
+            P2X, P2Y;
+        public int
+            P1W, P2W;
     }
 
 }
