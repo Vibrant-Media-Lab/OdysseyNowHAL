@@ -1,0 +1,3 @@
+[submodule "OdysseyNow/Packages/com.h8man.2d.navmeshplus"]
+	path = OdysseyNow/Packages/com.h8man.2d.navmeshplus
+	url = https://github.com/h8man/NavMeshPlus.git
