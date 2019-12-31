@@ -24,6 +24,8 @@ public class CatAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if ( ! agent.enabled) { return; }
+
         if ((transform.position - target.transform.position).magnitude < 1 && !stop)
         {
             stop = true;

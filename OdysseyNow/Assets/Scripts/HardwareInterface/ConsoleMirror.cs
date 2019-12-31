@@ -110,6 +110,7 @@ namespace HardwareInterface
 
             pluggedIn = false;
             sc = gameObject.GetComponent<SerialController>();
+            Debug.Log("ConsoleMirror awake");
         }
 
         private float lastSendTime = 0;
@@ -148,7 +149,7 @@ namespace HardwareInterface
                 if (Time.unscaledTime - lastSendTime >= updatePeriod)
                 {
                     string _s = "<" + JsonUtility.ToJson(cdw) + ">";
-                    Debug.Log("[]MSG write: " + _s);
+                    // Debug.Log("[]MSG write: " + _s);
                     sc.SendSerialMessage(_s);
                     lastSendTime = Time.unscaledTime;
                 }
@@ -214,7 +215,7 @@ namespace HardwareInterface
         void OnMessageArrived(string msg)
         {
             
-            Debug.Log("ConsoleMirror.OnMessageArrived(msg): " + msg);
+            //Debug.Log("ConsoleMirror.OnMessageArrived(msg): " + msg);
             mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
 
             _calib_calc_param_x();
