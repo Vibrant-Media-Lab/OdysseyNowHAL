@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message MessageFromOdyssey {
+  int32 p1_x = 0;
+  int32 p1_y = 0;
+  int32 p2_x = 0;
+  int32 p2_y = 0;
+}
+
+message MessageToOdyssey {
+
+}

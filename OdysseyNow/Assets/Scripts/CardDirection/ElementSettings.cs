@@ -48,7 +48,7 @@ namespace CardDirection
         /// <param name="name">Name of the object we're searching for.</param>
         /// <param name="tag">The tag on the object we're searching for.</param>
         /// <returns>The object we're searching for, or null.</returns>
-        GameObject FindFromNameAndTag(string name, string tag)
+        public static GameObject FindFromNameAndTag(string name, string tag)
         {
             GameObject[] withTag = GameObject.FindGameObjectsWithTag(tag);
             for (int i = 0; i < withTag.Length; i++)
@@ -73,10 +73,16 @@ namespace CardDirection
             p2.transform.localScale = new Vector3(p2Size, p2Size, p2Size);
 
             GameObject wall = FindFromNameAndTag("Wall", "Wall");
-            wall.transform.localScale = new Vector3(wallSize, wall.transform.localScale.y, wallSize);
+            if (wall != null)
+            {
+                wall.transform.localScale = new Vector3(wallSize, wall.transform.localScale.y, wallSize);
+            }
 
             GameObject ball = FindFromNameAndTag("Ball", "Ball");
-            ball.transform.localScale = new Vector3(ballSize, ballSize, ballSize);
+            if (ball != null)
+            {
+                ball.transform.localScale = new Vector3(ballSize, ballSize, ballSize);
+            }
         }
 
         /// <summary>
