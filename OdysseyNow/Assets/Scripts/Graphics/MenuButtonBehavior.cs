@@ -11,10 +11,14 @@ namespace Graphics
     /// </summary>
     public class MenuButtonBehavior : MonoBehaviour
     {
-        //if true, will load a scene if clicked
-        public bool load;
-        //another UI object that will replace this element on screen, if clicked
+        // another UI object that will replace this element on screen, if clicked
         public GameObject otherMenu;
+        // another UI object that will replace this element on screen, if clicked
+        public GameObject gameSelect;
+        // toggle that determines menu control flow
+        public Toggle aiToggle;
+        // toggle that determines menu control flow
+        public Toggle connectToggle;
 
         /// <summary>
         /// On start, set button click listener.
@@ -29,9 +33,26 @@ namespace Graphics
         /// </summary>
         void ButtonClicked()
         {
-            if (load)
-            {
-                SceneManager.LoadScene(gameObject.name.Replace(" ", ""));
+            // if gameSelect is null then this is just a normal button
+            if(gameSelect != null) {
+                // if the user wants to play with AI then they must be taken to the game
+                // select irrespective of connecting an odyssey console.
+                if(aiToggle.isOn) {
+                    gameSelect.SetActive(true);
+                    transform.parent.gameObject.SetActive(false);
+                }
+                // if an odyssey is connected but we don't want to play with AI
+                else if(connectToggle.isOn)
+                {
+                    // pulls up the calibrations scene
+                    SceneManager.LoadScene("Calibration");
+                }
+                // if an odyssey is not connected and we don't want to play with AI
+                else
+                {
+                    // pulls up the card based on the button's name
+                    SceneManager.LoadScene(gameObject.name.Replace(" ", ""));
+                }
             }
             else if (otherMenu != null)
             {
