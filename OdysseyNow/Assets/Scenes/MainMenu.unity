@@ -8321,6 +8321,7 @@ GameObject:
   - component: {fileID: 891806229}
   - component: {fileID: 891806231}
   - component: {fileID: 891806230}
+  - component: {fileID: 891806232}
   m_Layer: 5
   m_Name: P2 AI Toggle
   m_TagString: Untagged
@@ -8409,6 +8410,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &891806232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891806228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80a7b209a7770d438d9056865a27021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultySlider: {fileID: 2120893120}
 --- !u!1 &906381327
 GameObject:
   m_ObjectHideFlags: 0
@@ -10816,6 +10830,7 @@ GameObject:
   - component: {fileID: 1178461315}
   - component: {fileID: 1178461317}
   - component: {fileID: 1178461316}
+  - component: {fileID: 1178461318}
   m_Layer: 5
   m_Name: P1 AI Toggle
   m_TagString: Untagged
@@ -10904,6 +10919,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &1178461318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178461314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80a7b209a7770d438d9056865a27021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultySlider: {fileID: 1569488388}
 --- !u!1 &1186050943
 GameObject:
   m_ObjectHideFlags: 0
@@ -13530,7 +13558,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 2 Size
+  m_Text: Difficulty
 --- !u!222 &1541298091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17376,7 +17404,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 1 Size
+  m_Text: Difficulty
 --- !u!222 &2009195729
 CanvasRenderer:
   m_ObjectHideFlags: 0

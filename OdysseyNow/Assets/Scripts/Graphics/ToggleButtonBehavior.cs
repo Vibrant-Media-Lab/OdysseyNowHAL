@@ -20,17 +20,19 @@ namespace Graphics
         void Start()
         {
             gameObject.GetComponent<Toggle>().onValueChanged.AddListener(ToggleClicked);
+            // hide the sliders parent by default
+            difficultySlider.transform.parent.gameObject.SetActive(false);
         }
 
         /// <summary>
         /// On toggle, hide or show the slider
         /// </summary>
-        void ToggleClicked(float num)
+        void ToggleClicked(bool on)
         {
-            if(difficultySlider != null && difficultySlider.gameObject.active) {
-                difficultySlider.gameObject.SetActive(false);
-            } else if(difficultySlider != null && !difficultySlider.gameObject.active) {
-                difficultySlider.gameObject.SetActive(true);
+            if(difficultySlider != null && on) {
+                difficultySlider.transform.parent.gameObject.SetActive(true);
+            } else if(difficultySlider != null && !on) {
+                difficultySlider.transform.parent.gameObject.SetActive(false);
             }
         }
     }
