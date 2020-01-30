@@ -43,7 +43,9 @@ namespace Graphics
         /// </summary>
         void SliderChanged()
         {
-            sliderText.text = "Difficulty: " + difficultySlider.value;
+            if(sliderText != null) {
+                sliderText.text = "Difficulty: " + difficultySlider.value;
+            }
         }
     }
 }
