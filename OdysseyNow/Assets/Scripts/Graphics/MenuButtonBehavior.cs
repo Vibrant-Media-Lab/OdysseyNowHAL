@@ -21,7 +21,7 @@ namespace Graphics
         public Toggle connectToggle;
 
         /// <summary>
-        /// On start, set button click listener.
+        /// On start, set button click lisstener.
         /// </summary>
         void Start()
         {
@@ -39,6 +39,8 @@ namespace Graphics
                 // select irrespective of connecting an odyssey console.
                 if(aiToggle.isOn) {
                     gameSelect.SetActive(true);
+                    // get Game selects child based on card name
+                    gameSelect.transform.Find(transform.name).gameObject.SetActive(true);
                     transform.parent.gameObject.SetActive(false);
                 }
                 // if an odyssey is connected but we don't want to play with AI
@@ -56,8 +58,22 @@ namespace Graphics
             }
             else if (otherMenu != null)
             {
+                // if we are the back button in game select, hide all of game
+                // selects children before moving back to card select
+                if (gameObject.transform.parent.name == "Game Select") {
+                    foreach(Transform child in gameObject.transform.parent) {
+                        // don't hide the back button
+                        if(child.transform.name != "Back Button") {
+                            child.gameObject.SetActive(false);
+                        }
+                    }
+                }
                 otherMenu.SetActive(true);
                 transform.parent.gameObject.SetActive(false);
+            }
+            else {
+                // pulls up the card based on the button's parent's name
+                SceneManager.LoadScene(transform.parent.name.Replace(" ", ""));
             }
         }
     }
