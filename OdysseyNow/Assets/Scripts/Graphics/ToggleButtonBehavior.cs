@@ -7,12 +7,13 @@ using UnityEngine.UI;
 namespace Graphics
 {
     /// <summary>
-    /// Behavior of all menu buttons in the main menu (and pause menus).
+    /// Behavior of AI toggle buttons and their sliders
     /// </summary>
     public class ToggleButtonBehavior : MonoBehaviour
     {
         // slider to choose AI difficulty
         public Slider difficultySlider;
+        public Text sliderText;
 
         /// <summary>
         /// On start, set button click listener.
@@ -20,6 +21,7 @@ namespace Graphics
         void Start()
         {
             gameObject.GetComponent<Toggle>().onValueChanged.AddListener(ToggleClicked);
+            difficultySlider.onValueChanged.AddListener(value => SliderChanged());
             // hide the sliders parent by default
             difficultySlider.transform.parent.gameObject.SetActive(false);
         }
@@ -34,6 +36,14 @@ namespace Graphics
             } else if(difficultySlider != null && !on) {
                 difficultySlider.transform.parent.gameObject.SetActive(false);
             }
+        }
+
+        /// <summary>
+        /// On slider value change, update text to reflect difficulty
+        /// </summary>
+        void SliderChanged()
+        {
+            sliderText.text = "Difficulty: " + difficultySlider.value;
         }
     }
 }
