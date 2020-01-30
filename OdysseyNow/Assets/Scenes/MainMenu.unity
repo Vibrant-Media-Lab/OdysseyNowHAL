@@ -8423,6 +8423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySlider: {fileID: 2120893120}
+  sliderText: {fileID: 1541298090}
 --- !u!1 &906381327
 GameObject:
   m_ObjectHideFlags: 0
@@ -10932,6 +10933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySlider: {fileID: 1569488388}
+  sliderText: {fileID: 2009195728}
 --- !u!1 &1186050943
 GameObject:
   m_ObjectHideFlags: 0
@@ -13558,7 +13560,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Difficulty
+  m_Text: 'Difficulty: 1'
 --- !u!222 &1541298091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17404,7 +17406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Difficulty
+  m_Text: 'Difficulty: 1'
 --- !u!222 &2009195729
 CanvasRenderer:
   m_ObjectHideFlags: 0
