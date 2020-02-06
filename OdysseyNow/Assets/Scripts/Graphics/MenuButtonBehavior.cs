@@ -58,12 +58,42 @@ namespace Graphics
             }
             else if (otherMenu != null)
             {
-                // if we are the back button in game select, hide all of game
-                // selects children before moving back to card select
-                if (gameObject.transform.parent.name == "Game Select") {
-                    foreach(Transform child in gameObject.transform.parent) {
-                        // don't hide the back button
-                        if(child.transform.name != "Back Button") {
+                // if we are the back button in AI select, enable or disable play based on whether or not AI was selected
+                // this works because AI select back button knows which game selection menu to return to
+                if (transform.parent.name == "AI Select" && transform.name == "Back Button") {
+                    if(transform.parent.Find("P1 AI Toggle").GetComponent<Toggle>().isOn || transform.parent.Find("P2 AI Toggle").GetComponent<Toggle>().isOn) {
+                        otherMenu.transform.Find("Play Button").gameObject.SetActive(true);
+                    }
+                    else {
+                        otherMenu.transform.Find("Play Button").gameObject.SetActive(false);
+                    }
+                    otherMenu.transform.parent.gameObject.SetActive(true);
+                }
+                // if we are the Play button in game select, determine if AI has been selected
+                if(transform.parent.parent.name == "Game Select" && transform.name == "Play Button") {
+                    Transform aiSelect = transform.root.Find("AI Select");
+                    // if AI has been selected, load the scene cooresponding to the card of the game
+                    // otherwise, show a message to the player that they must select AI
+                    if(aiSelect.Find("P1 AI Toggle").GetComponent<Toggle>().isOn || aiSelect.Find("P2 AI Toggle").GetComponent<Toggle>().isOn) {
+                        Debug.Log(transform.parent.name.Replace(" ", ""));
+                        SceneManager.LoadScene(transform.parent.name.Replace(" ", ""));
+                    }
+                    else {
+                        Debug.Log("Must pick at least 1 AI");
+                    }
+                    return;
+                }
+                // if we are the AI select button in game select, move to AI select
+                if (transform.parent.parent.name == "Game Select" && transform.name == "AI Select Button") {
+                    // Change AI Select's back button to return to the correct card after selection
+                    otherMenu.transform.Find("Back Button").GetComponent<MenuButtonBehavior>().otherMenu = transform.parent.gameObject;
+                    transform.parent.parent.gameObject.SetActive(false);
+                }
+                // if we are the Back button in game select, make sure to disable other game selections
+                if (transform.parent.name == "Game Select" && transform.name == "Back Button") {
+                    foreach(Transform child in transform.parent) {
+                        // don't hide the back button or the odyssey now hal logo
+                        if(child.name != "Back Button" && child.name != "Inverted_OdysseyNowLogo") {
                             child.gameObject.SetActive(false);
                         }
                     }
