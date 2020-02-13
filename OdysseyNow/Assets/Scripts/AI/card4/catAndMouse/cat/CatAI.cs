@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,10 +6,13 @@ using UnityEngine.AI;
 public class CatAI : MonoBehaviour
 {
 
+    private float nextActionTime = 0.0f;
+    public float period = 5f;
     public GameObject target;
+    public int level;
     private NavMeshAgent agent;
     public bool stop;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,17 @@ public class CatAI : MonoBehaviour
 
             Debug.Log("Cat has the mouse.");
         }
-        agent.SetDestination(target.transform.position);
+        switch(level){
+            case 1:
+            agent.SetDestination(target.transform.position);
+            break;
+            case 2:
+            if (Time.time > nextActionTime ) {
+                nextActionTime += Time.time + period;
+                agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
+            }
+            break;
+        }
         //Navigate.DebugDrawPath(agent.path.corners);
     }
 }
