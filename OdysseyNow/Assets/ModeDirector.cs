@@ -10,6 +10,13 @@ public class ModeDirector : MonoBehaviour
     public GameObject go_calibration;
     public GameObject go_AI;
 
+    void Awake()
+    {
+        Debug.Log(PlayerPrefs.GetInt("ai1"));
+        Debug.Log(PlayerPrefs.GetInt("ai2"));
+        Debug.Log(PlayerPrefs.GetString("game"));
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +60,7 @@ public class ModeDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void StartGame_CatAI()

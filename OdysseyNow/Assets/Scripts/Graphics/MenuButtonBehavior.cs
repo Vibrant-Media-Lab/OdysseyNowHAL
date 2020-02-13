@@ -77,6 +77,8 @@ namespace Graphics
                     if(aiSelect.Find("P1 AI Toggle").GetComponent<Toggle>().isOn || aiSelect.Find("P2 AI Toggle").GetComponent<Toggle>().isOn) {
                         Debug.Log(transform.parent.name.Replace(" ", ""));
                         SceneManager.LoadScene(transform.parent.name.Replace(" ", ""));
+                        // tells the scene configurer which game to use
+                        PlayerPrefs.SetString("game", transform.parent.Find("Game Drop Down").Find("Label").GetComponent<Text>().text);
                     }
                     else {
                         Debug.Log("Must pick at least 1 AI");

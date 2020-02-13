@@ -7674,10 +7674,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Text: {fileID: 1189243708}
-  m_Image: {fileID: 0}
-  m_RectTransform: {fileID: 887065439}
-  m_Toggle: {fileID: 887065441}
 --- !u!114 &887065441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10911,6 +10907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1198363612}
   - component: {fileID: 1198363611}
+  - component: {fileID: 1198363613}
   m_Layer: 0
   m_Name: SceneNotes
   m_TagString: Untagged
@@ -10949,6 +10946,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1198363613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198363610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19bf66db833d88141b2e389ea2f050fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiSlider1: {fileID: 1569488388}
+  aiSlider2: {fileID: 2120893120}
+  aiToggle1: {fileID: 1178461317}
+  aiToggle2: {fileID: 891806231}
 --- !u!1001 &1204066270
 PrefabInstance:
   m_ObjectHideFlags: 0
