@@ -12,17 +12,38 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/SceneLabelBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/CalibrationDirectorNew.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CalibrationProcess.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/cat/CatAI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/mouse/MouseAI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/CalibrationOdysseySettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Meta/Comment.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/CalibrationSceneDirector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/HardwareInterface/CalibrationDirector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/MenuButtonBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ModeDirector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/CalibrationButtonBehaviour.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/CardLabel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card1/BOTTargetControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/ToggleButtonBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card1/BOTEngTargetControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/HoverText.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/CalibrationProcess.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/mouse/MouseAI.cs" />
         <option value="$PROJECT_DIR$/Assets/CalibrationDirectorNew.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/mouse/MouseAI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/cat/CatAI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/ToggleButtonBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/HoverText.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/CalibrationButtonBehaviour.cs" />
+        <option value="$PROJECT_DIR$/Assets/CalibrationSceneDirector.cs" />
+        <option value="$PROJECT_DIR$/Assets/ModeDirector.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Meta/Comment.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/MenuButtonBehavior.cs" />
       </list>
     </option>
   </component>
@@ -36,7 +57,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -62,7 +83,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581698908865</updated>
-      <workItem from="1581698911272" duration="1998000" />
+      <workItem from="1581698911272" duration="3690000" />
     </task>
     <servers />
   </component>
@@ -83,10 +104,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="781" y="342" key="SettingsEditor" timestamp="1581699987981">
+    <state x="781" y="342" key="SettingsEditor" timestamp="1581701728708">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1581699987981" />
+    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1581701728708" />
     <state x="937" y="298" width="686" height="804" key="find.popup" timestamp="1581699954149">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

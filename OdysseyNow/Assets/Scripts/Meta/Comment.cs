@@ -8,7 +8,6 @@ namespace Meta {
     /// </summary>
     public class Comment : MonoBehaviour {
         //This is the text of the comment
-        [TextArea]
-        public string notes = "Comment here.";
+        [TextArea] public string notes = "Comment here.";
     }
 }

@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Graphics
-{
+namespace Graphics {
     /// <summary>
     /// Behavior of AI toggle buttons and their sliders
     /// </summary>
-    public class ToggleButtonBehavior : MonoBehaviour
-    {
+    public class ToggleButtonBehavior : MonoBehaviour {
         // slider to choose AI difficulty
         public Slider difficultySlider;
         public Text sliderText;
@@ -18,8 +16,7 @@ namespace Graphics
         /// <summary>
         /// On start, set button click listener.
         /// </summary>
-        void Start()
-        {
+        private void Start() {
             gameObject.GetComponent<Toggle>().onValueChanged.AddListener(ToggleClicked);
             difficultySlider.onValueChanged.AddListener(value => SliderChanged());
             // hide the sliders parent by default
@@ -29,11 +26,11 @@ namespace Graphics
         /// <summary>
         /// On toggle, hide or show the slider
         /// </summary>
-        void ToggleClicked(bool on)
-        {
-            if(difficultySlider != null && on) {
+        private void ToggleClicked(bool on) {
+            if (difficultySlider != null && on) {
                 difficultySlider.transform.parent.gameObject.SetActive(true);
-            } else if(difficultySlider != null && !on) {
+            }
+            else if (difficultySlider != null && !on) {
                 difficultySlider.transform.parent.gameObject.SetActive(false);
             }
         }
@@ -41,9 +38,8 @@ namespace Graphics
         /// <summary>
         /// On slider value change, update text to reflect difficulty
         /// </summary>
-        void SliderChanged()
-        {
-            if(sliderText != null) {
+        private void SliderChanged() {
+            if (sliderText != null) {
                 sliderText.text = "Difficulty: " + difficultySlider.value;
             }
         }

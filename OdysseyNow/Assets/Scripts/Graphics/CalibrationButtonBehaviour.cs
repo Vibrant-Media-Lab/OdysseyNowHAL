@@ -3,21 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CalibrationButtonBehaviour : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void loadCalibrationScene() {
+public class CalibrationButtonBehaviour : MonoBehaviour {
+    public void LoadCalibrationScene() {
         SceneManager.LoadScene("Calibration");
     }
 }
