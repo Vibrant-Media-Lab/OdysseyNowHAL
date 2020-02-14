@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 6de2fb7f4783af149a30637d16321953, type: 2}
 --- !u!1 &5820463
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +313,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21414805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -334000983
   m_Radius: 0.21
   m_Speed: 1
@@ -335,13 +335,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21414805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6aa0652006149c41b9fca129b5a01d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 431468004}
-  stop: 0
+  level: 0
 --- !u!1 &24524509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4290,7 +4290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af6650cf7d584361a256e82728ecef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1_read: 0
+  p1_read: 1
   p2_read: 1
   useOverlay: 1
   screenOverlay: {fileID: 1138065681}
@@ -4868,7 +4868,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1405386638}
-  - component: {fileID: 1405386639}
   m_Layer: 0
   m_Name: AI-CatAndMouse
   m_TagString: Untagged
@@ -4894,18 +4893,6 @@ Transform:
   m_Father: {fileID: 511151602}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1405386639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405386637}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9d17703ec7d04a808df8681e95da73b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1414869717
 GameObject:
   m_ObjectHideFlags: 0
@@ -9057,7 +9044,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.026666665
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 3517ad54b614d480b9edb5fcdb6c1f76, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 86ef31f902ec27b4ca98d48a60574817, type: 2}
 --- !u!1 &2127914509
 GameObject:
   m_ObjectHideFlags: 0
@@ -9796,7 +9783,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5755280646347381176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.21
   m_Speed: 1.5
@@ -9818,12 +9805,10 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5755280646347381176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 293ba996f8d224288996decbbd8734e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  period: 3
   target: {fileID: 1072673124}
-  level: 2
-  stop: 0
+  level: 1

@@ -26,28 +26,45 @@ public class ModeDirector : MonoBehaviour
 
         if (LocalInputManager.instance == null)
         {
+            switch(PlayerPrefs.GetString("game")){
+                case "Cat and Mouse":
+                go_calibration.GetComponent<CalibrationDirectorNew>()
+                              .afterCalibration
+                              .AddListener(startCatAndMouse);
+                break;
+                case "Super Cat and Mouse":
+                break;
+                case "Haunted House":
+                break;
+                case "Zoo Breakout":
+                break;
+                case "Football: Running":
+                break;
+            }
             // fixme
-            go_calibration.GetComponent<CalibrationDirectorNew>()
-                .afterCalibration.AddListener(StartGame_CatAI);
-            go_calibration.GetComponent<CalibrationOdysseySettings>().p2_read = true;
+
+            // if p1 is ai, don't read calibration
+            if(PlayerPrefs.GetInt("ai1") != -1)
+                go_calibration.GetComponent<CalibrationOdysseySettings>().p1_read = false;
+            // if p2 is ai, don't read calibration
+            if(PlayerPrefs.GetInt("ai2") != -1)
+                go_calibration.GetComponent<CalibrationOdysseySettings>().p2_read = false;
             StartCalibration();
 
             return;
         }
 
-        if (LocalInputManager.instance.p1Scheme
-            == LocalInputManager.ControlScheme.AI)
+        if (LocalInputManager.instance.p1Scheme == LocalInputManager.ControlScheme.AI)
         {
             go_calibration.GetComponent<CalibrationDirectorNew>()
-                .afterCalibration.AddListener(StartGame_CatAI);
+                          .afterCalibration
+                          .AddListener(startCatAndMouse);
         }
-        if (LocalInputManager.instance.p1Scheme
-            == LocalInputManager.ControlScheme.OriginalConsole)
+        if (LocalInputManager.instance.p1Scheme == LocalInputManager.ControlScheme.OriginalConsole)
         {
             go_calibration.GetComponent<CalibrationOdysseySettings>().p1_read = true;
         }
-        if (LocalInputManager.instance.p2Scheme
-            == LocalInputManager.ControlScheme.OriginalConsole)
+        if (LocalInputManager.instance.p2Scheme == LocalInputManager.ControlScheme.OriginalConsole)
         {
             go_calibration.GetComponent<CalibrationOdysseySettings>().p2_read = true;
         }
@@ -63,22 +80,29 @@ public class ModeDirector : MonoBehaviour
 
     }
 
-    public void StartGame_CatAI()
+    public void startCatAndMouse()
     {
-        Debug.Log("in StartGame_CatAI");
         go_calibration.SetActive(false);
         GameObject p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
-        p1.GetComponent<NavMeshAgent>().enabled = true;
+        GameObject p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+        int player1AI = PlayerPrefs.GetInt("ai1");
+        int player2AI = PlayerPrefs.GetInt("ai2");
+        if(player1AI != -1) {
+            p1.GetComponent<NavMeshAgent>().enabled = true;
+            p1.GetComponent<CatAI>().enabled = true;
+            p1.GetComponent<CatAI>().level = player1AI;
+        }
+        if(player2AI != -1) {
+            p2.GetComponent<NavMeshAgent>().enabled = true;
+            p2.GetComponent<MouseAI>().enabled = true;
+            p2.GetComponent<MouseAI>().level = player2AI;
+        }
         go_AI.SetActive(true);
     }
 
     public void StartCalibration()
     {
-        // Turn Off Cat AI
         go_AI.SetActive(false);
-        GameObject p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
-        p1.GetComponent<NavMeshAgent>().enabled = false;
-
         go_calibration.SetActive(true);
     }
 

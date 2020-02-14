@@ -8,11 +8,10 @@ public class MouseAI : MonoBehaviour
 
     public Transform target;
     private NavMeshAgent agent;
-    public bool stop;
-
+    public int level;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Agent tend to rotate game object, that can be
         //      undesirable
@@ -22,23 +21,22 @@ public class MouseAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if ( ! agent.enabled) { return; }
 
-        if ((transform.position - target.position).magnitude < 1 && !stop)
+        if ((transform.position - target.position).magnitude < 1)
         {
-            stop = true;
-            //target.GetComponent<Navigate>().enabled = false;
-            //Canvas canvas = FindObjectOfType<Canvas>();
-            //var gameOver = canvas.transform.Find("Panel");
-            //gameOver.gameObject.SetActive(true);
-            //var score = canvas.transform.Find("Score");
-            //score.SendMessage("Stop", true);
-
             Debug.Log("Mouse has the cheese");
         }
-        agent.SetDestination(target.position);
-        //Navigate.DebugDrawPath(agent.path.corners);
+        switch(level){
+            case 1:
+            break;
+            case 2:
+            agent.SetDestination(target.position);
+            break;
+            case 3:
+            break;
+        }
     }
 }
