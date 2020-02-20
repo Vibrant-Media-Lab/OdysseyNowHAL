@@ -12,9 +12,9 @@ public class ModeDirector : MonoBehaviour {
     public GameObject AI;
 
     private void Awake() {
-        Debug.Log(PlayerPrefs.GetInt("ai1"));
-        Debug.Log(PlayerPrefs.GetInt("ai2"));
-        Debug.Log(PlayerPrefs.GetString("game"));
+        //Debug.Log(PlayerPrefs.GetInt("ai1"));
+        //Debug.Log(PlayerPrefs.GetInt("ai2"));
+        //Debug.Log(PlayerPrefs.GetString("game"));
     }
 
     // Start is called before the first frame update
@@ -26,6 +26,7 @@ public class ModeDirector : MonoBehaviour {
         if (LocalInputManager.instance == null) {
             switch (PlayerPrefs.GetString("game")) {
                 case "Cat and Mouse":
+                    // load cat and mouse after calibration
                     calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
                     break;
                 case "Super Cat and Mouse":
@@ -38,7 +39,10 @@ public class ModeDirector : MonoBehaviour {
                     break;
             }
             // fixme
-
+            
+            
+            calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = false;
+            
             // if p1 is ai, don't read calibration
             if (PlayerPrefs.GetInt("ai1") != -1)
                 calibration.GetComponent<CalibrationOdysseySettings>().p1_read = false;
@@ -78,10 +82,10 @@ public class ModeDirector : MonoBehaviour {
 
     private void StartCatAndMouse() {
         calibration.SetActive(false);
-        GameObject p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
-        GameObject p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
-        int player1AI = PlayerPrefs.GetInt("ai1");
-        int player2AI = PlayerPrefs.GetInt("ai2");
+        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
+        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+        var player1AI = PlayerPrefs.GetInt("ai1");
+        var player2AI = PlayerPrefs.GetInt("ai2");
         if (player1AI != -1) {
             p1.GetComponent<NavMeshAgent>().enabled = true;
             p1.GetComponent<CatAI>().enabled = true;
@@ -101,6 +105,4 @@ public class ModeDirector : MonoBehaviour {
         AI.SetActive(false);
         calibration.SetActive(true);
     }
-
-    public void StartGame_2p() { }
 }

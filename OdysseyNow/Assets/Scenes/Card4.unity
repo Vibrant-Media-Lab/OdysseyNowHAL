@@ -4178,7 +4178,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1119153336}
-  - component: {fileID: 1119153335}
   - component: {fileID: 1119153337}
   - component: {fileID: 1119153339}
   m_Layer: 8
@@ -4188,75 +4187,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1119153335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119153334}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dce3c8e69d1741a99b7c60a0b8ffe8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  p1: {fileID: 0}
-  p2: {fileID: 0}
-  cameraAnimationSpeed: 10
-  cameraTimeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: -0.0036315918
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.5663114
-      value: 0.9283519
-      inSlope: 0.4115178
-      outSlope: 0.4115178
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.17340244
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1.0010881
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  camera3DScene: {fileID: 314132887}
-  cameraInGame: {fileID: 1539927129}
-  enableCalibrationScene: 0
-  textLeft: {fileID: 1953342439}
-  textRight: {fileID: 2074164233}
-  textDBP1: {fileID: 210948115}
-  textDBP2: {fileID: 2135683531}
-  textInstruction: {fileID: 1783216403}
-  playerBlink: {fileID: 0}
-  SimScreenActors: {fileID: 0}
-  SimScreenOverlay: {fileID: 0}
-  CamLookRate: 0.2
-  consoleMirror: {fileID: 0}
-  _calib_votage_x_left: 617
-  _calib_votage_x_right: 300
-  _calib_votage_y_top: 711
-  _calib_votage_y_bottom: 379
-  _calib_write_votage_x_left: 420
-  _calib_write_votage_x_right: 302
-  _calib_write_votage_y_top: 180
-  _calib_write_votage_y_bottom: 80
 --- !u!4 &1119153336
 Transform:
   m_ObjectHideFlags: 0
@@ -4292,7 +4222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1_read: 1
   p2_read: 1
-  useOverlay: 1
+  useOverlay: 0
   screenOverlay: {fileID: 1138065681}
   overlay_extra_text: 
   overlay_topLeft: {fileID: 618656289}
@@ -5146,8 +5076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da959069ab19249bfb84d5a569f8f6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_calibration: {fileID: 1119153334}
-  go_AI: {fileID: 511151601}
+  calibration: {fileID: 1119153334}
+  AI: {fileID: 511151601}
 --- !u!4 &1490547034
 Transform:
   m_ObjectHideFlags: 0

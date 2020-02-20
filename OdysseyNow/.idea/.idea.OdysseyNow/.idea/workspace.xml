@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2669229e-527f-429d-bd02-64749a758ca4" name="Default Changelist" comment="" />
+    <list default="true" id="2669229e-527f-429d-bd02-64749a758ca4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ModeDirector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ModeDirector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Card4.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Card4.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardDirection/LocalInputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardDirection/LocalInputManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +23,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/cat/CatAI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/mouse/MouseAI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/CalibrationOdysseySettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CardDirection/LocalInputManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Meta/Comment.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/CalibrationSceneDirector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/HardwareInterface/CalibrationDirector.cs" root0="FORCE_HIGHLIGHTING" />
@@ -41,9 +47,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/HoverText.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/CalibrationButtonBehaviour.cs" />
         <option value="$PROJECT_DIR$/Assets/CalibrationSceneDirector.cs" />
-        <option value="$PROJECT_DIR$/Assets/ModeDirector.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Meta/Comment.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Graphics/MenuButtonBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/ModeDirector.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardDirection/LocalInputManager.cs" />
       </list>
     </option>
   </component>
@@ -83,7 +90,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581698908865</updated>
-      <workItem from="1581698911272" duration="3690000" />
+      <workItem from="1581698911272" duration="3724000" />
+      <workItem from="1582212417988" duration="4075000" />
     </task>
     <servers />
   </component>
@@ -97,7 +105,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

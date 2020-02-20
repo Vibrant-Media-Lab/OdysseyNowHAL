@@ -1,19 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CardDirection
-{
+namespace CardDirection {
     /// <summary>
     /// Manages the configuration of input methods.
     /// </summary>
-    public class LocalInputManager : MonoBehaviour
-    {
+    public class LocalInputManager : MonoBehaviour {
         //Singleton instance.
         public static LocalInputManager instance;
+
         //The possible control schemes
-        public enum ControlScheme { Keyboard, Traditional, OdysseyCon, OriginalConsole, AI, OdysseyConLegacy };
+        public enum ControlScheme {
+            Keyboard,
+            Traditional,
+            OdysseyCon,
+            OriginalConsole,
+            AI,
+            OdysseyConLegacy
+        };
+
         //Control schemes for both players
         public ControlScheme p1Scheme = ControlScheme.Keyboard;
         public ControlScheme p2Scheme = ControlScheme.Keyboard;
@@ -25,14 +33,11 @@ namespace CardDirection
         /// <summary>
         /// On awake, make a singleton
         /// </summary>
-        private void Awake()
-        {
-            if (LocalInputManager.instance != null)
-            {
-                Destroy(gameObject);
+        private void Awake() {
+            if (LocalInputManager.instance != null) {
+                //Destroy(gameObject);
             }
-            else
-            {
+            else {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
             }
@@ -41,8 +46,7 @@ namespace CardDirection
         /// <summary>
         /// Public method that initializes the input manager, starting a coroutine. This had to be separate from the coroutine itself so that the coroutine would belong to this object.
         /// </summary>
-        public void Init()
-        {
+        public void Init() {
             StartCoroutine(InitSoon());
         }
 
@@ -50,8 +54,7 @@ namespace CardDirection
         /// Wait one second and then init the menu controls.
         /// </summary>
         /// <returns></returns>
-        IEnumerator InitSoon()
-        {
+        IEnumerator InitSoon() {
             yield return new WaitForSeconds(1f);
             InitialControls();
         }
@@ -59,23 +62,19 @@ namespace CardDirection
         /// <summary>
         /// Sets up the previously selected options for control schemes. This is basically just necessary for when one chooses a control scheme, plays a card, and then returns to the main menu. Updates the dropdowns.
         /// </summary>
-        void InitialControls()
-        {
-            if (p1Option == null || p2Option == null)
-            {
+        private void InitialControls() {
+            if (p1Option == null || p2Option == null) {
                 p1Option = GameObject.Find("P1ControllerDropdown");
                 p2Option = GameObject.Find("P2ControllerDropdown");
 
-                if (p1Option == null || p2Option == null)
-                {
-                    Debug.Log("Trouble initing!");
+                if (p1Option == null || p2Option == null) {
+                    Debug.Log("Trouble initiating!");
                     Init();
                     return;
                 }
             }
 
-            switch (p1Scheme)
-            {
+            switch (p1Scheme) {
                 case ControlScheme.Keyboard:
                     p1Option.GetComponent<Dropdown>().value = 0;
                     break;
@@ -94,10 +93,11 @@ namespace CardDirection
                 case ControlScheme.OdysseyConLegacy:
                     p1Option.GetComponent<Dropdown>().value = 5;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
-            switch (p2Scheme)
-            {
+            switch (p2Scheme) {
                 case ControlScheme.Keyboard:
                     p2Option.GetComponent<Dropdown>().value = 0;
                     break;
@@ -116,30 +116,28 @@ namespace CardDirection
                 case ControlScheme.OdysseyConLegacy:
                     p2Option.GetComponent<Dropdown>().value = 5;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         /// <summary>
         /// When the input manager is destroyed, be sure to initialize a new one.
         /// </summary>
-        private void OnDestroy()
-        {
+        private void OnDestroy() {
             LocalInputManager.instance.Init();
         }
 
         /// <summary>
         /// Update the control scheme based on options selected on the dropdowns.
         /// </summary>
-        public void UpdateControls()
-        {
-            if (p1Option == null || p2Option == null)
-            {
+        public void UpdateControls() {
+            if (p1Option == null || p2Option == null) {
                 p1Option = GameObject.Find("P1ControllerDropdown");
                 p2Option = GameObject.Find("P2ControllerDropdown");
             }
 
-            switch (p1Option.GetComponent<Dropdown>().value)
-            {
+            switch (p1Option.GetComponent<Dropdown>().value) {
                 case 0:
                     p1Scheme = ControlScheme.Keyboard;
                     break;
@@ -160,8 +158,7 @@ namespace CardDirection
                     break;
             }
 
-            switch (p2Option.GetComponent<Dropdown>().value)
-            {
+            switch (p2Option.GetComponent<Dropdown>().value) {
                 case 0:
                     p2Scheme = ControlScheme.Keyboard;
                     break;
