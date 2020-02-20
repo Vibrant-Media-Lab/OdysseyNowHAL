@@ -649,7 +649,6 @@
             <e p="HoverText.cs" t="Include" />
             <e p="MenuButtonBehavior.cs" t="Include" />
             <e p="SceneLabelBehavior.cs" t="Include" />
-            <e p="ToggleButtonBehavior.cs" t="Include" />
           </e>
           <e p="HardwareInterface" t="Include">
             <e p="CalibrationDirector.cs" t="Include" />
@@ -662,7 +661,6 @@
           <e p="Meta" t="Include">
             <e p="Comment.cs" t="Include" />
           </e>
-          <e p="saveData.cs" t="Include" />
         </e>
         <e p="SlimUI" t="Include">
           <e p="ConsoleCursors" t="Include">

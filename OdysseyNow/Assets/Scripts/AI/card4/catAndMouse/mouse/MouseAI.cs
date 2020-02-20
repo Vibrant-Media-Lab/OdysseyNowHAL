@@ -28,9 +28,9 @@ public class MouseAI : MonoBehaviour {
 
         switch (level) {
             case 1:
+                agent.SetDestination(target.position);
                 break;
             case 2:
-                agent.SetDestination(target.position);
                 break;
             case 3:
                 break;

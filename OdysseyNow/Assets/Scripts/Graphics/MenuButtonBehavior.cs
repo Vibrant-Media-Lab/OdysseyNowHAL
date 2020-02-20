@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using CardDirection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,9 +13,6 @@ namespace Graphics {
 
         // another UI object that will replace this element on screen, if clicked
         public GameObject gameSelect;
-
-        // toggle that determines menu control flow
-        public Toggle aiToggle;
 
         // toggle that determines menu control flow
         public Toggle connectToggle;
@@ -35,11 +31,16 @@ namespace Graphics {
         /// On button click, either load a scene with the same name as this object or move around menu objects.
         /// </summary>
         private void ButtonClicked() {
+            var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                              PlayerPrefs.GetString("P1Input"));
+            var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                              PlayerPrefs.GetString("P2Input"));
+            var isAI = p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI;
             // if gameSelect is null then this is just a normal button
             if (gameSelect != null) {
                 // if the user wants to play with AI then they must be taken to the game
                 // select irrespective of connecting an odyssey console.
-                if (aiToggle.isOn) {
+                if (isAI) {
                     gameSelect.SetActive(true);
                     // get Game selects child based on card name
                     gameSelect.transform.Find(transform.name).gameObject.SetActive(true);
@@ -57,39 +58,13 @@ namespace Graphics {
                 }
             }
             else if (otherMenu != null) {
-                // if we are the back button in AI select, enable or disable play based on whether or not AI was selected
-                // this works because AI select back button knows which game selection menu to return to
-                if (_parent.name == "AI Select" && transform.name == "Back Button") {
-                    if (_parent.Find("P1 AI Toggle").GetComponent<Toggle>().isOn ||
-                        _parent.Find("P2 AI Toggle").GetComponent<Toggle>().isOn) {
-                        otherMenu.transform.Find("Play Button").gameObject.SetActive(true);
-                    }
-                    else {
-                        otherMenu.transform.Find("Play Button").gameObject.SetActive(false);
-                    }
-
-                    otherMenu.transform.parent.gameObject.SetActive(true);
-                }
-
                 switch (_parent.parent.name) {
                     // if we are the Play button in game select, determine if AI has been selected
                     case "Game Select" when transform.name == "Play Button": {
-                        var aiSelect = transform.root.Find("AI Select");
-                        // if AI has been selected, load the scene corresponding to the card of the game
-                        // otherwise, show a message to the player that they must select AI
-                        if (aiSelect.Find("P1 AI Toggle").GetComponent<Toggle>().isOn ||
-                            aiSelect.Find("P2 AI Toggle").GetComponent<Toggle>().isOn) {
-                            Debug.Log(_parent.name.Replace(" ", ""));
-                            SceneManager.LoadScene(_parent.name.Replace(" ", ""));
-                            // tells the scene configurer which game to use
-                            PlayerPrefs.SetString("game",
-                                                  _parent.Find("Game Drop Down").Find("Label").GetComponent<Text>()
-                                                         .text);
-                        }
-                        else {
-                            Debug.Log("Must pick at least 1 AI");
-                        }
-
+                        SceneManager.LoadScene(_parent.name.Replace(" ", ""));
+                        // tells the scene configurer which game to use
+                        PlayerPrefs.SetString("game",
+                                              _parent.Find("Game Drop Down").Find("Label").GetComponent<Text>().text);
                         return;
                     }
                     // if we are the AI select button in game select, move to AI select
