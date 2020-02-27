@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using d = CardDirection.Director;
 
-namespace BOT
-{
+namespace BOT {
     /// <summary>
     /// This is basically a copy of PlayerCubeController. It's bad and you shouldn't use any of it.
     /// </summary>
-    public class BOTCubeController : MonoBehaviour
-    {
-
+    public class BOTCubeController : MonoBehaviour {
         private Vector3 newPos;
         public GameObject tgt;
         static public int lagfactor = 5;
@@ -18,15 +15,11 @@ namespace BOT
 
 
         // Use this for initialization
-        void Start()
-        {
-        }
+        void Start() { }
 
         // Update is called once per frame
-        void FixedUpdate()
-        {
-            if (!d.instance.paused)
-            {
+        void FixedUpdate() {
+            if (!d.instance.paused) {
                 float tgtx = tgt.transform.position.x;
                 float tgty = tgt.transform.position.y;
 
@@ -43,6 +36,5 @@ namespace BOT
                 gameObject.transform.SetPositionAndRotation(newPos, gameObject.transform.rotation);
             }
         }
-
     }
 }

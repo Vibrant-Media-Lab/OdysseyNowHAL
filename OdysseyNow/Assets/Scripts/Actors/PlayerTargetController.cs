@@ -100,7 +100,7 @@ namespace Actors {
             //If the game isn't paused, move.
             if (!Director.instance.paused) {
                 //If you have keyboard controls...
-                if (GetControlScheme() == 0) {
+                if (GetControlScheme() == LocalInputManager.ControlScheme.Keyboard) {
                     //player target & english control for keyboard controls
                     float x = gameObject.transform.position.x;
                     float y = gameObject.transform.position.y;

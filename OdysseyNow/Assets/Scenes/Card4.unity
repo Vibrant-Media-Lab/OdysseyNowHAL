@@ -314,9 +314,9 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21414805}
   m_Enabled: 0
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: 65107623
   m_Radius: 0.21
-  m_Speed: 1
+  m_Speed: 1.5
   m_Acceleration: 300
   avoidancePriority: 50
   m_AngularSpeed: 3000
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 431468004}
-  level: 0
+  level: 1
 --- !u!1 &24524509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,7 +1995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148387606d0ccd84fa326ca211f274ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: 65107623
   m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -4222,7 +4222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1_read: 1
   p2_read: 1
-  useOverlay: 0
+  useOverlay: 1
   screenOverlay: {fileID: 1138065681}
   overlay_extra_text: 
   overlay_topLeft: {fileID: 618656289}
@@ -8972,9 +8972,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.026666665
+  m_VoxelSize: 0.016666668
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 86ef31f902ec27b4ca98d48a60574817, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 033167dfd5cefaa4bb207b8a1fff6e84, type: 2}
 --- !u!1 &2127914509
 GameObject:
   m_ObjectHideFlags: 0

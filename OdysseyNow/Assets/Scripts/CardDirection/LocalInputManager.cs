@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CardDirection {
@@ -14,7 +15,7 @@ namespace CardDirection {
             OriginalConsole,
             AI,
             OdysseyConLegacy
-        };
+        }
 
         // Dropdowns for the two options
         public Dropdown p1Option;
@@ -28,8 +29,15 @@ namespace CardDirection {
         public Slider difficultySliderP2;
         public Text sliderTextP2;
 
+        private void Awake() {
+            PlayerPrefs.SetString("P1Input", ControlScheme.Keyboard.ToString());
+            PlayerPrefs.SetString("P2Input", ControlScheme.Keyboard.ToString());
+            PlayerPrefs.SetInt("ai1", 1);
+            PlayerPrefs.SetInt("ai2", 1);
+        }
+
         /// <summary>
-        /// On start, set button click listener.
+        /// On start, set listeners.
         /// </summary>
         private void Start() {
             p1Option.onValueChanged.AddListener(value => P1ControlChanged());

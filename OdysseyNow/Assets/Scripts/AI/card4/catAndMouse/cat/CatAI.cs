@@ -14,6 +14,7 @@ public class CatAI : MonoBehaviour {
         // Agent tend to rotate game object, that can be
         //      undesirable
         agent = GetComponent<NavMeshAgent>();
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -30,16 +31,16 @@ public class CatAI : MonoBehaviour {
 
         switch (level) {
             case 1:
-                if (Time.time > nextActionTime) {
-                    nextActionTime += Time.time + period;
-                    agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
-                }
+                agent.SetDestination(target.transform.position);
+                // if (Time.time > nextActionTime) {
+                //     nextActionTime += Time.time + period;
+                //     agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
+                // }
 
                 break;
             case 2:
                 break;
             case 3:
-                agent.SetDestination(target.transform.position);
                 break;
         }
     }

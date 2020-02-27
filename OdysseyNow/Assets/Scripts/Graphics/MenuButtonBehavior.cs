@@ -58,22 +58,13 @@ namespace Graphics {
                 }
             }
             else if (otherMenu != null) {
-                switch (_parent.parent.name) {
-                    // if we are the Play button in game select, determine if AI has been selected
-                    case "Game Select" when transform.name == "Play Button": {
-                        SceneManager.LoadScene(_parent.name.Replace(" ", ""));
-                        // tells the scene configurer which game to use
-                        PlayerPrefs.SetString("game",
-                                              _parent.Find("Game Drop Down").Find("Label").GetComponent<Text>().text);
-                        return;
-                    }
-                    // if we are the AI select button in game select, move to AI select
-                    case "Game Select" when transform.name == "AI Select Button":
-                        // Change AI Select's back button to return to the correct card after selection
-                        otherMenu.transform.Find("Back Button").GetComponent<MenuButtonBehavior>().otherMenu =
-                            _parent.gameObject;
-                        _parent.parent.gameObject.SetActive(false);
-                        break;
+                // if we are the Play button in a game select, load the correct scene
+                if (_parent.parent.name == "Game Select" && transform.name == "Play Button") {
+                    SceneManager.LoadScene(_parent.name.Replace(" ", ""));
+                    // tells the scene configurer which game to use
+                    PlayerPrefs.SetString("game",
+                                          _parent.Find("Game Drop Down").Find("Label").GetComponent<Text>().text);
+                    return;
                 }
 
                 // if we are the Back button in game select, make sure to disable other game selections

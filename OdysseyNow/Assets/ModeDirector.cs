@@ -1,28 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using CardDirection;
+﻿using CardDirection;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 public class ModeDirector : MonoBehaviour {
     public GameObject calibration;
     public GameObject AI;
 
-    private void Awake() {
-        //Debug.Log(PlayerPrefs.GetInt("ai1"));
-        //Debug.Log(PlayerPrefs.GetInt("ai2"));
-        //Debug.Log(PlayerPrefs.GetString("game"));
-    }
-
     // Start is called before the first frame update
-    private void Start() {
-        //if (localInputManager.isdirty)
-        //{
-        // Enable calibration
-
+    private void Awake() {
         switch (PlayerPrefs.GetString("game")) {
             case "Cat and Mouse":
                 // load cat and mouse after calibration
@@ -38,21 +23,26 @@ public class ModeDirector : MonoBehaviour {
                 break;
         }
 
-        // if both input schemes are keyboard, then no need for overlay
-        // calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = false;
-
-        calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = true;
-
         var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
-        // if p1 is ai, don't read calibration
-        if (p1Input == LocalInputManager.ControlScheme.AI)
+        // if both input schemes are keyboard, then no need for overlay
+        if ((p1Input == LocalInputManager.ControlScheme.Keyboard &&
+             p2Input == LocalInputManager.ControlScheme.Keyboard) ||
+            (p1Input == LocalInputManager.ControlScheme.AI && p2Input == LocalInputManager.ControlScheme.AI))
+            calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = false;
+        else
+            calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = true;
+
+        // if p1 is ai or keyboard, don't read calibration
+        if (p1Input == LocalInputManager.ControlScheme.AI || p1Input == LocalInputManager.ControlScheme.Keyboard)
             calibration.GetComponent<CalibrationOdysseySettings>().p1_read = false;
-        // if p2 is ai, don't read calibration
-        if (p2Input == LocalInputManager.ControlScheme.AI)
+
+        // if p2 is ai or keyboard, don't read calibration
+        if (p2Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.Keyboard)
             calibration.GetComponent<CalibrationOdysseySettings>().p2_read = false;
+
         StartCalibration();
     }
 
@@ -60,6 +50,7 @@ public class ModeDirector : MonoBehaviour {
         calibration.SetActive(false);
         var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
         var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+
         var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
@@ -76,7 +67,8 @@ public class ModeDirector : MonoBehaviour {
             p2.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
         }
 
-        AI.SetActive(true);
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+            AI.SetActive(true);
     }
 
     private void StartCalibration() {
