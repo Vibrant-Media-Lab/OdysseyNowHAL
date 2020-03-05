@@ -151,7 +151,7 @@ namespace HardwareInterface {
 
                 if (Time.unscaledTime - lastSendTime >= updatePeriod) {
                     string _s = "<" + JsonUtility.ToJson(cdw) + ">";
-                    // Debug.Log("[]MSG write: " + _s);
+                    //Debug.Log("[]MSG write: " + _s);
                     sc.SendSerialMessage(_s);
                     lastSendTime = Time.unscaledTime;
                 }
@@ -239,6 +239,7 @@ namespace HardwareInterface {
         /// </summary>
         /// <param name="success"></param>
         void OnConnectionEvent(bool success) {
+            //Debug.Log("Connection successful: " + success);
             if (!success) {
                 pluggedIn = false;
             }

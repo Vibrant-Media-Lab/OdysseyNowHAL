@@ -684,34 +684,9 @@
       <e p="InControl.csproj" t="IncludeRecursive" />
       <e p="InControl.Editor.csproj" t="IncludeRecursive" />
       <e p="InControl.Examples.csproj" t="IncludeRecursive" />
-      <e p="NavMeshComponents.csproj" t="IncludeRecursive" />
-      <e p="NavMeshComponentsEditor.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="OdysseyNow.sln" t="IncludeFlat" />
-      <e p="Packages" t="ExcludeRecursive">
-        <e p="com.h8man.2d.navmeshplus" t="Include">
-          <e p="NavMeshComponents" t="Include">
-            <e p="Editor" t="Include">
-              <e p="NavMeshAssetManager.cs" t="Include" />
-              <e p="NavMeshAssetManager2d.cs" t="Include" />
-              <e p="NavMeshComponentsGUIUtility.cs" t="Include" />
-              <e p="NavMeshLinkEditor.cs" t="Include" />
-              <e p="NavMeshModifierEditor.cs" t="Include" />
-              <e p="NavMeshModifierVolumeEditor.cs" t="Include" />
-              <e p="NavMeshSurfaceEditor.cs" t="Include" />
-              <e p="NavMeshSurfaceEditor2d.cs" t="Include" />
-            </e>
-            <e p="Scripts" t="Include">
-              <e p="NavMeshBuilder2d.cs" t="Include" />
-              <e p="NavMeshLink.cs" t="Include" />
-              <e p="NavMeshModifier.cs" t="Include" />
-              <e p="NavMeshModifierVolume.cs" t="Include" />
-              <e p="NavMeshSurface.cs" t="Include" />
-              <e p="NavMeshSurface2d.cs" t="Include" />
-            </e>
-          </e>
-        </e>
-      </e>
+      <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
   </component>
