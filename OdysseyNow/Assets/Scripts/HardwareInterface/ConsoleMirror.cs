@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -211,8 +212,12 @@ namespace HardwareInterface {
         /// </summary>
         /// <param name="msg"></param>
         void OnMessageArrived(string msg) {
-            //Debug.Log("ConsoleMirror.OnMessageArrived(msg): " + msg);
-            mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
+            try {
+                mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
+            }
+            catch (ArgumentException e) {
+                Debug.LogWarning("ConsoleMirror.OnMessageArrived(msg): " + msg);
+            }
 
             _calib_calc_param_x();
             _calib_calc_param_y();

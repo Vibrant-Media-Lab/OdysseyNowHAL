@@ -21,6 +21,9 @@ public class ModeDirector : MonoBehaviour {
                 break;
             case "Football: Running":
                 break;
+            case "Tennis":
+                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartTennis);
+                break;
         }
 
         var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
@@ -47,6 +50,31 @@ public class ModeDirector : MonoBehaviour {
     }
 
     private void StartCatAndMouse() {
+        calibration.SetActive(false);
+        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
+        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+
+        var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+        if (p1Input == LocalInputManager.ControlScheme.AI) {
+            p1.GetComponent<NavMeshAgent>().enabled = true;
+            p1.GetComponent<CatAI>().enabled = true;
+            p1.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
+        }
+
+        if (p2Input == LocalInputManager.ControlScheme.AI) {
+            p2.GetComponent<NavMeshAgent>().enabled = true;
+            p2.GetComponent<MouseAI>().enabled = true;
+            p2.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
+        }
+
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+            AI.SetActive(true);
+    }
+
+    private void StartTennis() {
         calibration.SetActive(false);
         var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
         var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");

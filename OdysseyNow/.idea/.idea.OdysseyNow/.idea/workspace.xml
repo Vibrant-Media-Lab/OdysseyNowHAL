@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2669229e-527f-429d-bd02-64749a758ca4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OdysseyNow/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Card1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Card1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ModeDirector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ModeDirector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Card3.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Card3.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Card4.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Card4.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/HardwareInterface/ConsoleMirror.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HardwareInterface/ConsoleMirror.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +38,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/ModeDirector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/HoverText.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Graphics/SceneLabelBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scenes/Card3.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CardDirection/MenuDirector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CardDirection/Director.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AI/card1/BOTCubeController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -68,13 +67,13 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/AI/card1/BOTCubeController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AI/card1/BOTTargetControl.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AI/card1/BOTEngTargetControl.cs" />
-        <option value="$PROJECT_DIR$/Assets/ModeDirector.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardDirection/LocalInputManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/cat/CatAI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AI/card4/catAndMouse/mouse/MouseAI.cs" />
         <option value="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/AbstractSerialThread.cs" />
         <option value="$PROJECT_DIR$/Assets/CalibrationDirectorNew.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Actors/PlayerTargetController.cs" />
+        <option value="$PROJECT_DIR$/Assets/ModeDirector.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/HardwareInterface/ConsoleMirror.cs" />
       </list>
     </option>
@@ -119,7 +118,7 @@
       <workItem from="1582212417988" duration="19958000" />
       <workItem from="1582823074080" duration="19206000" />
       <workItem from="1583429368894" duration="2762000" />
-      <workItem from="1583432763587" duration="5156000" />
+      <workItem from="1583432763587" duration="7280000" />
     </task>
     <servers />
   </component>
