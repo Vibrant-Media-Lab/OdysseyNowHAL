@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CalibrationSceneDirector : MonoBehaviour
-{
+public class CalibrationSceneDirector : MonoBehaviour {
     public Transform p1;
     public Transform p2;
 
@@ -36,7 +36,9 @@ public class CalibrationSceneDirector : MonoBehaviour
     public float _calib_votage_x_left = 617;
     public float _calib_votage_x_right = 300;
     public float _calib_votage_y_top = 711;
+
     public float _calib_votage_y_bottom = 379;
+
     // -- Calibration parameters for Writing to Arduino
     public float _calib_write_votage_x_left = 420;
     public float _calib_write_votage_x_right = 302;
@@ -44,8 +46,7 @@ public class CalibrationSceneDirector : MonoBehaviour
     public float _calib_write_votage_y_bottom = 80;
 
     // Think of the process of calibration is a state-machine
-    private enum CalibrationStates
-    {
+    private enum CalibrationStates {
         NOT_STARTED = 0,
         ANIMMOTION_START = 1,
 
@@ -69,8 +70,7 @@ public class CalibrationSceneDirector : MonoBehaviour
     private float mOriginalPlayerTargetSpeed;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    private void Start() {
         // Preserve the target camera position
         m3DSceneCameraPosition = camera3DScene.transform.position;
         m3DSceneCameraRotation = camera3DScene.transform.rotation;
@@ -107,30 +107,24 @@ public class CalibrationSceneDirector : MonoBehaviour
     float distCovered, progress;
 
     // Update is called once per frame
-    void Update()
-    {
-        calibration_state_update(false, false);
+    private void Update() {
+        CalibrationStateUpdate(false, false);
     }
 
     CalibrationOdysseySettings calibrationSettings;
 
-    void calibration_state_update(bool extra_btn_prev, bool extra_btn_next)
-    {
-
-        bool cancel_calibration = (enableCalibrationScene == false);
+    private void CalibrationStateUpdate(bool extraBtnPrev, bool extraBtnNext) {
+        bool cancelCalibration = (enableCalibrationScene == false);
         HardwareInterface.ConsoleData cData = consoleMirror.readControllerRawData();
-        if (cData != null)
-        {
-            textDBP1.text = string.Format("({0},{1})", cData.P1_X_READ, cData.P1_Y_READ);
-            textDBP2.text = string.Format("({0},{1})", cData.P2_X_READ, cData.P2_Y_READ);
+        if (cData != null) {
+            textDBP1.text = $"({cData.P1_X_READ},{cData.P1_Y_READ})";
+            textDBP2.text = $"({cData.P2_X_READ},{cData.P2_Y_READ})";
         }
 
         // Again, the process of calibration is a state-machine
-        switch (mCalibStates)
-        {
+        switch (mCalibStates) {
             case CalibrationStates.NOT_STARTED:
-                if (enableCalibrationScene)
-                {
+                if (enableCalibrationScene) {
                     cameraInGame.enabled = false;
                     camera3DScene.enabled = true;
                     // Keep a note of the time the movement started.
@@ -141,6 +135,7 @@ public class CalibrationSceneDirector : MonoBehaviour
 
                     mCalibStates += 1;
                 }
+
                 break;
             case CalibrationStates.ANIMMOTION_START:
                 mTextInstruction.text = "Calibrate your Odyssey Input";
@@ -151,13 +146,12 @@ public class CalibrationSceneDirector : MonoBehaviour
                 progress = cameraTimeCurve.Evaluate(distCovered / mAnimJourneyLength);
 
                 // Set our position as a fraction of the distance between the start-end.
-                camera3DScene.transform.position = Vector3.Slerp(
-                    cameraInGame.transform.position, m3DSceneCameraPosition, progress);
-                camera3DScene.transform.rotation = Quaternion.Slerp(
-                    cameraInGame.transform.rotation, m3DSceneCameraRotation, progress);
+                camera3DScene.transform.position =
+                    Vector3.Slerp(cameraInGame.transform.position, m3DSceneCameraPosition, progress);
+                camera3DScene.transform.rotation =
+                    Quaternion.Slerp(cameraInGame.transform.rotation, m3DSceneCameraRotation, progress);
 
-                if (progress >= 1)
-                {
+                if (progress >= 1) {
                     mCalibStates += 1;
                     mPlayerBlinkAnimation.enabled = true;
                 }
@@ -175,12 +169,11 @@ public class CalibrationSceneDirector : MonoBehaviour
             case CalibrationStates.CALIB_LEFT_TOP:
 
                 mTextInstruction.text = "Please use the controller on Odessey, \n" +
-                    "move player 1 to the upper-left corner\n" +
-                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
-                    "(1/4)";
+                                        "move player 1 to the upper-left corner\n" +
+                                        "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                                        "(1/4)";
 
-                if (cancel_calibration)
-                {
+                if (cancelCalibration) {
                     // Allow go back to the game scene any time
                     // Keep a note of the time the movement started.
                     mAnimStartTime = Time.time;
@@ -191,13 +184,14 @@ public class CalibrationSceneDirector : MonoBehaviour
                 // Move the p1 to top-left corner
                 p1.position = new Vector2(consoleMirror._calib_unity_x_left, consoleMirror._calib_unity_y_top);
 
-                if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next) {
+                if (Input.GetKeyUp(KeyCode.Return) || extraBtnNext) {
                     // Save the calibration value
                     _calib_votage_x_left = cData.P1_X_READ;
                     _calib_votage_y_top = cData.P1_Y_READ;
 
                     mCalibStates++;
-                } else if (extra_btn_prev) {
+                }
+                else if (extraBtnPrev) {
                     exit_scene();
                 }
 
@@ -207,11 +201,10 @@ public class CalibrationSceneDirector : MonoBehaviour
             case CalibrationStates.CALIB_RIGHT_BOTTOM:
 
                 mTextInstruction.text = "Now, move player 1 to the LOWER-RIGHT corner\n" +
-                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
-                    "(2/4)";
+                                        "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                                        "(2/4)";
 
-                if (cancel_calibration)
-                {
+                if (cancelCalibration) {
                     // Keep a note of the time the movement started.
                     mAnimStartTime = Time.time;
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
@@ -220,8 +213,7 @@ public class CalibrationSceneDirector : MonoBehaviour
 
                 p1.position = new Vector2(consoleMirror._calib_unity_x_right, consoleMirror._calib_unity_y_bottom);
 
-                if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
-                {
+                if (Input.GetKeyUp(KeyCode.Return) || extraBtnNext) {
                     // Save the calibration value
                     _calib_votage_x_right = cData.P1_X_READ;
                     _calib_votage_y_bottom = cData.P1_Y_READ;
@@ -229,8 +221,7 @@ public class CalibrationSceneDirector : MonoBehaviour
                     mCalibStates++;
                     textLeft.text = textRight.text = "";
                 }
-                else if (extra_btn_prev)
-                {
+                else if (extraBtnPrev) {
                     mCalibStates--;
                 }
 
@@ -247,44 +238,39 @@ public class CalibrationSceneDirector : MonoBehaviour
                 mCalibStates = CalibrationStates.CALIB_WRITE_LEFT_TOP;
 
                 // Set the p1 to an initial position (so that has some visibility on the screen)
-                p1.position = new Vector2(
-                    (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
-                    (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
-                );
+                p1.position = new Vector2((consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
+                                          (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2);
 
                 break;
 
             case CalibrationStates.CALIB_WRITE_LEFT_TOP:
-                mTextInstruction.text = "Use the controller on HAL," +
-                    "move the player to the upper-left corner\n" +
-                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
-                    "(3/4)";
+                mTextInstruction.text = "Use the controller on HAL," + "move the player to the upper-left corner\n" +
+                                        "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                                        "(3/4)";
 
-                if (cancel_calibration)
-                {
+                if (cancelCalibration) {
                     // Keep a note of the time the movement started.
                     mAnimStartTime = Time.time;
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
                     break;
                 }
 
-                if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
-                {
+                if (Input.GetKeyUp(KeyCode.Return) || extraBtnNext) {
                     // Save the calibration value
-                    _calib_write_votage_x_left = consoleMirror.xConvertToConsole(p1.position.x);
-                    _calib_write_votage_y_top = consoleMirror.xConvertToConsole(p1.position.y);
+                    var position = p1.position;
+                    _calib_write_votage_x_left = consoleMirror.xConvertToConsole(position.x);
+                    _calib_write_votage_y_top = consoleMirror.xConvertToConsole(position.y);
 
                     mCalibStates++;
                     textLeft.text = textRight.text = "";
 
                     // Again, set the p1 to an initial position for visibility
-                    p1.position = new Vector2(
-                        (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
-                        (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
-                    );
+                    position = new Vector2((consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
+                                           (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) /
+                                           2);
+                    p1.position = position;
                 }
-                else if (extra_btn_prev)
-                {
+                else if (extraBtnPrev) {
                     mCalibStates = CalibrationStates.PRE_CALIB;
                 }
 
@@ -293,29 +279,27 @@ public class CalibrationSceneDirector : MonoBehaviour
 
             case CalibrationStates.CALIB_WRITE_RIGHT_BOTTOM:
                 mTextInstruction.text = "Now, use the controller on HAL," +
-                    "move the player to the lower-right corner\n" +
-                    "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
-                    "(4/4)";
+                                        "move the player to the lower-right corner\n" +
+                                        "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
+                                        "(4/4)";
 
-                if (cancel_calibration)
-                {
+                if (cancelCalibration) {
                     // Keep a note of the time the movement started.
                     mAnimStartTime = Time.time;
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
                     break;
                 }
 
-                if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
-                {
+                if (Input.GetKeyUp(KeyCode.Return) || extraBtnNext) {
                     // Save the calibration value
-                    _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p1.position.x);
-                    _calib_write_votage_y_bottom = consoleMirror.xConvertToConsole(p1.position.y);
+                    var position = p1.position;
+                    _calib_write_votage_x_right = consoleMirror.xConvertToConsole(position.x);
+                    _calib_write_votage_y_bottom = consoleMirror.xConvertToConsole(position.y);
 
                     mCalibStates++;
                     textLeft.text = textRight.text = "";
                 }
-                else if (extra_btn_prev)
-                {
+                else if (extraBtnPrev) {
                     mCalibStates--;
                 }
 
@@ -324,19 +308,16 @@ public class CalibrationSceneDirector : MonoBehaviour
 
             case CalibrationStates.CALIB_FINISH:
 
-                mTextInstruction.text = "How well does the blocks on the TV follow?\n" +
-                    "";
+                mTextInstruction.text = "How well does the blocks on the TV follow?\n" + "";
 
-                if (cancel_calibration || extra_btn_next)
-                {
+                if (cancelCalibration || extraBtnNext) {
                     // Keep a note of the time the movement started.
                     mTextInstruction.text = "";
                     mAnimStartTime = Time.time;
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
                 }
 
-                if (extra_btn_next)
-                {
+                if (extraBtnNext) {
                     // On confirm, write the calibration data
                     consoleMirror._calib_votage_x_left = _calib_votage_x_left;
                     consoleMirror._calib_votage_x_right = _calib_votage_x_right;
@@ -350,8 +331,7 @@ public class CalibrationSceneDirector : MonoBehaviour
                     // restore the player target speed
                     p1.GetComponent<Actors.PlayerTargetController>().speed = mOriginalPlayerTargetSpeed;
                 }
-                else if (extra_btn_prev)
-                {
+                else if (extraBtnPrev) {
                     mCalibStates--;
                 }
 
@@ -364,13 +344,12 @@ public class CalibrationSceneDirector : MonoBehaviour
                 progress = cameraTimeCurve.Evaluate(distCovered / mAnimJourneyLength);
 
                 // Set our position as a fraction of the distance between the start-end.
-                camera3DScene.transform.position = Vector3.Slerp(
-                    m3DSceneCameraPosition, cameraInGame.transform.position, progress);
-                camera3DScene.transform.rotation = Quaternion.Slerp(
-                    m3DSceneCameraRotation, cameraInGame.transform.rotation, progress);
+                camera3DScene.transform.position =
+                    Vector3.Slerp(m3DSceneCameraPosition, cameraInGame.transform.position, progress);
+                camera3DScene.transform.rotation =
+                    Quaternion.Slerp(m3DSceneCameraRotation, cameraInGame.transform.rotation, progress);
 
-                if (progress >= 1)
-                {
+                if (progress >= 1) {
                     cameraInGame.enabled = true;
                     camera3DScene.enabled = false;
 
@@ -382,11 +361,12 @@ public class CalibrationSceneDirector : MonoBehaviour
                 }
 
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
-    void update_camera_look()
-    {
+    void update_camera_look() {
         mCamLookRotation.y += Input.GetAxis("Mouse X");
         mCamLookRotation.x += -Input.GetAxis("Mouse Y");
         mCamLookRotation.y = Mathf.Clamp(mCamLookRotation.y, -1.5f, 1.5f);
@@ -394,21 +374,18 @@ public class CalibrationSceneDirector : MonoBehaviour
         camera3DScene.transform.localEulerAngles = mCamLookRotation * CamLookRate;
     }
 
-    public void on_prev_button()
-    {
-        calibration_state_update(true, false);
+    public void on_prev_button() {
+        CalibrationStateUpdate(true, false);
     }
-    
-    public void on_next_button()
-    {
-        calibration_state_update(false, true);
+
+    public void on_next_button() {
+        CalibrationStateUpdate(false, true);
     }
 
     /// <summary>
     /// Exit the calibration scene
     /// </summary>
-    void exit_scene()
-    {
+    void exit_scene() {
         // Go back to the main menu
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }

@@ -1,82 +1,106 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using CardDirection;
+﻿using CardDirection;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
-public class ModeDirector : MonoBehaviour
-{
-    public GameObject go_calibration;
-    public GameObject go_AI;
+public class ModeDirector : MonoBehaviour {
+    public GameObject calibration;
+    public GameObject AI;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        //if (localInputManager.isdirty)
-        //{
-        // Enable calibration
-
-        if (LocalInputManager.instance == null)
-        {
-            // fixme
-            go_calibration.GetComponent<CalibrationDirectorNew>()
-                .afterCalibration.AddListener(StartGame_CatAI);
-            go_calibration.GetComponent<CalibrationOdysseySettings>().p2_read = true;
-            StartCalibration();
-
-            return;
+    private void Awake() {
+        switch (PlayerPrefs.GetString("game")) {
+            case "Cat and Mouse":
+                // load cat and mouse after calibration
+                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
+                break;
+            case "Super Cat and Mouse":
+                break;
+            case "Haunted House":
+                break;
+            case "Zoo Breakout":
+                break;
+            case "Football: Running":
+                break;
+            case "Tennis":
+                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartTennis);
+                break;
         }
 
-        if (LocalInputManager.instance.p1Scheme
-            == LocalInputManager.ControlScheme.AI)
-        {
-            go_calibration.GetComponent<CalibrationDirectorNew>()
-                .afterCalibration.AddListener(StartGame_CatAI);
-        }
-        if (LocalInputManager.instance.p1Scheme
-            == LocalInputManager.ControlScheme.OriginalConsole)
-        {
-            go_calibration.GetComponent<CalibrationOdysseySettings>().p1_read = true;
-        }
-        if (LocalInputManager.instance.p2Scheme
-            == LocalInputManager.ControlScheme.OriginalConsole)
-        {
-            go_calibration.GetComponent<CalibrationOdysseySettings>().p2_read = true;
-        }
+        var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+        // if both input schemes are keyboard, then no need for overlay
+        if ((p1Input == LocalInputManager.ControlScheme.Keyboard &&
+             p2Input == LocalInputManager.ControlScheme.Keyboard) ||
+            (p1Input == LocalInputManager.ControlScheme.AI && p2Input == LocalInputManager.ControlScheme.AI))
+            calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = false;
+        else
+            calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = true;
+
+        // if p1 is ai or keyboard, don't read calibration
+        if (p1Input == LocalInputManager.ControlScheme.AI || p1Input == LocalInputManager.ControlScheme.Keyboard)
+            calibration.GetComponent<CalibrationOdysseySettings>().p1_read = false;
+
+        // if p2 is ai or keyboard, don't read calibration
+        if (p2Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.Keyboard)
+            calibration.GetComponent<CalibrationOdysseySettings>().p2_read = false;
 
         StartCalibration();
-
-        //}
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void StartCatAndMouse() {
+        calibration.SetActive(false);
+        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
+        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+
+        var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+        if (p1Input == LocalInputManager.ControlScheme.AI) {
+            p1.GetComponent<NavMeshAgent>().enabled = true;
+            p1.GetComponent<CatAI>().enabled = true;
+            p1.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
+        }
+
+        if (p2Input == LocalInputManager.ControlScheme.AI) {
+            p2.GetComponent<NavMeshAgent>().enabled = true;
+            p2.GetComponent<MouseAI>().enabled = true;
+            p2.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
+        }
+
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+            AI.SetActive(true);
     }
 
-    public void StartGame_CatAI()
-    {
-        Debug.Log("in StartGame_CatAI");
-        go_calibration.SetActive(false);
-        GameObject p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
-        p1.GetComponent<NavMeshAgent>().enabled = true;
-        go_AI.SetActive(true);
+    private void StartTennis() {
+        calibration.SetActive(false);
+        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
+        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+
+        var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+        if (p1Input == LocalInputManager.ControlScheme.AI) {
+            p1.GetComponent<NavMeshAgent>().enabled = true;
+            p1.GetComponent<CatAI>().enabled = true;
+            p1.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
+        }
+
+        if (p2Input == LocalInputManager.ControlScheme.AI) {
+            p2.GetComponent<NavMeshAgent>().enabled = true;
+            p2.GetComponent<MouseAI>().enabled = true;
+            p2.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
+        }
+
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+            AI.SetActive(true);
     }
 
-    public void StartCalibration()
-    {
-        // Turn Off Cat AI
-        go_AI.SetActive(false);
-        GameObject p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
-        p1.GetComponent<NavMeshAgent>().enabled = false;
-
-        go_calibration.SetActive(true);
-    }
-
-    public void StartGame_2p()
-    {
-
+    private void StartCalibration() {
+        AI.SetActive(false);
+        calibration.SetActive(true);
     }
 }
