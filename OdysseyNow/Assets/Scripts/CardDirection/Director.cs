@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -36,9 +35,9 @@ namespace CardDirection
 
         /* For reference:
          * public void UpdateAll(
-         *      bool _secondPlayer, 
-         *      bool _includeBall, 
-         *      bool _includeWall, 
+         *      bool _secondPlayer,
+         *      bool _includeBall,
+         *      bool _includeWall,
          *      int _wallPosition: 0, 1, 2
          *      int _wallHeight: 0, 1
          *      string _wallBallCollision : Pass, Extinguish, None
@@ -48,7 +47,7 @@ namespace CardDirection
          *      string _onResetExtinguish : None, P1 & P2, P2. Ball
          * )
          */
-        
+
         /// <summary>
         /// On start, set parameters based on card number, set settings based on main menu configuration, and choose the right pause menu
         /// </summary>

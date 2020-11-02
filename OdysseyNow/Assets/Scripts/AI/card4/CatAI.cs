@@ -9,7 +9,7 @@ public class CatAI : MonoBehaviour
     public GameObject target;
     private NavMeshAgent agent;
     public bool stop;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class CatAI : MonoBehaviour
 
         if ((transform.position - target.transform.position).magnitude < 1 && !stop)
         {
-            stop = true;
+            //stop = true;
             //target.GetComponent<Navigate>().enabled = false;
             //Canvas canvas = FindObjectOfType<Canvas>();
             //var gameOver = canvas.transform.Find("Panel");
