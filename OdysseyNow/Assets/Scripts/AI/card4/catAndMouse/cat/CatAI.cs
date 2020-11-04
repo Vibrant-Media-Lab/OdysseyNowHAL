@@ -6,14 +6,15 @@ public class CatAI : MonoBehaviour {
     private float period = 2f;
     private NavMeshAgent agent;
 
-    public GameObject target;
+    public Transform target;
+    public GameObject cat;
     public int level;
 
     // Start is called before the first frame update
     private void Start() {
         // Agent tend to rotate game object, that can be
         //      undesirable
-        agent = GetComponent<NavMeshAgent>();
+        agent = cat.GetComponent<NavMeshAgent>();
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -25,13 +26,13 @@ public class CatAI : MonoBehaviour {
             return;
         }
 
-        if ((transform.position - target.transform.position).magnitude < 1) {
+        if ((transform.position - target.position).magnitude < 1) {
             Debug.Log("Cat has the mouse.");
         }
 
         switch (level) {
             case 1:
-                agent.SetDestination(target.transform.position);
+                agent.SetDestination(target.position);
                 // if (Time.time > nextActionTime) {
                 //     nextActionTime += Time.time + period;
                 //     agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
