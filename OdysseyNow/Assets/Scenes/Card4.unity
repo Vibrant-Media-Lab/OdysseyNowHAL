@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 93647768}
   - component: {fileID: 93647769}
   m_Layer: 0
-  m_Name: AI-SuperCatAndMouseStonehenge
+  m_Name: SCAM-Stonehenge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6467,7 +6467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1354274593
 Transform:
   m_ObjectHideFlags: 0
@@ -7947,7 +7947,7 @@ GameObject:
   - component: {fileID: 1405386638}
   - component: {fileID: 1405386639}
   m_Layer: 0
-  m_Name: AI-CatAndMouse
+  m_Name: CatAndMouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33061,7 +33061,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.016666668
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 0b3a1d0272060e04fbbacabcd21141e1, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: d417c732518afab4e9956bdcec3a9b7d, type: 2}
 --- !u!850595691 &2024151680
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -33635,7 +33635,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.016666668
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 808909ec7f6693b40a289020769e0c72, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: cd50da1caa3ec4f4eb641a9ff3216653, type: 2}
 --- !u!1 &2127914509
 GameObject:
   m_ObjectHideFlags: 0
