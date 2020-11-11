@@ -68,7 +68,7 @@ namespace CardDirection
                     menu.GetComponent<MenuDirector>().UpdateAll(true, false, false, 1, 1, "Pass", "Extinguish", "Bounce", false, "P2");
                     break;
                 case 5:
-                    menu.GetComponent<MenuDirector>().UpdateAll(true, true, false, 1, 1, "Pass", "None", "Extinguish", false, "P2");
+                    menu.GetComponent<MenuDirector>().UpdateAll(true, true, false, 2, 1, "Pass", "None", "Extinguish", false, "P2");
                     break;
                 case 6:
                     menu.GetComponent<MenuDirector>().UpdateAll(false, false, false, 1, 1, "Pass", "None", "Bounce", true, "None");
