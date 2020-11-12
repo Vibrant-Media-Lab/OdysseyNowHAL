@@ -17,6 +17,7 @@ public class ModeDirector : MonoBehaviour {
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartSuperCatAndMouse);
                 break;
             case "Haunted House":
+                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartHauntedHouse);
                 break;
             case "Zoo Breakout":
                 break;
@@ -104,6 +105,39 @@ public class ModeDirector : MonoBehaviour {
             game.SetActive(true);
             AI.SetActive(true);
         }
+    }
+
+    private void StartHauntedHouse()
+    {
+        calibration.SetActive(false);
+        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
+        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+        var game = AI.transform.Find("CatAndMouse").gameObject;
+
+        var p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+        if (p1Input == LocalInputManager.ControlScheme.AI)
+        {
+            p1.GetComponent<NavMeshAgent>().enabled = true;
+            game.GetComponent<CatAI>().enabled = true;
+            game.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
+        }
+
+        if (p2Input == LocalInputManager.ControlScheme.AI)
+        {
+            p2.GetComponent<NavMeshAgent>().enabled = true;
+            game.GetComponent<MouseAI>().enabled = true;
+            game.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
+        }
+
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+        {
+            game.SetActive(true);
+            AI.SetActive(true);
+        }
+
     }
 
     private void StartTennis() {
