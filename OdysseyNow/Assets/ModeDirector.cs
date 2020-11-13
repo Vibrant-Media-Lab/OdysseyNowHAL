@@ -111,7 +111,7 @@ public class ModeDirector : MonoBehaviour {
         calibration.SetActive(false);
         var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
         var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
-        var game = AI.transform.Find("CatAndMouse").gameObject;
+        var game = AI.transform.Find("HauntedHouse").gameObject;
 
         var p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P1Input"));
@@ -120,15 +120,16 @@ public class ModeDirector : MonoBehaviour {
         if (p1Input == LocalInputManager.ControlScheme.AI)
         {
             p1.GetComponent<NavMeshAgent>().enabled = true;
-            game.GetComponent<CatAI>().enabled = true;
-            game.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
+            game.GetComponent<GhostAI>().enabled = true;
+            game.GetComponent<GhostAI>().level = PlayerPrefs.GetInt("ai1");
         }
 
         if (p2Input == LocalInputManager.ControlScheme.AI)
         {
+            Debug.Log("This needs to not be allowed.");
             p2.GetComponent<NavMeshAgent>().enabled = true;
-            game.GetComponent<MouseAI>().enabled = true;
-            game.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
+            game.GetComponent<GhostAI>().enabled = true;
+            game.GetComponent<GhostAI>().level = PlayerPrefs.GetInt("ai2");
         }
 
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
