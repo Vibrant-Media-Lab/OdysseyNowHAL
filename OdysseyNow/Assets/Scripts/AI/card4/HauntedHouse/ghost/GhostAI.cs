@@ -5,17 +5,14 @@ public class GhostAI : MonoBehaviour {
     private float nextActionTime = 0.0f;
     private float period = 2f;
     private NavMeshAgent agent;
-
     public Transform target;
     public GameObject ghost;
     public int level;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame updates
     private void Start() {
-        // Agent tend to rotate game object, that can be
-        //      undesirable
         agent = ghost.GetComponent<NavMeshAgent>();
-
+        // The agent tends to rotate the game object, that can be undesirable
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -32,11 +29,12 @@ public class GhostAI : MonoBehaviour {
 
         switch (level) {
             case 1:
-                agent.SetDestination(target.position);
-                // if (Time.time > nextActionTime) {
-                //     nextActionTime += Time.time + period;
-                //     agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
-                // }
+                //agent.SetDestination(target.position);
+                if (Time.time > nextActionTime)
+                {
+                    nextActionTime += Time.time + period;
+                    agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
+                }
 
                 break;
             case 2:

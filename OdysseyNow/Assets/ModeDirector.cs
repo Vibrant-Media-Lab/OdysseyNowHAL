@@ -6,11 +6,9 @@ public class ModeDirector : MonoBehaviour {
     public GameObject calibration;
     public GameObject AI;
 
-    // Start is called before the first frame update
     private void Awake() {
         switch (PlayerPrefs.GetString("game")) {
             case "Cat and Mouse":
-                // load cat and mouse after calibration
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
                 break;
             case "Super Cat and Mouse":
@@ -117,27 +115,18 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
-        if (p1Input == LocalInputManager.ControlScheme.AI)
-        {
-            p1.GetComponent<NavMeshAgent>().enabled = true;
-            game.GetComponent<GhostAI>().enabled = true;
-            game.GetComponent<GhostAI>().level = PlayerPrefs.GetInt("ai1");
-        }
 
-        if (p2Input == LocalInputManager.ControlScheme.AI)
-        {
-            Debug.Log("This needs to not be allowed.");
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
+            //Need to set it to the correct place near the door.
+            p2.GetComponent<NavMeshAgent>().SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
+            p2.transform.localScale = new Vector3(10, 10, 10);
+
             p2.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<GhostAI>().enabled = true;
             game.GetComponent<GhostAI>().level = PlayerPrefs.GetInt("ai2");
-        }
-
-        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
-        {
             game.SetActive(true);
             AI.SetActive(true);
         }
-
     }
 
     private void StartTennis() {
