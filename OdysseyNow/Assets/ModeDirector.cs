@@ -82,6 +82,7 @@ public class ModeDirector : MonoBehaviour {
         calibration.SetActive(false);
         var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
         var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+        var game = AI.transform.Find("SCAM-Stonehenge").gameObject;
 
         var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P1Input"));
@@ -89,18 +90,18 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P2Input"));
         if (p1Input == LocalInputManager.ControlScheme.AI) {
             p1.GetComponent<NavMeshAgent>().enabled = true;
-            p1.GetComponent<CatAI>().enabled = true;
-            p1.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
+            game.GetComponent<CatAI>().enabled = true;
+            game.GetComponent<CatAI>().level = PlayerPrefs.GetInt("ai1");
         }
 
         if (p2Input == LocalInputManager.ControlScheme.AI) {
             p2.GetComponent<NavMeshAgent>().enabled = true;
-            p2.GetComponent<MouseAI>().enabled = true;
-            p2.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
+            game.GetComponent<MouseAI>().enabled = true;
+            game.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
         }
 
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
-            AI.transform.Find("SCAM-Stonehenge").gameObject.SetActive(true);
+            game.SetActive(true);
             AI.SetActive(true);
         }
     }
