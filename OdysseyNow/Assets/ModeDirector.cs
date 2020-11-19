@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class ModeDirector : MonoBehaviour {
     public GameObject calibration;
     public GameObject AI;
@@ -117,13 +118,15 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P2Input"));
 
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
-            //Need to set it to the correct place near the door.
-            p2.GetComponent<NavMeshAgent>().SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
-            p2.transform.localScale = new Vector3(10, 10, 10);
+            //TODO: Need to set it to the correct place near the door.
+            //p1.GetComponent<NavMeshAgent>().SetDestination(new Vector3(0, 0, 0));
+            //p2.GetComponent<NavMeshAgent>().SetDestination(new Vector3(0, 0, 0));
 
+            p1.transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
+            p2.transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
             p2.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<GhostAI>().enabled = true;
-            game.GetComponent<GhostAI>().level = PlayerPrefs.GetInt("ai2");
+            game.GetComponent<GhostAI>().level = 1;
             game.SetActive(true);
             AI.SetActive(true);
         }
