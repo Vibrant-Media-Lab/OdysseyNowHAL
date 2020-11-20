@@ -25,6 +25,9 @@ public class ModeDirector : MonoBehaviour {
             case "Tennis":
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartTennis);
                 break;
+            case "Wipeout":
+                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartWipeout);
+                break;
         }
 
         var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
@@ -128,6 +131,35 @@ public class ModeDirector : MonoBehaviour {
 
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
             AI.SetActive(true);
+    }
+
+    private void StartWipeout() {
+        calibration.SetActive(false);
+        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
+        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+        var game = AI.transform.Find("Wipeout").gameObject;
+
+        var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+        if (p1Input == LocalInputManager.ControlScheme.AI) {
+            p1.GetComponent<NavMeshAgent>().enabled = true;
+            game.GetComponent<Wipeout_clock>().enabled = true;
+            game.GetComponent<Wipeout_clock>().level = PlayerPrefs.GetInt("ai1");
+        }
+
+        if (p2Input == LocalInputManager.ControlScheme.AI) {
+            p2.GetComponent<NavMeshAgent>().enabled = true;
+            game.GetComponent<Wipeout_car>().enabled = true;
+            game.GetComponent<Wipeout_car>().level = PlayerPrefs.GetInt("ai2");
+        }
+
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
+            game.SetActive(true);
+            AI.SetActive(true);
+        }
+
     }
 
     private void StartCalibration() {
