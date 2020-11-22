@@ -44,7 +44,7 @@ public class CalibrationDirectorNew : MonoBehaviour {
         mStepPipe.Add(new S0_2D3DAnimation(this, cameraInGame, camera3DScene));
         mStepPipe.Add(new S1_Devices(this));
 
-        if (mCalibrationSettings.useOverlay)
+        if (mCalibrationSettings.useOverlay && PlayerPrefs.GetInt("console_connected") == 1)
         {
             mStepPipe.Add(new S2_Overlay(this, mCalibrationSettings.overlay_extra_text));
         }
@@ -129,7 +129,7 @@ public class CalibrationDirectorNew : MonoBehaviour {
     }
 
     public string GetCurrentStepCount() {
-        return "(" + (mCurrentStepIndex + 1) + "/" + mStepPipe.Count + ")";
+        return "(" + (mCurrentStepIndex + 1) + "/" + (mStepPipe.Count - 1) + ")";
     }
 
     /// <summary>
