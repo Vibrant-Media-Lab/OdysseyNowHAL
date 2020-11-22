@@ -319,7 +319,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21414805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -5932,9 +5932,13 @@ MonoBehaviour:
   calibdefs:
   - {fileID: 414618494}
   - {fileID: 1646953207}
+  spot_left:
+  - the mouse
+  - the cheese
+  spot_right:
+  - the cat
+  - the cheese
   overlay_extra_text: 
-  overlay_topLeft_extra_text: 
-  overlay_bottomRight_extra_text: 
   _calib_p1_read_votage_x_left: 617
   _calib_p1_read_votage_y_top: 711
   _calib_p1_read_votage_x_right: 300
@@ -34319,7 +34323,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5755280646347381176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5

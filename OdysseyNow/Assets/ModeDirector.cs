@@ -10,7 +10,6 @@ public class ModeDirector : MonoBehaviour {
     private void Awake() {
         switch (PlayerPrefs.GetString("game")) {
             case "Cat and Mouse":
-                // load cat and mouse after calibration
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
                 break;
             case "SCAM-Stonehendge":
@@ -56,6 +55,12 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
+        
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
+            game.SetActive(true);
+            AI.SetActive(true);
+        }
+        
         if (p1Input == LocalInputManager.ControlScheme.AI) {
             p1.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<CatAI>().enabled = true;
@@ -66,11 +71,6 @@ public class ModeDirector : MonoBehaviour {
             p2.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<MouseAI>().enabled = true;
             game.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
-        }
-
-        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
-            game.SetActive(true);
-            AI.SetActive(true);
         }
 
     }
@@ -85,6 +85,12 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
+        
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
+            game.SetActive(true);
+            AI.SetActive(true);
+        }
+        
         if (p1Input == LocalInputManager.ControlScheme.AI) {
             p1.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<CatAI>().enabled = true;
@@ -95,11 +101,6 @@ public class ModeDirector : MonoBehaviour {
             p2.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<MouseAI>().enabled = true;
             game.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
-        }
-
-        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
-            game.SetActive(true);
-            AI.SetActive(true);
         }
     }
 
@@ -112,6 +113,10 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
+        
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+            AI.SetActive(true);
+        
         if (p1Input == LocalInputManager.ControlScheme.AI) {
             p1.GetComponent<NavMeshAgent>().enabled = true;
             p1.GetComponent<CatAI>().enabled = true;
@@ -123,9 +128,6 @@ public class ModeDirector : MonoBehaviour {
             p2.GetComponent<MouseAI>().enabled = true;
             p2.GetComponent<MouseAI>().level = PlayerPrefs.GetInt("ai2");
         }
-
-        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
-            AI.SetActive(true);
     }
 
     private void StartCalibration() {

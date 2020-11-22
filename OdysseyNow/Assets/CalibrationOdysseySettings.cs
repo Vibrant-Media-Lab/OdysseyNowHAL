@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -16,12 +17,14 @@ public class CalibrationOdysseySettings : MonoBehaviour
 
     public List<string> games;
     public List<GameObject> calibdefs;
+    
+    public List<string> spot_left;
+    
+    public List<string> spot_right;
 
-    public Dictionary<string, GameObject> overlays;
+    public Dictionary<string, List<object>> game_data;
 
     public string overlay_extra_text;
-    public string overlay_topLeft_extra_text;
-    public string overlay_bottomRight_extra_text;
 
     [Header("Calibration Step 3:")]
     public float _calib_p1_read_votage_x_left = 617;
@@ -56,9 +59,13 @@ public class CalibrationOdysseySettings : MonoBehaviour
 
     void Awake()
     {
-        overlays = new Dictionary<string, GameObject>();
-        for(int i = 0; i < games.Count; i++) {
-            overlays.Add(games[i], calibdefs[i]);
+        game_data = new Dictionary<string, List<object>>();
+        for(int i = 0; i < games.Count; i++)
+        {
+            game_data.Add(games[i], new List<object>());
+            game_data[games[i]].Add(calibdefs[i]);
+            game_data[games[i]].Add(spot_left[i]);
+            game_data[games[i]].Add(spot_right[i]);
         }
     }
 }

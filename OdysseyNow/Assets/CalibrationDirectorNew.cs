@@ -57,10 +57,10 @@ public class CalibrationDirectorNew : MonoBehaviour {
 
             // if screen overlay is used
             if (mCalibrationSettings.useOverlay) {
-                mStepPipe.Add(new S3_CalibRead(this, mCalibrationSettings.overlay_topLeft_extra_text,
-                                               mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerReadName, "top-left"));
-                mStepPipe.Add(new S3_CalibRead(this, mCalibrationSettings.overlay_bottomRight_extra_text,
-                                               mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerReadName,
+                mStepPipe.Add(new S3_CalibRead(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][1],
+                                               (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerReadName, "top-left"));
+                mStepPipe.Add(new S3_CalibRead(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][2],
+                                               (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerReadName,
                                                "bottom-right"));
             }
             else {
@@ -79,10 +79,10 @@ public class CalibrationDirectorNew : MonoBehaviour {
 
             // if screen overlay is used
             if (mCalibrationSettings.useOverlay) {
-                mStepPipe.Add(new S4_CalibWrite(this, mCalibrationSettings.overlay_topLeft_extra_text,
-                                                mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerWriteName, "top-left"));
-                mStepPipe.Add(new S4_CalibWrite(this, mCalibrationSettings.overlay_bottomRight_extra_text,
-                                                mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerWriteName,
+                mStepPipe.Add(new S4_CalibWrite(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][1],
+                                                (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerWriteName, "top-left"));
+                mStepPipe.Add(new S4_CalibWrite(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][2],
+                                                (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerWriteName,
                                                 "bottom-right"));
             }
             else {
