@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEditorInternal;
 
 public class CalibrationOdysseySettings : MonoBehaviour
 {
@@ -11,13 +13,14 @@ public class CalibrationOdysseySettings : MonoBehaviour
 
     [Header("Calibration Step 2:")]
     public bool useOverlay;
-    public SpriteRenderer screenOverlay;
+
+    public List<string> games;
+    public List<GameObject> calibdefs;
+
+    public Dictionary<string, GameObject> overlays;
+
     public string overlay_extra_text;
-
-    public GameObject overlay_topLeft;
     public string overlay_topLeft_extra_text;
-
-    public GameObject overlay_bottomRight;
     public string overlay_bottomRight_extra_text;
 
     [Header("Calibration Step 3:")]
@@ -25,7 +28,7 @@ public class CalibrationOdysseySettings : MonoBehaviour
     public float _calib_p1_read_votage_y_top = 711;
     public float _calib_p1_read_votage_x_right = 300;
     public float _calib_p1_read_votage_y_bottom = 379;
-                       
+
     public float _calib_p1_write_votage_x_left = 420;
     public float _calib_p1_write_votage_y_top = 180;
     public float _calib_p1_write_votage_x_right = 302;
@@ -51,15 +54,11 @@ public class CalibrationOdysseySettings : MonoBehaviour
     public float _calib_unity_y_top = 4.4f;
     public float _calib_unity_y_bottom = -4.4f;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        overlays = new Dictionary<string, GameObject>();
+        for(int i = 0; i < games.Count; i++) {
+            overlays.Add(games[i], calibdefs[i]);
+        }
     }
 }

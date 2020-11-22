@@ -57,9 +57,9 @@ public class CalibrationDirectorNew : MonoBehaviour {
             // if screen overlay is used
             if (mCalibrationSettings.useOverlay) {
                 mStepPipe.Add(new S3_CalibRead(this, mCalibrationSettings.overlay_topLeft_extra_text,
-                                               mCalibrationSettings.overlay_topLeft, playerReadName, "top-left"));
+                                               mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerReadName, "top-left"));
                 mStepPipe.Add(new S3_CalibRead(this, mCalibrationSettings.overlay_bottomRight_extra_text,
-                                               mCalibrationSettings.overlay_bottomRight, playerReadName,
+                                               mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerReadName,
                                                "bottom-right"));
             }
             else {
@@ -79,9 +79,9 @@ public class CalibrationDirectorNew : MonoBehaviour {
             // if screen overlay is used
             if (mCalibrationSettings.useOverlay) {
                 mStepPipe.Add(new S4_CalibWrite(this, mCalibrationSettings.overlay_topLeft_extra_text,
-                                                mCalibrationSettings.overlay_topLeft, playerWriteName, "top-left"));
+                                                mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerWriteName, "top-left"));
                 mStepPipe.Add(new S4_CalibWrite(this, mCalibrationSettings.overlay_bottomRight_extra_text,
-                                                mCalibrationSettings.overlay_bottomRight, playerWriteName,
+                                                mCalibrationSettings.overlays[PlayerPrefs.GetString("game")], playerWriteName,
                                                 "bottom-right"));
             }
             else {
@@ -364,6 +364,7 @@ class S3_CalibRead : IStateStep {
         }
 
         mOverlaySpot.SetActive(true);
+        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(true);
 
         // Append extra text
         if (mOverlayExtraText.TrimStart().TrimEnd() != "") {
@@ -443,7 +444,9 @@ class S3_CalibRead : IStateStep {
                 break;
         }
 
+        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(false);
         mOverlaySpot.SetActive(false);
+
     }
 
     void IStateStep.Step() {
@@ -490,6 +493,7 @@ class S4_CalibWrite : IStateStep {
         }
 
         mOverlaySpot.SetActive(true);
+        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(true);
 
         // Append extra text
         if (mOverlayExtraText.TrimStart().TrimEnd() != "") {
@@ -561,6 +565,7 @@ class S4_CalibWrite : IStateStep {
                 break;
         }
 
+        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(false);
         mOverlaySpot.SetActive(false);
     }
 
