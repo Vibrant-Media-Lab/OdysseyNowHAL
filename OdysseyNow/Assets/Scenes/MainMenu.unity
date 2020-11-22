@@ -6318,7 +6318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   otherMenu: {fileID: 448613491}
   gameSelect: {fileID: 0}
-  connectToggle: {fileID: 0}
+  connectToggle: {fileID: 1882719786}
 --- !u!114 &820210557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11469,7 +11469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   otherMenu: {fileID: 448613491}
   gameSelect: {fileID: 0}
-  connectToggle: {fileID: 0}
+  connectToggle: {fileID: 1882719786}
 --- !u!114 &1499487536
 MonoBehaviour:
   m_ObjectHideFlags: 0

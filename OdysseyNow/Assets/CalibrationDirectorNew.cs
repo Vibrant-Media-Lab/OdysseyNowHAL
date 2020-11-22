@@ -44,12 +44,13 @@ public class CalibrationDirectorNew : MonoBehaviour {
         mStepPipe.Add(new S0_2D3DAnimation(this, cameraInGame, camera3DScene));
         mStepPipe.Add(new S1_Devices(this));
 
-        if (mCalibrationSettings.useOverlay) {
+        if (mCalibrationSettings.useOverlay)
+        {
             mStepPipe.Add(new S2_Overlay(this, mCalibrationSettings.overlay_extra_text));
         }
 
         // if we need read calibration
-        if (mCalibrationSettings.p1_read || mCalibrationSettings.p2_read) {
+        if (mCalibrationSettings.p1_read || mCalibrationSettings.p2_read && PlayerPrefs.GetInt("console_connected") == 1) {
             // find a player in read mode
             var playerReadName = mCalibrationSettings.p1_read ? "P1" : "P2";
             Debug.Log("Read mode player: " + playerReadName);
@@ -72,7 +73,7 @@ public class CalibrationDirectorNew : MonoBehaviour {
         }
 
         // if we need write calibration
-        if (!mCalibrationSettings.p1_read || !mCalibrationSettings.p2_read) {
+        if (!mCalibrationSettings.p1_read || !mCalibrationSettings.p2_read && PlayerPrefs.GetInt("console_connected") == 1) {
             // find a player in write mode
             var playerWriteName = !mCalibrationSettings.p1_read ? "P1" : "P2";
 

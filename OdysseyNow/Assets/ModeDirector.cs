@@ -13,7 +13,7 @@ public class ModeDirector : MonoBehaviour {
                 // load cat and mouse after calibration
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
                 break;
-            case "Super Cat and Mouse":
+            case "SCAM-Stonehendge":
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartSuperCatAndMouse);
                 break;
             case "Haunted House":
@@ -34,10 +34,6 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
-        // if both input schemes are keyboard or AI, then no need to calibrate overlay
-        if ((p1Input == LocalInputManager.ControlScheme.Keyboard || p1Input == LocalInputManager.ControlScheme.AI) &&
-            (p2Input == LocalInputManager.ControlScheme.Keyboard || p2Input == LocalInputManager.ControlScheme.AI))
-            calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = false;
 
         // if p1 is ai or keyboard, don't read calibration
         if (p1Input == LocalInputManager.ControlScheme.AI || p1Input == LocalInputManager.ControlScheme.Keyboard)
