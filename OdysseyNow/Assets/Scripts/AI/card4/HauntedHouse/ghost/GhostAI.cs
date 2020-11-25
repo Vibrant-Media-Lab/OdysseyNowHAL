@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class GhostAI : MonoBehaviour {
     private NavMeshAgent agent;
-    public Transform detective;
+    public Transform target;
     public GameObject ghost;
     public int level;
     public bool ghost_has_hidden, detective_is_close, ghost_has_been_touched, ghost_has_finished_tasks;
@@ -30,7 +30,7 @@ public class GhostAI : MonoBehaviour {
         // The agent tends to rotate the game object, that can be undesirable
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        GoAndHideAt(UnityEngine.Random.Range(0, x_locations.Length));
+        //ExtinguishToggle();
     }
 
     // Update is called once per frame
@@ -41,25 +41,23 @@ public class GhostAI : MonoBehaviour {
 
         switch (level) {
             case 1:
-                Debug.Log((transform.position - detective.position).magnitude);
-
-                if ((transform.position - detective.position).magnitude < 1)
+                //GoAndHideAt(UnityEngine.Random.Range(0, x_locations.Length));
+                Debug.Log((transform.position - target.position).magnitude);
+                if ((transform.position - target.position).magnitude < 1)
                 {
                     Debug.Log("Detective is close.");
                     detective_is_close = true;
-                    //ExtinguishToggle();
+                    ExtinguishToggle();
                     Debug.Log("BOO!");
                 }
 
-                //if (!ghost_has_hidden)
-                //{
-                //    GoAndHideAt(UnityEngine.Random.Range(0, x_locations.Length));
+                //if (!ghost_has_hidden) {
+                //    GoAndHideAt(UnityEngine.Random.Range(0,x_locations.Length));
                 //    ghost_has_hidden = true;
                 //}
-
                 //else if (!detective_is_close)
                 //{
-                //    if ((transform.position - detective.position).magnitude < 2)
+                //    if ((transform.position - target.position).magnitude < 2)
                 //    {
                 //        Debug.Log("Detective is close.");
                 //        detective_is_close = true;
@@ -67,10 +65,9 @@ public class GhostAI : MonoBehaviour {
                 //        Debug.Log("BOO!");
                 //    }
                 //}
-
                 //else if (!ghost_has_been_touched)
                 //{
-                //    if ((transform.position - detective.position).magnitude < 1)
+                //    if ((transform.position - target.position).magnitude < 1)
                 //    {
                 //        Debug.Log("Detective touched Ghost.");
                 //        ghost_has_been_touched = true;
@@ -94,7 +91,7 @@ public class GhostAI : MonoBehaviour {
 
     private bool TheDetectiveIsAtTheTreasure()
     {
-        if ((treasure_location - detective.position).magnitude < 1) return true;
+        if ((treasure_location - target.position).magnitude < 1) return true;
         return false;
     }
 
