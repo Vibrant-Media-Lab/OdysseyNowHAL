@@ -38,6 +38,8 @@ public class ModeDirector : MonoBehaviour {
         else
             calibration.GetComponent<CalibrationOdysseySettings>().useOverlay = true;
 
+        StartCalibration();
+
         // if p1 is ai or keyboard, don't read calibration
         if (p1Input == LocalInputManager.ControlScheme.AI || p1Input == LocalInputManager.ControlScheme.Keyboard)
             calibration.GetComponent<CalibrationOdysseySettings>().p1_read = false;
@@ -45,8 +47,6 @@ public class ModeDirector : MonoBehaviour {
         // if p2 is ai or keyboard, don't read calibration
         if (p2Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.Keyboard)
             calibration.GetComponent<CalibrationOdysseySettings>().p2_read = false;
-
-        StartCalibration();
     }
 
     private void StartCatAndMouse() {
