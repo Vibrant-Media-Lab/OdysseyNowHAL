@@ -108,8 +108,8 @@ public class ModeDirector : MonoBehaviour {
     private void StartHauntedHouse()
     {
         calibration.SetActive(false);
-        var p1 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player1");
         var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
+
         var game = AI.transform.Find("HauntedHouse").gameObject;
 
         var p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
@@ -118,12 +118,7 @@ public class ModeDirector : MonoBehaviour {
                                                                           PlayerPrefs.GetString("P2Input"));
 
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
-            //TODO: Need to set it to the correct place near the door.
-            //p1.GetComponent<NavMeshAgent>().SetDestination(new Vector3(0, 0, 0));
-            //p2.GetComponent<NavMeshAgent>().SetDestination(new Vector3(0, 0, 0));
-
-            p1.transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
-            p2.transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
+            PlayerPrefs.SetString("P1Input", LocalInputManager.ControlScheme.Keyboard.ToString());
             p2.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<GhostAI>().enabled = true;
             game.GetComponent<GhostAI>().level = 1;
