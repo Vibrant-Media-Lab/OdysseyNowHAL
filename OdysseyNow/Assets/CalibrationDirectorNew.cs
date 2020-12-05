@@ -150,12 +150,8 @@ public class CalibrationDirectorNew : MonoBehaviour {
     /// Handler of user input
     /// </summary>
     public void StepGoNext() {
-        mCurrentStepIndex++;
-        if (mCurrentStepIndex >= mStepPipe.Count) {
-            if (mCurrentStepIndex > 0) {
-                mStepPipe[mCurrentStepIndex - 1].OnExitStep();
-            }
-
+        if (mCurrentStepIndex + 1 >= mStepPipe.Count) {
+            mStepPipe[mCurrentStepIndex].OnExitStep();
             Debug.Log("StepGoNext(): mCurrentStepIndex >= mStepPipe.Count");
             mBtnNext.interactable = false;
             // end of calibration
@@ -163,7 +159,7 @@ public class CalibrationDirectorNew : MonoBehaviour {
         }
         else {
             mBtnNext.interactable = true;
-            StateTransit(mStepPipe[mCurrentStepIndex]);
+            StateTransit(mStepPipe[++mCurrentStepIndex]);
         }
     }
 

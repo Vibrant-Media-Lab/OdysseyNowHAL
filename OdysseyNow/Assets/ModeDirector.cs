@@ -14,7 +14,7 @@ public class ModeDirector : MonoBehaviour {
             case "Cat and Mouse":
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
                 break;
-            case "SCAM-Stonehendge":
+            case "SCAM-Stonehenge":
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartSuperCatAndMouse);
                 break;
             case "Haunted House":
@@ -74,8 +74,7 @@ public class ModeDirector : MonoBehaviour {
             AI.SetActive(true);
         }
 
-        if (p1Input == LocalInputManager.ControlScheme.AI || p1Input == LocalInputManager.ControlScheme.Keyboard) {
-
+        if (p1Input == LocalInputManager.ControlScheme.AI) {
             game.GetComponent<CatAI>().enabled      = true;
             game.GetComponent<CatAI>().level        = PlayerPrefs.GetInt("ai1");
         }
@@ -117,8 +116,6 @@ public class ModeDirector : MonoBehaviour {
     private void StartHauntedHouse()
     {
         calibration.SetActive(false);
-        var p2 = ElementSettings.FindFromNameAndTag("PlayerTarget", "Player2");
-
         var game = AI.transform.Find("HauntedHouse").gameObject;
 
         var p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
@@ -128,7 +125,6 @@ public class ModeDirector : MonoBehaviour {
 
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
             PlayerPrefs.SetString("P1Input", LocalInputManager.ControlScheme.Keyboard.ToString());
-            p2.GetComponent<NavMeshAgent>().enabled = true;
             game.GetComponent<GhostAI>().enabled = true;
             game.GetComponent<GhostAI>().level = 1;
             game.SetActive(true);
@@ -161,10 +157,10 @@ public class ModeDirector : MonoBehaviour {
 
     private void setupStartPositions(GameObject game)
     {
-        p1.transform.Find("PlayerBody").position   = game.transform.Find("p1_start").position;
-        p2.transform.Find("PlayerBody").position   = game.transform.Find("p2_start").position;
-        p1.transform.Find("PlayerTarget").position = game.transform.Find("p1_start").position;
-        p2.transform.Find("PlayerTarget").position = game.transform.Find("p2_start").position;
+        p1.transform.Find("PlayerBody").position   = game.transform.Find("p1-start").position;
+        p2.transform.Find("PlayerBody").position   = game.transform.Find("p2-start").position;
+        p1.transform.Find("PlayerTarget").position = game.transform.Find("p1-start").position;
+        p2.transform.Find("PlayerTarget").position = game.transform.Find("p2-start").position;
     }
 
     private void StartCalibration() {

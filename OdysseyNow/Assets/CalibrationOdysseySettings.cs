@@ -60,8 +60,7 @@ public class CalibrationOdysseySettings : MonoBehaviour
     void Awake()
     {
         game_data = new Dictionary<string, List<object>>();
-        for(int i = 0; i < games.Count; i++)
-        {
+        for(int i = 0; i < games.Count; i++) {
             game_data.Add(games[i], new List<object>());
             game_data[games[i]].Add(calibdefs[i]);
             game_data[games[i]].Add(spot_left[i]);
