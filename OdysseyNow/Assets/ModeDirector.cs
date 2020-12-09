@@ -123,6 +123,8 @@ public class ModeDirector : MonoBehaviour {
         var p2Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
 
+        setupStartPositions(game);
+
         if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI) {
             PlayerPrefs.SetString("P1Input", LocalInputManager.ControlScheme.Keyboard.ToString());
             game.GetComponent<GhostAI>().enabled = true;
