@@ -115,24 +115,31 @@ public class ModeDirector : MonoBehaviour {
 
     private void StartTennis() {
         calibration.SetActive(false);
-        var p1_target = p1.transform.Find("PlayerTarget").gameObject;
-        var p2_target = p2.transform.Find("PlayerTarget").gameObject;
-        
+		var game = AI.transform.Find("Tennis").gameObject;
+
         var p1Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P1Input"));
         var p2Input = (LocalInputManager.ControlScheme) System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
+
+		// setupStartPositions(game);
         
-        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI){
+            game.SetActive(true);
             AI.SetActive(true);
+        }
         
         if (p1Input == LocalInputManager.ControlScheme.AI)
         {
-            p1_target.GetComponent<NavMeshAgent>().enabled = true;
+            game.GetComponent<TennisAI>().enabled = true;
+            game.GetComponent<TennisAI>().p1Level = PlayerPrefs.GetInt("ai1");
+            game.GetComponent<TennisAI>().players |= 1;
         }
 
         if (p2Input == LocalInputManager.ControlScheme.AI) {
-            p2_target.GetComponent<NavMeshAgent>().enabled = true;
+            game.GetComponent<TennisAI>().enabled = true;
+            game.GetComponent<TennisAI>().p2Level = PlayerPrefs.GetInt("ai2");
+			game.GetComponent<TennisAI>().players |= 2;
         }
     }
 
