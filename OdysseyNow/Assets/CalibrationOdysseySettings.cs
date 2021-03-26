@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using UnityEditorInternal;
 
 public class CalibrationOdysseySettings : MonoBehaviour
 {
