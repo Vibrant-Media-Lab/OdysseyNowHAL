@@ -148,14 +148,6 @@ namespace CardDirection
             UpdateAll();
         }
 
-        /// <summary>
-        /// Redundant method; TODO: review dependancies and delete.
-        /// </summary>
-        void RemoveOptions()
-        {
-
-        }
-
         /* The following methods update card variables.
          * These methods are called by the UI elements in the menu.
         */

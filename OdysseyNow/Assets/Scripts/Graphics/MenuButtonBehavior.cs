@@ -46,11 +46,6 @@ namespace Graphics {
                     gameSelect.transform.Find(transform.name).gameObject.SetActive(true);
                     _parent.gameObject.SetActive(false);
                 }
-                // if an odyssey is connected but we don't want to play with AI
-                else if (connectToggle.isOn) {
-                    // pulls up the calibrations scene
-                    SceneManager.LoadScene("Calibration");
-                }
                 // if an odyssey is not connected and we don't want to play with AI
                 else {
                     // pulls up the card based on the button's name
@@ -64,6 +59,7 @@ namespace Graphics {
                     // tells the scene configurer which game to use
                     PlayerPrefs.SetString("game",
                                           _parent.Find("Game Drop Down").Find("Label").GetComponent<Text>().text);
+                    PlayerPrefs.SetInt("console_connected", connectToggle.isOn ? 1 : 0);
                     return;
                 }
 
