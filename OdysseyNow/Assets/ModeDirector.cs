@@ -20,6 +20,9 @@ public class ModeDirector : MonoBehaviour {
             case "Haunted House":
                 calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartHauntedHouse);
                 break;
+            case "Deadly Haunted House":
+                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartDeadlyHauntedHouse);
+                break;
             case "Zoo Breakout":
                 break;
             case "Football: Running":
@@ -131,6 +134,38 @@ public class ModeDirector : MonoBehaviour {
             game.GetComponent<GhostAI>().level = 1;
             game.SetActive(true);
             AI.SetActive(true);
+        }
+    }
+
+    private void StartDeadlyHauntedHouse()
+    {
+        calibration.SetActive(false);
+        var game = AI.transform.Find("DeadlyHauntedHouse").gameObject;
+
+        var p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P1Input"));
+        var p2Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
+
+        setupStartPositions(game);
+
+
+        if (p1Input == LocalInputManager.ControlScheme.AI || p2Input == LocalInputManager.ControlScheme.AI)
+        {
+            game.SetActive(true);
+            AI.SetActive(true);
+        }
+
+        if (p1Input == LocalInputManager.ControlScheme.AI)
+        {
+            game.GetComponent<HeirAI>().enabled = true;
+            game.GetComponent<HeirAI>().level = PlayerPrefs.GetInt("ai1");
+        }
+
+        if (p2Input == LocalInputManager.ControlScheme.AI)
+        {
+            game.GetComponent<GhostAI>().enabled = true;
+            game.GetComponent<GhostAI>().level = PlayerPrefs.GetInt("ai2");
         }
     }
 

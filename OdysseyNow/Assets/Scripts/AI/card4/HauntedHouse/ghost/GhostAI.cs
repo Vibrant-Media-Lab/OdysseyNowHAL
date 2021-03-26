@@ -10,7 +10,7 @@ public class GhostAI : MonoBehaviour {
     public  Transform  detective;
     public  Transform  ghost;
     public  GameObject ghost_Ai;
-    public  GameObject game_Clues;
+    public  GameObject hiding_places;
     public  GameObject treasure_location;
     public  GameObject detective_start_location;
     public  GameObject ghost_start_location;
@@ -40,7 +40,7 @@ public class GhostAI : MonoBehaviour {
         // Set a random hiding spot
         int i = UnityEngine.Random.Range(1, 31);
 
-        hiding_spot = game_Clues.transform.Find("Clue (" + i + ")").transform.position;
+        hiding_spot = hiding_places.transform.Find("Clue (" + i + ")").transform.position;
  
         //Set Corrected Size For Game
         ghost.parent.Find("PlayerTarget").transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
