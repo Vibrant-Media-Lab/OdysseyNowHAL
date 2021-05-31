@@ -30,7 +30,7 @@ public class GhostAI : MonoBehaviour {
     private void Start() {
         // Prepare the navmesh agent
         agent = ghost_Ai.GetComponent<NavMeshAgent>();
-
+        
         playercube = ghost_Ai.GetComponent<Actors.PlayerTargetController>().playerCube;
 
         // The agent tends to rotate the game object, that can be undesirable
@@ -41,11 +41,6 @@ public class GhostAI : MonoBehaviour {
         int i = UnityEngine.Random.Range(1, 31);
 
         hiding_spot = hiding_places.transform.Find("Clue (" + i + ")").transform.position;
- 
-        //Set Corrected Size For Game
-        ghost.parent.Find("PlayerTarget").transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
-        detective.parent.Find("PlayerTarget").transform.localScale = new Vector3((float)0.8, (float)0.8, (float)0.8);
-
     }
 
     // Update is called once per frame
