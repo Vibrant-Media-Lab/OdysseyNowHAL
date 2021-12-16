@@ -32,12 +32,14 @@ public class CatAI : MonoBehaviour {
 
         switch (level) {
             case 1:
+                
                 agent.SetDestination(target.position);
-                // if (Time.time > nextActionTime) {
-                //     nextActionTime += Time.time + period;
-                //     agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
-                // }
-
+                
+                if (Time.time > nextActionTime) {
+                     nextActionTime += Time.time + period;
+                     agent.SetDestination(new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0));
+                 }
+                 
                 break;
             case 2:
                 break;
