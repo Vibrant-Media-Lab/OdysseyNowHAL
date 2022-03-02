@@ -66,6 +66,7 @@ bool recvSerialWithStartEnd() {
                     // error, message too long.
                     //      TODO what to do? currently we are throwing away all the buffer message and wait for next new start.
                     recvInProgress = false;
+                    Serial.println("\n\n\nThrew Away Data");
                 } else {
                     recvBuffer[currPos++] = r;
                 }

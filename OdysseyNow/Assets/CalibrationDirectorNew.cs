@@ -44,23 +44,22 @@ public class CalibrationDirectorNew : MonoBehaviour {
         mStepPipe.Add(new S0_2D3DAnimation(this, cameraInGame, camera3DScene));
         mStepPipe.Add(new S1_Devices(this));
 
-        if (mCalibrationSettings.useOverlay && PlayerPrefs.GetInt("console_connected") == 1)
-        {
+        if (mCalibrationSettings.useOverlay) {
             mStepPipe.Add(new S2_Overlay(this, mCalibrationSettings.overlay_extra_text));
         }
 
         // if we need read calibration
-        if (mCalibrationSettings.p1_read || mCalibrationSettings.p2_read && PlayerPrefs.GetInt("console_connected") == 1) {
+        if (mCalibrationSettings.p1_read || mCalibrationSettings.p2_read) {
             // find a player in read mode
             var playerReadName = mCalibrationSettings.p1_read ? "P1" : "P2";
             Debug.Log("Read mode player: " + playerReadName);
 
             // if screen overlay is used
             if (mCalibrationSettings.useOverlay) {
-                mStepPipe.Add(new S3_CalibRead(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][1],
-                                               (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerReadName, "top-left"));
-                mStepPipe.Add(new S3_CalibRead(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][2],
-                                               (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerReadName,
+                mStepPipe.Add(new S3_CalibRead(this, mCalibrationSettings.overlay_topLeft_extra_text,
+                                               mCalibrationSettings.overlay_topLeft, playerReadName, "top-left"));
+                mStepPipe.Add(new S3_CalibRead(this, mCalibrationSettings.overlay_bottomRight_extra_text,
+                                               mCalibrationSettings.overlay_bottomRight, playerReadName,
                                                "bottom-right"));
             }
             else {
@@ -73,16 +72,16 @@ public class CalibrationDirectorNew : MonoBehaviour {
         }
 
         // if we need write calibration
-        if (!mCalibrationSettings.p1_read || !mCalibrationSettings.p2_read && PlayerPrefs.GetInt("console_connected") == 1) {
+        if (!mCalibrationSettings.p1_read || !mCalibrationSettings.p2_read) {
             // find a player in write mode
             var playerWriteName = !mCalibrationSettings.p1_read ? "P1" : "P2";
 
             // if screen overlay is used
             if (mCalibrationSettings.useOverlay) {
-                mStepPipe.Add(new S4_CalibWrite(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][1],
-                                                (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerWriteName, "top-left"));
-                mStepPipe.Add(new S4_CalibWrite(this, (string) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][2],
-                                                (GameObject) mCalibrationSettings.game_data[PlayerPrefs.GetString("game")][0], playerWriteName,
+                mStepPipe.Add(new S4_CalibWrite(this, mCalibrationSettings.overlay_topLeft_extra_text,
+                                                mCalibrationSettings.overlay_topLeft, playerWriteName, "top-left"));
+                mStepPipe.Add(new S4_CalibWrite(this, mCalibrationSettings.overlay_bottomRight_extra_text,
+                                                mCalibrationSettings.overlay_bottomRight, playerWriteName,
                                                 "bottom-right"));
             }
             else {
@@ -129,7 +128,7 @@ public class CalibrationDirectorNew : MonoBehaviour {
     }
 
     public string GetCurrentStepCount() {
-        return "(" + (mCurrentStepIndex + 1) + "/" + (mStepPipe.Count - 1) + ")";
+        return "(" + (mCurrentStepIndex + 1) + "/" + mStepPipe.Count + ")";
     }
 
     /// <summary>
@@ -150,8 +149,12 @@ public class CalibrationDirectorNew : MonoBehaviour {
     /// Handler of user input
     /// </summary>
     public void StepGoNext() {
-        if (mCurrentStepIndex + 1 >= mStepPipe.Count) {
-            mStepPipe[mCurrentStepIndex].OnExitStep();
+        mCurrentStepIndex++;
+        if (mCurrentStepIndex >= mStepPipe.Count) {
+            if (mCurrentStepIndex > 0) {
+                mStepPipe[mCurrentStepIndex - 1].OnExitStep();
+            }
+
             Debug.Log("StepGoNext(): mCurrentStepIndex >= mStepPipe.Count");
             mBtnNext.interactable = false;
             // end of calibration
@@ -159,7 +162,7 @@ public class CalibrationDirectorNew : MonoBehaviour {
         }
         else {
             mBtnNext.interactable = true;
-            StateTransit(mStepPipe[++mCurrentStepIndex]);
+            StateTransit(mStepPipe[mCurrentStepIndex]);
         }
     }
 
@@ -361,7 +364,6 @@ class S3_CalibRead : IStateStep {
         }
 
         mOverlaySpot.SetActive(true);
-        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(true);
 
         // Append extra text
         if (mOverlayExtraText.TrimStart().TrimEnd() != "") {
@@ -441,9 +443,7 @@ class S3_CalibRead : IStateStep {
                 break;
         }
 
-        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(false);
         mOverlaySpot.SetActive(false);
-
     }
 
     void IStateStep.Step() {
@@ -490,7 +490,6 @@ class S4_CalibWrite : IStateStep {
         }
 
         mOverlaySpot.SetActive(true);
-        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(true);
 
         // Append extra text
         if (mOverlayExtraText.TrimStart().TrimEnd() != "") {
@@ -562,7 +561,6 @@ class S4_CalibWrite : IStateStep {
                 break;
         }
 
-        mOverlaySpot.transform.Find(mMode).gameObject.SetActive(false);
         mOverlaySpot.SetActive(false);
     }
 

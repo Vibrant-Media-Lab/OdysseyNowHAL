@@ -33,15 +33,38 @@ public class CalibrationDirector : MonoBehaviour
 
     // Calibration Parameters
     // -- Calibration params for Reading from Arduino
-    public float _calib_votage_x_left = 617;
-    public float _calib_votage_x_right = 300;
-    public float _calib_votage_y_top = 711;
-    public float _calib_votage_y_bottom = 379;
+    //public float _calib_votage_x_left = 617;
+    //public float _calib_votage_x_right = 300;
+    //public float _calib_votage_y_top = 711;
+    //public float _calib_votage_y_bottom = 379;
     // -- Calibration parameters for Writing to Arduino
-    public float _calib_write_votage_x_left = 420;
-    public float _calib_write_votage_x_right = 302;
-    public float _calib_write_votage_y_top = 180;
-    public float _calib_write_votage_y_bottom = 80;
+    //public float _calib_write_votage_x_left = 420;
+    //public float _calib_write_votage_x_right = 302;
+    //public float _calib_write_votage_y_top = 180;
+    //public float _calib_write_votage_y_bottom = 80;
+
+    // -- Calibration params for Reading from Arduino
+    public float _calib_votage_x_left = 561;
+    public float _calib_votage_x_right = 194;
+    public float _calib_votage_y_top = 623;
+    public float _calib_votage_y_bottom = 277;
+
+    // ---- These will be calculated
+    public float _calib_x_mul = -1;
+    public float _calib_x_offset = -1;
+    public float _calib_y_mul = -1;
+    public float _calib_y_offset = -1;
+
+    // -- Calibration parameters for Writing to Arduino
+    //public float _calib_write_votage_x_left = 420;
+    //public float _calib_write_votage_x_right = 302;
+    //public float _calib_write_votage_y_top = 180;
+    //public float _calib_write_votage_y_bottom = 80;
+
+    public float _calib_write_votage_x_left = 177.0158f;
+    public float _calib_write_votage_x_right = -12.86436f;
+    public float _calib_write_votage_y_top = 103.1317f;
+    public float _calib_write_votage_y_bottom = 204.0835f;
 
     // Think of the process of calibration is a state-machine
     private enum CalibrationStates
@@ -188,6 +211,10 @@ public class CalibrationDirector : MonoBehaviour
                 p1.position = new Vector2(consoleMirror._calib_unity_x_left, consoleMirror._calib_unity_y_top);
 
                 if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next) {
+                    if (cData == null)
+                    {
+                        Debug.Log("No cdata");
+                    }
                     // Save the calibration value
                     _calib_votage_x_left = cData.P1_X_READ;
                     _calib_votage_y_top = cData.P1_Y_READ;

@@ -26,11 +26,10 @@ namespace HardwareInterface {
 
         // Calibration Parameters
         // -- Calibration params for Reading from Arduino
-        public float _calib_votage_x_left = 617;
-        public float _calib_votage_x_right = 300;
-        public float _calib_votage_y_top = 711;
-
-        public float _calib_votage_y_bottom = 379;
+        public float _calib_votage_x_left = 647;
+        public float _calib_votage_x_right = 288;
+        public float _calib_votage_y_top = 705;
+        public float _calib_votage_y_bottom = 370;
 
         // ---- These will be calculated
         public float _calib_x_mul = -1;
@@ -40,11 +39,17 @@ namespace HardwareInterface {
         public float _calib_y_offset = -1;
 
         // -- Calibration parameters for Writing to Arduino
-        public float _calib_write_votage_x_left = 420;
-        public float _calib_write_votage_x_right = 302;
-        public float _calib_write_votage_y_top = 180;
+        //public float _calib_write_votage_x_left = 420;
+        //public float _calib_write_votage_x_right = 302;
+        //public float _calib_write_votage_y_top = 180;
+        //public float _calib_write_votage_y_bottom = 80;
 
-        public float _calib_write_votage_y_bottom = 80;
+        //public float _calib_write_votage_x_left = 226.6435f;
+        //public float _calib_write_votage_x_right = 31.36908f;
+        public float _calib_write_votage_x_left = 226.6435f;
+        public float _calib_write_votage_x_right = 31.36908f;
+        public float _calib_write_votage_y_top = 77.82012f;
+        public float _calib_write_votage_y_bottom = 177.5947f;
 
         // ---- These will be calculated
         public float _calib_write_x_mul = -1;
@@ -141,18 +146,21 @@ namespace HardwareInterface {
 
                 cdw.P2W = p2Console == false ? 1 : 0;
                 if (!p2Console) {
-                    cdw.P2X = (int) xConvertToConsole(p2.position.x);
+                    cdw.P2X = (int) xConvertToConsole((p2.position.x));
                     cdw.P2Y = (int) yConvertToConsole(p2.position.y);
                     //cdw.P2_X = (int)(p2.position.x);
                     //cdw.P2_Y = (int)(p2.position.y);
+                    //Debug.Log("P2 no colsole, plugged in"); //this is to verif that we are actually getting here
+                    //Debug.Log("ConvertToArduino:"+cdw.P2X); //this is to verify data
                 }
                 else {
                     p2.position = new Vector2(p2X, p2Y);
+                    //Debug.Log("P2 no colsole, plugged in, run once"); //this is to verif that we onlu come here once
                 }
 
                 if (Time.unscaledTime - lastSendTime >= updatePeriod) {
                     string _s = "<" + JsonUtility.ToJson(cdw) + ">";
-                    //Debug.Log("[]MSG write: " + _s);
+                    Debug.Log("[]MSG write: " + _s); //UNCOMM
                     sc.SendSerialMessage(_s);
                     lastSendTime = Time.unscaledTime;
                 }
@@ -177,7 +185,8 @@ namespace HardwareInterface {
         /// <param name="x"></param>
         /// <returns></returns>
         public float xConvertToConsole(float x) {
-            return (x - _calib_write_x_offset) / _calib_write_x_mul;
+            //Debug.Log((x - _calib_write_x_offset) / _calib_write_x_mul);
+            return ((x - _calib_write_x_offset) / _calib_write_x_mul);
         }
 
         /// <summary>
@@ -212,11 +221,14 @@ namespace HardwareInterface {
         /// </summary>
         /// <param name="msg"></param>
         void OnMessageArrived(string msg) {
+            Debug.Log(msg); //UNCOMM
             try {
                 mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
+                //Debug.Log("Message arrived!"); //UNCOMM
+                //Debug.Log("It reads: " + msg); //UNCOMM
             }
             catch (ArgumentException e) {
-                Debug.LogWarning("ConsoleMirror.OnMessageArrived(msg): " + msg);
+                //Debug.LogWarning("ConsoleMirror.OnMessageArrived(msg): " + msg);
             }
 
             _calib_calc_param_x();

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 public class SlimUIWindow : EditorWindow {
     [MenuItem("Window/SlimUI Online Documentation")]

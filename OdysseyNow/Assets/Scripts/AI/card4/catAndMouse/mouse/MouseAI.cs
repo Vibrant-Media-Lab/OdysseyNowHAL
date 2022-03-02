@@ -23,15 +23,13 @@ public class MouseAI : MonoBehaviour {
     private float e = 1f;
 
     public Transform target;
-    public GameObject mouse;
     public int level;
-
 
     // Start is called before the first frame update
     private void Start() {
         // Agent tend to rotate game object, that can be
         //      undesirable
-        agent = mouse.GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -51,8 +49,8 @@ public class MouseAI : MonoBehaviour {
 
         switch (level) {
             case 1:
-                //Mouse();
-                agent.SetDestination(target.position);
+                Mouse();
+                //agent.SetDestination(target.position);
                 break;
             case 2:
                 break;
@@ -104,7 +102,7 @@ public class MouseAI : MonoBehaviour {
                                 q[state, 4] = grid[mr, mc + 1] == 1 ? 0 : (int?) null; // west
                                 break;
                             case 13:
-                                q[state, 3] = grid[mr, mc - 1] == 1 ? 0 : (int?) null; // east
+                                q[state, 3] = grid[mr, mc - 1] == 1 ? 0 : (int?) null; // east 
                                 q[state, 4] = null; // west
                                 break;
                             default:
