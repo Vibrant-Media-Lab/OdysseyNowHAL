@@ -29,6 +29,7 @@ void setup() {
     // Init P1 and P2 pins, all other spots are implicitly read only
     init_player_as_reading(&p1_spot);
     init_player_as_reading(&p2_spot);
+    //read_player_reset(&p2_spot);//testing
 }
 
 // Change the size as needed. A handy link for this: https://arduinojson.org/v6/assistant/
@@ -93,7 +94,7 @@ void processInData() {
         }
         if ( ! docIn["P2W"].isNull() ) {
             docIn["P2W"].as<bool>() ? MAKE_WRITE(p2_spot) : MAKE_READ(p2_spot);
-            reset_as_player(&p2_spot);
+            //reset_as_player(&p2_spot);
         }
 
         if (p1_spot.writing) {
