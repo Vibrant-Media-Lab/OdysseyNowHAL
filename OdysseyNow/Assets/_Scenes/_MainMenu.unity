@@ -4401,6 +4401,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notes: Chooses between input methods for P1
+--- !u!1 &591799992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 591799994}
+  - component: {fileID: 591799993}
+  m_Layer: 0
+  m_Name: GameCalibration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &591799993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591799992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383412083ffadfc48bcc096462a23a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _calib_votage_x_left: 617
+  _calib_votage_x_right: 300
+  _calib_votage_y_top: 711
+  _calib_votage_y_bottom: 379
+  _calib_write_votage_x_left: 420
+  _calib_write_votage_x_right: 302
+  _calib_write_votage_y_top: 180
+  _calib_write_votage_y_bottom: 80
+--- !u!4 &591799994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591799992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.33763263, y: -0.1581991, z: -0.3567529}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &597379421
 GameObject:
   m_ObjectHideFlags: 0

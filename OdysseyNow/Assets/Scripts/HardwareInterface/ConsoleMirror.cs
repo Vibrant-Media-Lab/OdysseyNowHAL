@@ -24,18 +24,23 @@ namespace HardwareInterface {
         //true if console is plugged in
         public bool pluggedIn;
 
+
+
+        //create game calibration instance
+        //public GameCalibration gameCalibration;
+
+
         // Calibration Parameters
         // -- Calibration params for Reading from Arduino
-        public float _calib_votage_x_left = 647;
-        public float _calib_votage_x_right = 288;
-        public float _calib_votage_y_top = 705;
-        public float _calib_votage_y_bottom = 370;
+        public float _calib_votage_x_left = 0;
+        public float _calib_votage_x_right = 0;
+        public float _calib_votage_y_top = 0;
+        public float _calib_votage_y_bottom = 0;
 
         // ---- These will be calculated
         public float _calib_x_mul = -1;
         public float _calib_x_offset = -1;
         public float _calib_y_mul = -1;
-
         public float _calib_y_offset = -1;
 
         // -- Calibration parameters for Writing to Arduino
@@ -44,12 +49,10 @@ namespace HardwareInterface {
         //public float _calib_write_votage_y_top = 180;
         //public float _calib_write_votage_y_bottom = 80;
 
-        //public float _calib_write_votage_x_left = 226.6435f;
-        //public float _calib_write_votage_x_right = 31.36908f;
-        public float _calib_write_votage_x_left = 226.6435f;
-        public float _calib_write_votage_x_right = 31.36908f;
-        public float _calib_write_votage_y_top = 77.82012f;
-        public float _calib_write_votage_y_bottom = 177.5947f;
+        private float _calib_write_votage_x_left = 420;
+        private float _calib_write_votage_x_right = 302f;
+        private float _calib_write_votage_y_top = 180f;
+        private float _calib_write_votage_y_bottom = 80f;
 
         // ---- These will be calculated
         public float _calib_write_x_mul = -1;
@@ -63,6 +66,11 @@ namespace HardwareInterface {
         public float _calib_unity_x_right = 7.7f;
         public float _calib_unity_y_top = 4.4f;
         public float _calib_unity_y_bottom = -4.4f;
+
+        //send reset  variable to send reset command to Arduino
+        public bool _sendP1Reset = false;
+        public bool _sendP2Reset = false;
+        private ConsoleResetWrite resetWrite = new ConsoleResetWrite();
 
 
         void _calib_calc_param_x() {
@@ -111,6 +119,11 @@ namespace HardwareInterface {
         /// <summary>
         /// On awake, make singleton and get SerialController instance.
         /// </summary>
+        /// 
+
+
+
+
         private void Awake() {
             if (instance != null) {
                 Destroy(gameObject);
@@ -122,6 +135,7 @@ namespace HardwareInterface {
             pluggedIn = false;
             sc = gameObject.GetComponent<SerialController>();
             Debug.Log("ConsoleMirror awake");
+
         }
 
         private float lastSendTime = 0;
@@ -132,6 +146,7 @@ namespace HardwareInterface {
         /// On update, set locations to whatever the console sent to us, and send messages to the console
         /// </summary>
         private void LateUpdate() {
+
             if (pluggedIn) {
                 cdw.P1W = p1Console == false ? 1 : 0;
                 if (!p1Console) {
@@ -158,11 +173,71 @@ namespace HardwareInterface {
                     //Debug.Log("P2 no colsole, plugged in, run once"); //this is to verif that we onlu come here once
                 }
 
+
+
                 if (Time.unscaledTime - lastSendTime >= updatePeriod) {
                     string _s = "<" + JsonUtility.ToJson(cdw) + ">";
                     Debug.Log("[]MSG write: " + _s); //UNCOMM
                     sc.SendSerialMessage(_s);
                     lastSendTime = Time.unscaledTime;
+
+
+                }
+
+                //send the P1 reset values when reset is pressed
+                if (_sendP1Reset)
+                {
+                    //the loop is to ensure that the reset message is actually sent and received by arduino
+                    for (int count = 0; count < 5; count++)
+                    {
+                        //here we turn on reset
+                        resetWrite.P1R = 0;
+                        resetWrite.P2R = 1;
+                        string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
+                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
+                        sc.SendSerialMessage(_r);
+                    }
+
+                    for (int count = 0; count < 5; count++)
+                    {
+                        //here we turn off rest
+                        resetWrite.P1R = 0;
+                        resetWrite.P2R = 0;
+                        string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
+                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
+                        sc.SendSerialMessage(_r);
+                    }
+
+                    //this is set to false to simulate a button press. It ensures that we are not stuck in a reset loop 
+                    _sendP1Reset = false;
+                }
+
+                //send the P2 reset values when reset is pressed
+                if (_sendP2Reset)
+                {
+                    //the loop is to ensure that the reset message is actually sent and received by arduino
+                    for (int count = 0; count < 5; count++)
+                    {
+                        //here we turn on reset
+                        resetWrite.P1R = 0;
+                        resetWrite.P2R = 1;
+                        string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
+                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
+                        sc.SendSerialMessage(_r);
+                    }
+
+                    for (int count = 0; count < 5; count++)
+                    {
+                        //here we turn off rest
+                        resetWrite.P1R = 0;
+                        resetWrite.P2R = 0;
+                        string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
+                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
+                        sc.SendSerialMessage(_r);
+                    }
+
+                    //this is set to false to simulate a button press. It ensures that we are not stuck in a reset loop 
+                    _sendP2Reset = false;
                 }
 
                 ball.position = new Vector2(ballX, ballY);
@@ -185,7 +260,7 @@ namespace HardwareInterface {
         /// <param name="x"></param>
         /// <returns></returns>
         public float xConvertToConsole(float x) {
-            //Debug.Log((x - _calib_write_x_offset) / _calib_write_x_mul);
+            //Debug.Log("!!! calib x mul value - const?:"+(_calib_write_x_mul));
             return ((x - _calib_write_x_offset) / _calib_write_x_mul);
         }
 
@@ -225,11 +300,22 @@ namespace HardwareInterface {
             try {
                 mLastConsoleData = JsonUtility.FromJson<ConsoleData>(msg);
                 //Debug.Log("Message arrived!"); //UNCOMM
-                //Debug.Log("It reads: " + msg); //UNCOMM
+                Debug.Log("It reads: " + msg); //UNCOMM
             }
             catch (ArgumentException e) {
                 //Debug.LogWarning("ConsoleMirror.OnMessageArrived(msg): " + msg);
             }
+
+            //get cal values
+            _calib_votage_x_left = GameCalibration.instance._calib_votage_x_left;
+            _calib_votage_x_right = GameCalibration.instance._calib_votage_x_right;
+            _calib_votage_y_top = GameCalibration.instance._calib_votage_y_top;
+            _calib_votage_y_bottom = GameCalibration.instance._calib_votage_y_bottom;
+
+            _calib_write_votage_x_left = GameCalibration.instance._calib_write_votage_x_left;
+            _calib_write_votage_x_right = GameCalibration.instance._calib_write_votage_x_right;
+            _calib_write_votage_y_top = GameCalibration.instance._calib_write_votage_y_top;
+            _calib_write_votage_y_bottom = GameCalibration.instance._calib_write_votage_y_bottom;
 
             _calib_calc_param_x();
             _calib_calc_param_y();

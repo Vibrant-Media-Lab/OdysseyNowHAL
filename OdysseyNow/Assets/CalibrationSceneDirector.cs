@@ -318,15 +318,25 @@ public class CalibrationSceneDirector : MonoBehaviour {
                 }
 
                 if (extraBtnNext) {
-                    // On confirm, write the calibration data
-                    consoleMirror._calib_votage_x_left = _calib_votage_x_left;
-                    consoleMirror._calib_votage_x_right = _calib_votage_x_right;
-                    consoleMirror._calib_votage_y_top = _calib_votage_y_top;
-                    consoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
-                    consoleMirror._calib_write_votage_x_left = _calib_write_votage_x_left;
-                    consoleMirror._calib_write_votage_x_right = _calib_write_votage_x_right;
-                    consoleMirror._calib_write_votage_y_top = _calib_write_votage_y_top;
-                    consoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+                    //// On confirm, write the calibration data
+                    //consoleMirror._calib_votage_x_left = _calib_votage_x_left;
+                    //consoleMirror._calib_votage_x_right = _calib_votage_x_right;
+                    //consoleMirror._calib_votage_y_top = _calib_votage_y_top;
+                    //consoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
+                    //consoleMirror._calib_write_votage_x_left = _calib_write_votage_x_left;
+                    //consoleMirror._calib_write_votage_x_right = _calib_write_votage_x_right;
+                    //consoleMirror._calib_write_votage_y_top = _calib_write_votage_y_top;
+                    //consoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+
+                    //// On confirm, write the calibration data
+                    //HardwareInterface.ConsoleMirror._calib_votage_x_left = _calib_votage_x_left;
+                    //HardwareInterface.ConsoleMirror._calib_votage_x_right = _calib_votage_x_right;
+                    //HardwareInterface.ConsoleMirror._calib_votage_y_top = _calib_votage_y_top;
+                    //HardwareInterface.ConsoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
+                    //HardwareInterface.ConsoleMirror._calib_write_votage_x_left = _calib_write_votage_x_left;
+                    //HardwareInterface.ConsoleMirror._calib_write_votage_x_right = _calib_write_votage_x_right;
+                    //HardwareInterface.ConsoleMirror._calib_write_votage_y_top = _calib_write_votage_y_top;
+                    //HardwareInterface.ConsoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
 
                     // restore the player target speed
                     p1.GetComponent<Actors.PlayerTargetController>().speed = mOriginalPlayerTargetSpeed;

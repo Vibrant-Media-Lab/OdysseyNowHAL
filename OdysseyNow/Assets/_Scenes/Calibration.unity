@@ -5413,26 +5413,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}
-      propertyPath: _calib_x_mul
-      value: -2.5173502
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_x_offset
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_y_mul
-      value: -1.4246988
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_y_offset
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
       propertyPath: _calib_unity_x_min
       value: -7.7
       objectReference: {fileID: 0}
@@ -5465,26 +5445,6 @@ PrefabInstance:
         type: 3}
       propertyPath: pluggedIn
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_write_votage_x_left
-      value: 311
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_write_votage_x_right
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_write_votage_y_top
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 3641995673445440782, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      propertyPath: _calib_write_votage_y_bottom
-      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 3662830358867388175, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}

@@ -30,6 +30,7 @@ void setup() {
     init_player_as_reading(&p1_spot);
     init_player_as_reading(&p2_spot);
     //read_player_reset(&p2_spot);//testing
+    reset_as_player(&p2_spot);
 }
 
 // Change the size as needed. A handy link for this: https://arduinojson.org/v6/assistant/
@@ -68,6 +69,7 @@ bool recvSerialWithStartEnd() {
                     //      TODO what to do? currently we are throwing away all the buffer message and wait for next new start.
                     recvInProgress = false;
                     Serial.println("\n\n\nThrew Away Data");
+                    
                 } else {
                     recvBuffer[currPos++] = r;
                 }
@@ -76,6 +78,7 @@ bool recvSerialWithStartEnd() {
             recvInProgress = true;
             currPos = 0;
         }
+        //delayMicroseconds(100);
     }
     return false;
 }
@@ -103,6 +106,12 @@ void processInData() {
                 tmp_y = docIn["P1Y"];
                 write_player_knobs(&p1_spot, tmp_x, tmp_y, 120); // todo - english
             } // else { we have insufficient data received }
+
+            // we player 1 handle resets here
+            if ( (! docIn["P1R"].isNull()) && docIn["P1R"].as<bool>() ) {
+              reset_as_player(&p1_spot);
+            }
+
         }
         if (p2_spot.writing) {
             if (!(docIn["P2X"].isNull() || docIn["P2X"].isNull())) {
@@ -110,6 +119,12 @@ void processInData() {
                 tmp_y = docIn["P2Y"];
                 write_player_knobs(&p2_spot, tmp_x, tmp_y, 120);
             } // else { we have insufficient data received }
+
+            // we player 2 handle resets here
+            if ( (! docIn["P2R"].isNull()) && docIn["P2R"].as<bool>() ) {
+              reset_as_player(&p2_spot);
+            }
+
         }
     }
 }
@@ -153,9 +168,9 @@ void loop() {
     // Serial buffer has only 64-bytes. Gotta read message by blocks
     if (recvSerialWithStartEnd()) {
         // We have JSON available in recv_buffer
-        //        Serial.print("JSON available: ");
-        //        Serial.write(recvBuffer, RECV_BUF_SIZE);
-        //        Serial.println("");
+               Serial.print("JSON available: ");
+               Serial.write(recvBuffer, RECV_BUF_SIZE);
+               Serial.println("");
         processInData();
     }
 

@@ -30,6 +30,17 @@ namespace HardwareInterface
             P2X, P2Y;
         public int
             P1W, P2W;
+        //public int
+        //    p1rst;
+    }
+
+    [System.Serializable]
+    public class ConsoleResetWrite
+    {
+        //this class is for the JSON data that conatains the reset message
+        public int
+            P1R, P2R;
+
     }
 
 }

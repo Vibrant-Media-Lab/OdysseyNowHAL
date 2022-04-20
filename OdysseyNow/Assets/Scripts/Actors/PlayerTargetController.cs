@@ -105,21 +105,21 @@ namespace Actors {
                     float x = gameObject.transform.position.x;
                     float y = gameObject.transform.position.y;
 
-                    float adjustedspeed = speed / 10;
+                    float adjustedspeed = speed / 100;
 
-                    if (Input.GetKey(up) && y < 6) {
+                    if (Input.GetKey(up) && y < 50) {
                         y += adjustedspeed;
                     }
 
-                    if (Input.GetKey(down) && y > -6) {
+                    if (Input.GetKey(down) && y > -50) {
                         y -= adjustedspeed;
                     }
 
-                    if (Input.GetKey(left) && x > -8) {
+                    if (Input.GetKey(left) && x > -90) {
                         x -= adjustedspeed;
                     }
 
-                    if (Input.GetKey(right) && x < 8) {
+                    if (Input.GetKey(right) && x < 90) {
                         x += adjustedspeed;
                     }
 

@@ -24,6 +24,8 @@ public class CalibrationDirector : MonoBehaviour
 
     public float CamLookRate = 0.3f;
     public HardwareInterface.ConsoleMirror consoleMirror;
+    //public HardwareInterface.ConsoleMirror consoleMirror = HardwareInterface.ConsoleMirror.Instance;
+    public GameCalibration gameCalibration = GameCalibration.Instance;
 
     private UnityEngine.UI.Text mTextInstruction;
     private Animation mPlayerBlinkAnimation;
@@ -31,40 +33,27 @@ public class CalibrationDirector : MonoBehaviour
     private Quaternion m3DSceneCameraRotation;
     private Vector3 mCamLookRotation;
 
-    // Calibration Parameters
-    // -- Calibration params for Reading from Arduino
-    //public float _calib_votage_x_left = 617;
-    //public float _calib_votage_x_right = 300;
-    //public float _calib_votage_y_top = 711;
-    //public float _calib_votage_y_bottom = 379;
-    // -- Calibration parameters for Writing to Arduino
-    //public float _calib_write_votage_x_left = 420;
-    //public float _calib_write_votage_x_right = 302;
-    //public float _calib_write_votage_y_top = 180;
-    //public float _calib_write_votage_y_bottom = 80;
 
     // -- Calibration params for Reading from Arduino
-    public float _calib_votage_x_left = 561;
-    public float _calib_votage_x_right = 194;
-    public float _calib_votage_y_top = 623;
-    public float _calib_votage_y_bottom = 277;
+    private float _calib_votage_x_left = 617;
+    private float _calib_votage_x_right = 300;
+    private float _calib_votage_y_top = 711;
+    private float _calib_votage_y_bottom = 379;
 
-    // ---- These will be calculated
-    public float _calib_x_mul = -1;
-    public float _calib_x_offset = -1;
-    public float _calib_y_mul = -1;
-    public float _calib_y_offset = -1;
+    // ---- these will be calculated
+    private float _calib_x_mul = -1;
+    private float _calib_x_offset = -1;
+    private float _calib_y_mul = -1;
+    private float _calib_y_offset = -1;
 
-    // -- Calibration parameters for Writing to Arduino
-    //public float _calib_write_votage_x_left = 420;
-    //public float _calib_write_votage_x_right = 302;
-    //public float _calib_write_votage_y_top = 180;
-    //public float _calib_write_votage_y_bottom = 80;
+    // -- calibration parameters for writing to arduino
+    private float _calib_write_votage_x_left = 420;
+    private float _calib_write_votage_x_right = 302f;
+    private float _calib_write_votage_y_top = 180f;
+    private float _calib_write_votage_y_bottom = 80f;
 
-    public float _calib_write_votage_x_left = 177.0158f;
-    public float _calib_write_votage_x_right = -12.86436f;
-    public float _calib_write_votage_y_top = 103.1317f;
-    public float _calib_write_votage_y_bottom = 204.0835f;
+
+
 
     // Think of the process of calibration is a state-machine
     private enum CalibrationStates
@@ -123,6 +112,7 @@ public class CalibrationDirector : MonoBehaviour
         mOriginalPlayerTargetSpeed = p1.GetComponent<Actors.PlayerTargetController>().speed;
         // Set the speed of move for calibration only;
         p1.GetComponent<Actors.PlayerTargetController>().speed = 0.75f;
+
     }
 
     float distCovered, progress;
@@ -249,6 +239,10 @@ public class CalibrationDirector : MonoBehaviour
                     _calib_votage_x_right = cData.P1_X_READ;
                     _calib_votage_y_bottom = cData.P1_Y_READ;
 
+                    ////testing new calibration method -REMOVE
+                    //_calib_votage_x_right = cData.P1_X_READ;
+                    //_calib_votage_y_bottom = cData.P1_Y_READ;
+
                     mCalibStates++;
                     textLeft.text = textRight.text = "";
                 }
@@ -261,8 +255,8 @@ public class CalibrationDirector : MonoBehaviour
                 break;
 
             case CalibrationStates.PRE_CALIB_WRITE:
-                // Set P1 to write mode
-                consoleMirror.p1Console = false;
+                // Set P2 to write mode
+                consoleMirror.p2Console = false;
                 consoleMirror.pluggedIn = true;
                 // Hide "Screen" elements
                 //SimScreenActors.SetActive(false);
@@ -270,7 +264,7 @@ public class CalibrationDirector : MonoBehaviour
                 mCalibStates = CalibrationStates.CALIB_WRITE_LEFT_TOP;
 
                 // Set the p1 to an initial position (so that has the visibility on the screen)
-                p1.position = new Vector2(
+                p2.position = new Vector2(
                     (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
                     (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
                 );
@@ -295,14 +289,14 @@ public class CalibrationDirector : MonoBehaviour
                 if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                 {
                     // Save the calibration value
-                    _calib_write_votage_x_left = consoleMirror.xConvertToConsole(p1.position.x);
-                    _calib_write_votage_y_top = consoleMirror.xConvertToConsole(p1.position.y);
+                    _calib_write_votage_x_left = consoleMirror.xConvertToConsole(p2.position.x);
+                    _calib_write_votage_y_top = consoleMirror.yConvertToConsole(p2.position.y);
 
                     mCalibStates++;
                     textLeft.text = textRight.text = "";
 
                     // Again, set the p1 to an initial position (so that has the visibility on the screen)
-                    p1.position = new Vector2(
+                    p2.position = new Vector2(
                         (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
                         (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
                     );
@@ -331,9 +325,13 @@ public class CalibrationDirector : MonoBehaviour
 
                 if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                 {
+
+                    //get the right value -REMOVE
+                    //_calib_votage_x_right = cData.P2_X_READ;
+
                     // Save the calibration value
-                    _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p1.position.x);
-                    _calib_write_votage_y_bottom = consoleMirror.xConvertToConsole(p1.position.y);
+                    _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p2.position.x);
+                    _calib_write_votage_y_bottom = consoleMirror.yConvertToConsole(p2.position.y);
 
                     mCalibStates++;
                     textLeft.text = textRight.text = "";
@@ -343,6 +341,7 @@ public class CalibrationDirector : MonoBehaviour
                     mCalibStates--;
                 }
 
+                Debug.Log("Case write right");
                 update_camera_look();
                 break;
 
@@ -350,29 +349,56 @@ public class CalibrationDirector : MonoBehaviour
 
                 mTextInstruction.text = "How well does the blocks on the TV follow?\n" +
                     "";
+                Debug.Log("We are in the last state");
 
                 if (cancel_calibration || extra_btn_next)
                 {
                     // Keep a note of the time the movement started.
                     mTextInstruction.text = "";
                     mAnimStartTime = Time.time;
+                    
+                    //gameCalibration._calib_votage_x_left = _calib_votage_x_left;
+                    //gameCalibration._calib_votage_x_right = _calib_votage_x_right;
+                    //gameCalibration._calib_votage_y_top = _calib_votage_y_top;
+                    //gameCalibration._calib_votage_y_bottom = _calib_votage_y_bottom;
+                    //gameCalibration._calib_write_votage_x_left = _calib_write_votage_x_left;
+                    //gameCalibration._calib_write_votage_x_right = _calib_write_votage_x_right;
+                    //gameCalibration._calib_write_votage_y_top = _calib_write_votage_y_top;
+                    //gameCalibration._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+                    //Debug.Log("!!!!!!!" + _calib_votage_x_left);
+                    //Debug.Log("!!!!!!!" + gameCalibration._calib_votage_x_left);
+                    //Debug.Log("We are in the last state");
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
                 }
 
                 if (extra_btn_next)
                 {
+                    //old stuff--Ununsed
+                    //consoleMirror._calib_votage_x_left = _calib_votage_x_left;
+                    //consoleMirror._calib_votage_x_right = _calib_votage_x_right;
+                    //consoleMirror._calib_votage_y_top = _calib_votage_y_top;
+                    //consoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
+                    //consoleMirror._calib_write_votage_x_left = _calib_write_votage_x_left;
+                    //consoleMirror._calib_write_votage_x_right = _calib_write_votage_x_right;
+                    //consoleMirror._calib_write_votage_y_top = _calib_write_votage_y_top;
+                    //consoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+
                     // On confirm, write the calibration data
-                    consoleMirror._calib_votage_x_left = _calib_votage_x_left;
-                    consoleMirror._calib_votage_x_right = _calib_votage_x_right;
-                    consoleMirror._calib_votage_y_top = _calib_votage_y_top;
-                    consoleMirror._calib_votage_y_bottom = _calib_votage_y_bottom;
-                    consoleMirror._calib_write_votage_x_left = _calib_write_votage_x_left;
-                    consoleMirror._calib_write_votage_x_right = _calib_write_votage_x_right;
-                    consoleMirror._calib_write_votage_y_top = _calib_write_votage_y_top;
-                    consoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+                    gameCalibration._calib_votage_x_left = _calib_votage_x_left+100;
+                    gameCalibration._calib_votage_x_right = _calib_votage_x_right-100;
+                    gameCalibration._calib_votage_y_top = _calib_votage_y_top;
+                    gameCalibration._calib_votage_y_bottom = _calib_votage_y_bottom;
+                    gameCalibration._calib_write_votage_x_left = _calib_write_votage_x_left-100;
+                    gameCalibration._calib_write_votage_x_right = _calib_write_votage_x_right;
+                    gameCalibration._calib_write_votage_y_top = _calib_write_votage_y_top;
+                    gameCalibration._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
+                    //Debug.Log("!!!!!!!" + _calib_votage_x_left);
+                    //Debug.Log("!!!!!!!" + gameCalibration._calib_votage_x_left);
+
+
 
                     // restore the player target speed
-                    p1.GetComponent<Actors.PlayerTargetController>().speed = mOriginalPlayerTargetSpeed;
+                    p2.GetComponent<Actors.PlayerTargetController>().speed = mOriginalPlayerTargetSpeed;
                 }
                 else if (extra_btn_prev)
                 {
@@ -392,6 +418,7 @@ public class CalibrationDirector : MonoBehaviour
                     m3DSceneCameraPosition, cameraInGame.transform.position, progress);
                 camera3DScene.transform.rotation = Quaternion.Slerp(
                     m3DSceneCameraRotation, cameraInGame.transform.rotation, progress);
+
 
                 if (progress >= 1)
                 {
@@ -434,6 +461,6 @@ public class CalibrationDirector : MonoBehaviour
     void exit_scene()
     {
         // Go back to the main menu
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("_MainMenu");
     }
 }
