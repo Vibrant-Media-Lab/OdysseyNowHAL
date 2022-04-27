@@ -185,6 +185,7 @@ namespace HardwareInterface {
                 }
 
                 //send the P1 reset values when reset is pressed
+                //All you need to do is set _sendP1Reset to true once and the method will send a reset button press
                 if (_sendP1Reset)
                 {
                     //the loop is to ensure that the reset message is actually sent and received by arduino
@@ -194,7 +195,6 @@ namespace HardwareInterface {
                         resetWrite.P1R = 0;
                         resetWrite.P2R = 1;
                         string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
-                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
                         sc.SendSerialMessage(_r);
                     }
 
@@ -204,7 +204,6 @@ namespace HardwareInterface {
                         resetWrite.P1R = 0;
                         resetWrite.P2R = 0;
                         string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
-                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
                         sc.SendSerialMessage(_r);
                     }
 
@@ -213,6 +212,7 @@ namespace HardwareInterface {
                 }
 
                 //send the P2 reset values when reset is pressed
+                //All you need to do is set _sendP2Reset to true once and the method will send a reset button press
                 if (_sendP2Reset)
                 {
                     //the loop is to ensure that the reset message is actually sent and received by arduino
@@ -222,7 +222,6 @@ namespace HardwareInterface {
                         resetWrite.P1R = 0;
                         resetWrite.P2R = 1;
                         string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
-                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
                         sc.SendSerialMessage(_r);
                     }
 
@@ -232,7 +231,6 @@ namespace HardwareInterface {
                         resetWrite.P1R = 0;
                         resetWrite.P2R = 0;
                         string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
-                        //Debug.Log("[]MSG write: " + _r); //UNCOMM
                         sc.SendSerialMessage(_r);
                     }
 
