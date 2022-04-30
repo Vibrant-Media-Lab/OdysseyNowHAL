@@ -107,6 +107,9 @@ namespace CardDirection
                 case 16:
                     menu.GetComponent<MenuDirector>().UpdateAll(true, false, false, 1, 1, "Pass", "None", "Bounce", false, "P1 & P2");
                     break;
+                case 17: // P1-P2 and P2-Ball collisions are handled independently
+                    menu.GetComponent<MenuDirector>().UpdateAll(true, true, true, 0, 1, "Extinguish", "None", "None", true, "None");
+                    break;
             }
             menu.SetActive(false);
             if (cardNumber > 0)
@@ -125,10 +128,10 @@ namespace CardDirection
         /// </summary>
         /// <param name="num"></param>
         void LoadCard(int num){
-            if (num > 16)
+            if (num > 17)
                 num = 1;
             else if (num <= 0)
-                num = 16;
+                num = 17;
 
             SceneManager.LoadScene("Card" + num);
         }
@@ -169,7 +172,7 @@ namespace CardDirection
         /// </summary>
         public void MainMenu()
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("_MainMenu");
         }
 
         /// <summary>

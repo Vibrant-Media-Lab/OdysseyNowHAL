@@ -33,6 +33,8 @@ namespace Actors {
         //The input device assigned to this player, for traditional gamepad input.
         InputDevice con;
 
+        public HardwareInterface.ConsoleMirror consoleMirror = HardwareInterface.ConsoleMirror.Instance;
+
         ///On start, set the player number and connect the controller.
         private void Start() {
             player = 1;
@@ -240,7 +242,12 @@ namespace Actors {
             GameObject.FindWithTag("Ball").GetComponent<BallController>().resetButtonUp(gameObject.tag);
             UnExtinguish();
             if (gameObject.CompareTag("Player1"))
-                ConsoleMirror.instance.p1Reset();
+            {
+                //consoleMirror.p1Reset();
+                //Debug.Log("Player Target Controller is Sending P1 Reset");
+            }
+                
+
         }
 
         /// <summary>

@@ -114,13 +114,20 @@ namespace HardwareInterface {
 
         //TODO: Handle sending messages back to the console. We want one to be able to play with one person playing through Unity and another through the console.
 
-        public void p1Reset() { }
+        public void p1Reset() {
+            _sendP1Reset = true;
+        }
 
         /// <summary>
         /// On awake, make singleton and get SerialController instance.
         /// </summary>
         /// 
 
+
+        public static HardwareInterface.ConsoleMirror Instance
+        {
+            get { return instance; }
+        }
 
 
 
@@ -192,10 +199,11 @@ namespace HardwareInterface {
                     for (int count = 0; count < 5; count++)
                     {
                         //here we turn on reset
-                        resetWrite.P1R = 0;
-                        resetWrite.P2R = 1;
+                        resetWrite.P1R = 1;
+                        resetWrite.P2R = 0;
                         string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
                         sc.SendSerialMessage(_r);
+                        Debug.Log("P1RST:"+_r);
                     }
 
                     for (int count = 0; count < 5; count++)
@@ -223,6 +231,7 @@ namespace HardwareInterface {
                         resetWrite.P2R = 1;
                         string _r = "<" + JsonUtility.ToJson(resetWrite) + ">";
                         sc.SendSerialMessage(_r);
+                        Debug.Log("P2RST:" + _r);
                     }
 
                     for (int count = 0; count < 5; count++)

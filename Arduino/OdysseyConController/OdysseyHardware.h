@@ -158,17 +158,30 @@ void init_player_as_reading(spot_gen *player) {
  * @param player
  */
 void reset_as_player(spot_gen *player) {
-    if (player->writing) {
-        pinMode(player->reset_write_pin, OUTPUT);
-        digitalWrite(player->reset_write_pin, LOW);
-        pinMode(player->crowbar_reset_pin, INPUT_PULLUP);
+    // if (player->writing) {
+    //     pinMode(player->reset_write_pin, OUTPUT);
+    //     digitalWrite(player->reset_write_pin, LOW);
+    //     pinMode(player->crowbar_reset_pin, INPUT_PULLUP);
 
-        delay(RESET_SETTLE_TIME_MS);
+    //     delay(RESET_SETTLE_TIME_MS);
 
-        pinMode(player->reset_write_pin, INPUT);
-        pinMode(player->crowbar_reset_pin, OUTPUT);
-        digitalWrite(player->crowbar_reset_pin, LOW);
-    }
+    //     pinMode(player->reset_write_pin, INPUT);
+    //     pinMode(player->crowbar_reset_pin, OUTPUT);
+    //     digitalWrite(player->crowbar_reset_pin, LOW);
+    // }
+
+    
+    pinMode(player->reset_write_pin, OUTPUT);
+    digitalWrite(player->reset_write_pin, LOW);
+    pinMode(player->crowbar_reset_pin, INPUT_PULLUP);
+
+    delay(RESET_SETTLE_TIME_MS);
+
+    pinMode(player->reset_write_pin, INPUT);
+    pinMode(player->crowbar_reset_pin, OUTPUT);
+    digitalWrite(player->crowbar_reset_pin, LOW);
+    delay(RESET_SETTLE_TIME_MS);
+    
 }
 
 bool read_player_reset(spot_gen *player) {

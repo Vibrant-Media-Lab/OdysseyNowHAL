@@ -30,7 +30,8 @@ void setup() {
     init_player_as_reading(&p1_spot);
     init_player_as_reading(&p2_spot);
     //read_player_reset(&p2_spot);//testing
-    reset_as_player(&p2_spot);
+    //reset_as_player(&p2_spot);
+    //reset_as_player(&p1_spot);
 }
 
 // Change the size as needed. A handy link for this: https://arduinojson.org/v6/assistant/
@@ -93,7 +94,7 @@ void processInData() {
         if ( ! docIn["P1W"].isNull() ) {
             // Re-init the play as input/output, (and make sure we don't do it if it's already in the state)
             docIn["P1W"].as<bool>() ? MAKE_WRITE(p1_spot) : MAKE_READ(p1_spot);
-            reset_as_player(&p1_spot);
+            //reset_as_player(&p1_spot);
         }
         if ( ! docIn["P2W"].isNull() ) {
             docIn["P2W"].as<bool>() ? MAKE_WRITE(p2_spot) : MAKE_READ(p2_spot);
@@ -107,11 +108,12 @@ void processInData() {
                 write_player_knobs(&p1_spot, tmp_x, tmp_y, 120); // todo - english
             } // else { we have insufficient data received }
 
-            // we player 1 handle resets here
-            if ( (! docIn["P1R"].isNull()) && docIn["P1R"].as<bool>() ) {
-              reset_as_player(&p1_spot);
-            }
 
+        }
+        
+        // we player 1 handle resets here
+        if ( (! docIn["P1R"].isNull()) && docIn["P1R"].as<bool>() ) {
+          reset_as_player(&p1_spot);
         }
         if (p2_spot.writing) {
             if (!(docIn["P2X"].isNull() || docIn["P2X"].isNull())) {
@@ -120,11 +122,12 @@ void processInData() {
                 write_player_knobs(&p2_spot, tmp_x, tmp_y, 120);
             } // else { we have insufficient data received }
 
-            // we player 2 handle resets here
-            if ( (! docIn["P2R"].isNull()) && docIn["P2R"].as<bool>() ) {
-              reset_as_player(&p2_spot);
-            }
 
+        }
+        
+        // we player 2 handle resets here
+        if ( (! docIn["P2R"].isNull()) && docIn["P2R"].as<bool>() ) {
+          reset_as_player(&p2_spot);
         }
     }
 }

@@ -3911,7 +3911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calibration: {fileID: 1141483018}
-  AI: {fileID: 0}
+  AI: {fileID: 2005456404}
 --- !u!4 &537336252
 Transform:
   m_ObjectHideFlags: 0
@@ -6355,18 +6355,7 @@ MonoBehaviour:
   SimScreenOverlay: {fileID: 0}
   CamLookRate: 0.3
   consoleMirror: {fileID: 0}
-  _calib_votage_x_left: 561
-  _calib_votage_x_right: 194
-  _calib_votage_y_top: 623
-  _calib_votage_y_bottom: 277
-  _calib_x_mul: -1
-  _calib_x_offset: -1
-  _calib_y_mul: -1
-  _calib_y_offset: -1
-  _calib_write_votage_x_left: 177.0158
-  _calib_write_votage_x_right: -12.86436
-  _calib_write_votage_y_top: 103.1317
-  _calib_write_votage_y_bottom: 204.0835
+  gameCalibration: {fileID: 0}
 --- !u!1 &1151421098
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CardDirection;
+using System;
 
 namespace Actors
 {
@@ -39,6 +40,9 @@ namespace Actors
         public bool playerExtinguish = false;
         //true if hitting reset extinguishes the ball
         public bool resetExtinguishBall = false;
+
+
+        public HardwareInterface.ConsoleMirror consoleMirror = HardwareInterface.ConsoleMirror.Instance;
 
         /// <summary>
         /// On start, set the speed of the ball
@@ -117,6 +121,7 @@ namespace Actors
         /// <param name="player"></param>
         public void resetButton(string player)
         {
+            Debug.Log("DBG resetButton");
             if (!((ballpossesssion == possession.PLAYER1 && player.Equals("Player1")) || (ballpossesssion == possession.PLAYER2 && player.Equals("Player2"))))
             {
                 unExtinguish();
@@ -134,6 +139,7 @@ namespace Actors
         /// <param name="player"></param>
         public void resetButtonUp(string player)
         {
+            Debug.Log("DBG resetButtonUp");
             unExtinguish();
         }
 
@@ -142,6 +148,7 @@ namespace Actors
         /// </summary>
         void unExtinguish()
         {
+            Debug.Log("DBG unExtinguish");
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             gameObject.GetComponent<BoxCollider>().enabled = true;
         }
