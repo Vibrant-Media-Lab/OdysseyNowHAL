@@ -104,6 +104,6 @@ public class ModeDirector : MonoBehaviour {
 
     private void StartCalibration() {
         AI.SetActive(false);
-        calibration.SetActive(true);
+        //calibration.SetActive(true);
     }
 }

@@ -18,111 +18,101 @@ public class EvaderController : MonoBehaviour
     public int sequence;
 
     public HardwareInterface.ConsoleMirror consoleMirror = HardwareInterface.ConsoleMirror.Instance;
-    private bool hasFired = false;
     public Actors.BallController ballController;
     private bool justReset = false;
     private int framesSinceReset;
 
+    public bool lastServedLeft = true;
+
+    public float leftServeTimerLength = 4f;
+    public float elapsedTimeLeftServe;
+
+    public float rightServeTimerLength = 3.5f;
+    public float elapsedTimeRightServe;
+
     void FixedUpdate()
     {
-        // fire projectile
-        // Player1 Reset
-        if ((int)float.Parse(roundTimer.text) % 10 == 0 && !hasFired)
-        {
-            Debug.Log("DBG Left Serve");
-            consoleMirror._sendP1Reset = true;
-            ballController.resetButton("Player1");
-            hasFired = true;
-            justReset = true;
+
+        // Fire Projectile
+        if (roundTimer.GetComponent<RoundTimer>().activelyTiming)
+        {   
+            // Player1 Reset (Left Serve)
+            if (!lastServedLeft)
+            {
+                elapsedTimeLeftServe += Time.deltaTime;
+                if (elapsedTimeLeftServe >= leftServeTimerLength)
+                {
+                    consoleMirror._sendP1Reset = true;
+                    ballController.resetButton("Player1");
+                    elapsedTimeLeftServe = 0f;
+                    lastServedLeft = true;
+                    // Pick a new timing between 3-5 seconds
+                    leftServeTimerLength = Random.Range(3, 6);
+                }
+            }
+            //Player2 Reset (Right Serve)
+            else if (lastServedLeft)
+            {
+                elapsedTimeRightServe += Time.deltaTime;
+                if (elapsedTimeRightServe >= rightServeTimerLength)
+                {
+                    consoleMirror._sendP2Reset = true;
+                    ballController.resetButton("Player2");
+                    elapsedTimeRightServe = 0f;
+                    lastServedLeft = false;
+                }
+            }
         }
-        // Player2 Reset
-        else if ((int)float.Parse(roundTimer.text) % 5 == 0 && !hasFired)
+        else
         {
-            Debug.Log("DBG Right Serve");
-            consoleMirror._sendP2Reset = true;
-            ballController.resetButton("Player2");
-            hasFired = true;
-            justReset = true;
+            elapsedTimeLeftServe = 0f;
+            elapsedTimeRightServe = 0f;
         }
 
         // Wait 5 frames, then signal reset button release
-        else if (justReset)
+        //else if (justReset)
+        //{
+        //    framesSinceReset++;
+        //    Debug.Log("DBG" + framesSinceReset);
+        //    if (framesSinceReset >= 5)
+        //    {
+        //        ballController.resetButtonUp("Player1");
+        //        justReset = false;
+        //        framesSinceReset = 0;
+        //    }
+        //}
+
+
+        // Movement
+        if (float.Parse(roundTimer.text) > 40) // Phase 1: 60-40 Seconds
         {
-            framesSinceReset++;
-            Debug.Log("DBG" + framesSinceReset);
-            if (framesSinceReset >= 5)
-            {
-                ballController.resetButtonUp("Player1");
-                justReset = false;
-                framesSinceReset = 0;
-            }
-        }
-
-        // Primes the AI to fire again when possible
-        else if ((int)float.Parse(roundTimer.text) % 10 != 0 && (int)float.Parse(roundTimer.text) % 5 != 0)
-        {
-            hasFired = false;
-        }
-
-
-
-        // this is ugly, but the basic idea is to move the target between pre-determined destinations,
-        // based on the time left on the round timer
-        if (float.Parse(roundTimer.text) > 45) // Part 1: Sequences 0, 1. 60-45 seconds
-        {
-            if (sequence != 0 && sequence != 1)
+            // resets the sequencing (if necessary)
+            if (sequence != 0 && sequence != 1 && sequence != 2 && sequence != 3)
                 sequence = 0;
 
+            // if the target hasn't reached the destination, move it closer
             if (target.transform.position != destinations[sequence].transform.position)
                 MoveTarget(destinations[sequence]);
 
-            if (CheckCloseEnough(destinations[0].transform.position))
-            {
-                sequence = 1;
-            }
-            else if (CheckCloseEnough(destinations[1].transform.position))
-            {
-                sequence = 0;
-            }
+            // if the body is close enough to the destination, pick a new one
+            if (CheckCloseEnough(destinations[sequence].transform.position))
+                sequence = Random.Range(0, 4);
         }
-        else if (float.Parse(roundTimer.text) <= 45 && float.Parse(roundTimer.text) > 25) // Part 2: Sequences 2, 3. 45-25 seconds
-        {
-            if (sequence != 2 && sequence != 3)
-                sequence = 2;
-
-            if (target.transform.position != destinations[sequence].transform.position)
-                MoveTarget(destinations[sequence]);
-
-            if (CheckCloseEnough(destinations[2].transform.position))
-            {
-                sequence = 3;
-            }
-            else if (CheckCloseEnough(destinations[3].transform.position))
-            {
-                sequence = 2;
-            }
-        }
-        else // Part 3: Sequences 0, 1, 2, 3. 25-0 seconds
+        else if (float.Parse(roundTimer.text) < 40 && float.Parse(roundTimer.text) > 20) // Phase 2: 40-20 Seconds
         {
             if (target.transform.position != destinations[sequence].transform.position)
                 MoveTarget(destinations[sequence]);
 
-            if (CheckCloseEnough(destinations[0].transform.position))
-            {
-                sequence = 1;
-            }
-            else if (CheckCloseEnough(destinations[1].transform.position))
-            {
-                sequence = 2;
-            }
-            else if (CheckCloseEnough(destinations[2].transform.position))
-            {
-                sequence = 3;
-            }
-            else if (CheckCloseEnough(destinations[3].transform.position))
-            {
-                sequence = 0;
-            }
+            if (CheckCloseEnough(destinations[sequence].transform.position))
+                sequence = Random.Range(0, 10);
+        }
+        else // Phase 3: 20-0 Seconds
+        {
+            if (target.transform.position != destinations[sequence].transform.position)
+                MoveTarget(destinations[sequence]);
+
+            if (CheckCloseEnough(destinations[sequence].transform.position))
+                sequence = Random.Range(0, 17);
         }
     }
 
@@ -142,7 +132,7 @@ public class EvaderController : MonoBehaviour
     private bool CheckCloseEnough(Vector2 destinationPos)
     {
         Vector2 distance = new Vector2(destinationPos.x - this.gameObject.transform.position.x, destinationPos.y - this.gameObject.transform.position.y);
-        if (distance.magnitude < .1)
+        if (distance.magnitude < .2)
             return true;
         else
             return false;
