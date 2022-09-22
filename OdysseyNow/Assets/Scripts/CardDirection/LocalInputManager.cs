@@ -29,6 +29,9 @@ namespace CardDirection {
         public Slider difficultySliderP2;
         public Text sliderTextP2;
 
+        //singleton instance
+        //public static LocalInputManager instance;
+
         private void Awake() {
             PlayerPrefs.SetString("P1Input", ControlScheme.Keyboard.ToString());
             PlayerPrefs.SetString("P2Input", ControlScheme.Keyboard.ToString());
@@ -47,6 +50,17 @@ namespace CardDirection {
             // hide the sliders' parent by default
             difficultySliderP1.transform.parent.gameObject.SetActive(false);
             difficultySliderP2.transform.parent.gameObject.SetActive(false);
+
+            /*DontDestroyOnLoad(gameObject);
+
+            if (instance != null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                instance = this;
+            }*/
         }
 
         private void P1SliderChanged() {
