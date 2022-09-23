@@ -19,11 +19,14 @@ public class GameCalibration : MonoBehaviour
     public float _calib_write_votage_y_top = 180;
     public float _calib_write_votage_y_bottom = 80;
 
-    //this stored the type on imput selected
+    //this stored the type on imput selected--depracted
     public LocalInputManager.ControlScheme p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                       PlayerPrefs.GetString("P1Input"));
     public LocalInputManager.ControlScheme p2Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
                                                                           PlayerPrefs.GetString("P2Input"));
+
+  
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +49,11 @@ public class GameCalibration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        p1Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                      PlayerPrefs.GetString("P1Input"));
+
+        p2Input = (LocalInputManager.ControlScheme)System.Enum.Parse(typeof(LocalInputManager.ControlScheme),
+                                                                          PlayerPrefs.GetString("P2Input"));
     }
 
     public static GameCalibration Instance

@@ -32,6 +32,7 @@ namespace CardDirection {
         //singleton instance
         //public static LocalInputManager instance;
 
+
         private void Awake() {
             PlayerPrefs.SetString("P1Input", ControlScheme.Keyboard.ToString());
             PlayerPrefs.SetString("P2Input", ControlScheme.Keyboard.ToString());
