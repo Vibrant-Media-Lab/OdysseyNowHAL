@@ -35,10 +35,10 @@ public class CalibrationDirector : MonoBehaviour
 
 
     // -- Calibration params for Reading from Arduino
-    private float _calib_votage_x_left = 617;
-    private float _calib_votage_x_right = 300;
-    private float _calib_votage_y_top = 711;
-    private float _calib_votage_y_bottom = 379;
+    public float _calib_votage_x_left = 617;
+    public float _calib_votage_x_right = 300;
+    public float _calib_votage_y_top = 711;
+    public float _calib_votage_y_bottom = 379;
 
     // ---- these will be calculated
     private float _calib_x_mul = -1;
@@ -47,10 +47,10 @@ public class CalibrationDirector : MonoBehaviour
     private float _calib_y_offset = -1;
 
     // -- calibration parameters for writing to arduino
-    private float _calib_write_votage_x_left = 420;
-    private float _calib_write_votage_x_right = 302f;
-    private float _calib_write_votage_y_top = 180f;
-    private float _calib_write_votage_y_bottom = 80f;
+    public float _calib_write_votage_x_left = 420;
+    public float _calib_write_votage_x_right = 302f;
+    public float _calib_write_votage_y_top = 180f;
+    public float _calib_write_votage_y_bottom = 80f;
 
 
 
@@ -181,25 +181,18 @@ public class CalibrationDirector : MonoBehaviour
                 SimScreenOverlay.SetActive(false);
                 mCalibStates = CalibrationStates.CALIB_LEFT_TOP;*/
 
-                //here we look at the inpuits and decie which player is being calibrated with the keyboard and which with 
-                //the odyssey remote controller
+                //here we look at the inputs and decide which player is being calibrated with the controller
                 if(gameCalibration.p1Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
                     //set p1 to read mode if plugged into the odyssey
                     consoleMirror.p1Console = true;
                     consoleMirror.pluggedIn = false;
                 }
-                else
+                else if (gameCalibration.p2Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
-                    //set p1 to write mode if plugged into the odyssey
-                    consoleMirror.p1Console = false;
-                    consoleMirror.pluggedIn = true;
-
-                    // Set the p1 to an initial position (so that has the visibility on the screen)
-                    p1.position = new Vector2(
-                        (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
-                        (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
-                    );
+                    //set p2 to read mode if plugged into the odyssey
+                    consoleMirror.p2Console = true;
+                    consoleMirror.pluggedIn = false;
                 }
                 SimScreenOverlay.SetActive(false);
                 mCalibStates = CalibrationStates.CALIB_LEFT_TOP;
@@ -267,22 +260,22 @@ public class CalibrationDirector : MonoBehaviour
 
                     update_camera_look();
                 }
-                else
+                else if (gameCalibration.p2Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
+                    // Move the p2 to top-left corner
+                    p2.position = new Vector2(consoleMirror._calib_unity_x_left, consoleMirror._calib_unity_y_top);
+
                     if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                     {
+                        if (cData == null)
+                        {
+                            Debug.Log("No cdata");
+                        }
                         // Save the calibration value
-                        _calib_write_votage_x_left = consoleMirror.xConvertToConsole(p1.position.x);
-                        _calib_write_votage_y_top = consoleMirror.yConvertToConsole(p1.position.y);
+                        _calib_votage_x_left = cData.P2_X_READ;
+                        _calib_votage_y_top = cData.P2_Y_READ;
 
                         mCalibStates++;
-                        textLeft.text = textRight.text = "";
-
-                        // Again, set the p1 to an initial position (so that has the visibility on the screen)
-                        p1.position = new Vector2(
-                            (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
-                            (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
-                        );
                     }
                     else if (extra_btn_prev)
                     {
@@ -291,8 +284,8 @@ public class CalibrationDirector : MonoBehaviour
 
                     update_camera_look();
                 }
-
                 break;
+            
             case CalibrationStates.CALIB_RIGHT_BOTTOM:
 
                 mTextInstruction.text = "Now, move player 1 to the LOWER-RIGHT corner\n" +
@@ -352,17 +345,20 @@ public class CalibrationDirector : MonoBehaviour
 
                     update_camera_look();
                 }
-                else
+                else if (gameCalibration.p2Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
+                    // Move the p2 to top-left corner
+                    p2.position = new Vector2(consoleMirror._calib_unity_x_right, consoleMirror._calib_unity_y_bottom);
+
                     if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                     {
                         // Save the calibration value
-                        _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p1.position.x);
-                        _calib_write_votage_y_bottom = consoleMirror.yConvertToConsole(p1.position.y);
+                        _calib_votage_x_right = cData.P2_X_READ;
+                        _calib_votage_y_bottom = cData.P2_Y_READ;
+
 
                         mCalibStates++;
                         textLeft.text = textRight.text = "";
-
                     }
                     else if (extra_btn_prev)
                     {
@@ -387,13 +383,7 @@ public class CalibrationDirector : MonoBehaviour
                     (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
                     (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
                 );*/
-                if (gameCalibration.p2Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
-                {
-                    //set p2 to read mode if plugged into the odyssey
-                    consoleMirror.p2Console = true;
-                    consoleMirror.pluggedIn = false;
-                }
-                else
+                if (gameCalibration.p2Input != CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
                     //set p2 to write mode if plugged into the odyssey
                     consoleMirror.p2Console = false;
@@ -401,6 +391,18 @@ public class CalibrationDirector : MonoBehaviour
 
                     // Set the p2 to an initial position (so that has the visibility on the screen)
                     p2.position = new Vector2(
+                        (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
+                        (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
+                    );
+                }
+                else if (gameCalibration.p1Input != CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
+                {
+                    //set p1 to write mode if plugged into the odyssey
+                    consoleMirror.p1Console = false;
+                    consoleMirror.pluggedIn = true;
+
+                    // Set the p1 to an initial position (so that has the visibility on the screen)
+                    p1.position = new Vector2(
                         (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
                         (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
                     );
@@ -449,29 +451,9 @@ public class CalibrationDirector : MonoBehaviour
                 update_camera_look();*/
 
                 //check whether p2 is calibrated by remote or keyboard
-                if (gameCalibration.p2Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
+                if (gameCalibration.p2Input != CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
-                    // Move the p2 to top-left corner
-                    p2.position = new Vector2(consoleMirror._calib_unity_x_left, consoleMirror._calib_unity_y_top);
-
-                    if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
-                    {
-
-                        // Save the calibration value
-                        _calib_votage_x_left = cData.P2_X_READ;
-                        _calib_votage_y_top = cData.P2_Y_READ;
-
-                        mCalibStates++;
-                    }
-                    else if (extra_btn_prev)
-                    {
-                        mCalibStates = CalibrationStates.PRE_CALIB;
-                    }
-
-                    update_camera_look();
-                }
-                else
-                {
+                    
                     if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                     {
                         // Save the calibration value
@@ -483,6 +465,30 @@ public class CalibrationDirector : MonoBehaviour
 
                         // Again, set the p2 to an initial position (so that has the visibility on the screen)
                         p2.position = new Vector2(
+                            (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
+                            (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
+                        );
+                    }
+                    else if (extra_btn_prev)
+                    {
+                        mCalibStates = CalibrationStates.PRE_CALIB;
+                    }
+
+                    update_camera_look();
+                }
+                else if (gameCalibration.p1Input != CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
+                {
+                    if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
+                    {
+                        // Save the calibration value
+                        _calib_write_votage_x_left = consoleMirror.xConvertToConsole(p1.position.x);
+                        _calib_write_votage_y_top = consoleMirror.yConvertToConsole(p1.position.y);
+
+                        mCalibStates++;
+                        textLeft.text = textRight.text = "";
+
+                        // Again, set the p2 to an initial position (so that has the visibility on the screen)
+                        p1.position = new Vector2(
                             (consoleMirror._calib_unity_x_right + consoleMirror._calib_unity_x_left) / 2,
                             (consoleMirror._calib_unity_y_bottom + consoleMirror._calib_unity_y_top) / 2
                         );
@@ -534,20 +540,17 @@ public class CalibrationDirector : MonoBehaviour
                 update_camera_look();*/
 
                 //check whether p2 is calibrated by remote or keyboard
-                if (gameCalibration.p2Input == CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
+                if (gameCalibration.p2Input != CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
-                    // Move the p2 to top-left corner
-                    p2.position = new Vector2(consoleMirror._calib_unity_x_right, consoleMirror._calib_unity_y_bottom);
-
                     if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                     {
                         // Save the calibration value
-                        _calib_votage_x_right = cData.P2_X_READ;
-                        _calib_votage_y_bottom = cData.P2_Y_READ;
-
+                        _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p2.position.x);
+                        _calib_write_votage_y_bottom = consoleMirror.yConvertToConsole(p2.position.y);
 
                         mCalibStates++;
                         textLeft.text = textRight.text = "";
+
                     }
                     else if (extra_btn_prev)
                     {
@@ -556,13 +559,13 @@ public class CalibrationDirector : MonoBehaviour
 
                     update_camera_look();
                 }
-                else
+                else if (gameCalibration.p1Input != CardDirection.LocalInputManager.ControlScheme.OriginalConsole)
                 {
                     if (Input.GetKeyUp(KeyCode.Return) || extra_btn_next)
                     {
                         // Save the calibration value
-                        _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p2.position.x);
-                        _calib_write_votage_y_bottom = consoleMirror.yConvertToConsole(p2.position.y);
+                        _calib_write_votage_x_right = consoleMirror.xConvertToConsole(p1.position.x);
+                        _calib_write_votage_y_bottom = consoleMirror.yConvertToConsole(p1.position.y);
 
                         mCalibStates++;
                         textLeft.text = textRight.text = "";
