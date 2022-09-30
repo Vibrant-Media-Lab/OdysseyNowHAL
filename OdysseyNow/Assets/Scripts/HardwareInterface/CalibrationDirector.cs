@@ -619,11 +619,14 @@ public class CalibrationDirector : MonoBehaviour
                     //consoleMirror._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
 
                     // On confirm, write the calibration data
-                    gameCalibration._calib_votage_x_left = _calib_votage_x_left+100;
-                    gameCalibration._calib_votage_x_right = _calib_votage_x_right-100;
+                    // gameCalibration._calib_votage_x_left = _calib_votage_x_left+100;
+                    // gameCalibration._calib_votage_x_right = _calib_votage_x_right-100;
+                    gameCalibration._calib_votage_x_left = _calib_votage_x_left;
+                    gameCalibration._calib_votage_x_right = _calib_votage_x_right;
                     gameCalibration._calib_votage_y_top = _calib_votage_y_top;
                     gameCalibration._calib_votage_y_bottom = _calib_votage_y_bottom;
-                    gameCalibration._calib_write_votage_x_left = _calib_write_votage_x_left-100;
+                    // gameCalibration._calib_write_votage_x_left = _calib_write_votage_x_left-100;
+                    gameCalibration._calib_write_votage_x_left = _calib_write_votage_x_left;
                     gameCalibration._calib_write_votage_x_right = _calib_write_votage_x_right;
                     gameCalibration._calib_write_votage_y_top = _calib_write_votage_y_top;
                     gameCalibration._calib_write_votage_y_bottom = _calib_write_votage_y_bottom;
