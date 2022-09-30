@@ -108,7 +108,7 @@ namespace CardDirection
                     menu.GetComponent<MenuDirector>().UpdateAll(true, false, false, 1, 1, "Pass", "None", "Bounce", false, "P1 & P2");
                     break;
                 case 17: // P1-P2 and P2-Ball collisions are handled independently
-                    menu.GetComponent<MenuDirector>().UpdateAll(true, true, true, 0, 1, "Extinguish", "None", "None", true, "None");
+                    menu.GetComponent<MenuDirector>().UpdateAll(true, true, true, 0, 1, "Extinguish", "None", "None", false, "None");
                     break;
             }
             menu.SetActive(false);
