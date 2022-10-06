@@ -202,7 +202,7 @@ public class CalibrationDirector : MonoBehaviour
             case CalibrationStates.CALIB_LEFT_TOP:
 
                 mTextInstruction.text = "Please use the controller on Odessey, \n" +
-                    "move player 1 to the upper-left corner\n" +
+                    "move Original Console player to the upper-left corner\n" +
                     "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
                     "(1/4)";
 
@@ -288,7 +288,7 @@ public class CalibrationDirector : MonoBehaviour
             
             case CalibrationStates.CALIB_RIGHT_BOTTOM:
 
-                mTextInstruction.text = "Now, move player 1 to the LOWER-RIGHT corner\n" +
+                mTextInstruction.text = "Now, move Original Console player to the LOWER-RIGHT corner\n" +
                     "<size=18>Hit <color=brown>RESET</color> on the controller to continue...</size>\n" +
                     "(2/4)";
 
