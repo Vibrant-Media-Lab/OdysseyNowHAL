@@ -284,6 +284,10 @@ public class CalibrationDirector : MonoBehaviour
 
                     update_camera_look();
                 }
+                else if (extra_btn_prev)
+                {
+                    exit_scene();
+                }
                 break;
             
             case CalibrationStates.CALIB_RIGHT_BOTTOM:
@@ -340,7 +344,7 @@ public class CalibrationDirector : MonoBehaviour
                     }
                     else if (extra_btn_prev)
                     {
-                        exit_scene();
+                        mCalibStates--;
                     }
 
                     update_camera_look();
@@ -362,7 +366,7 @@ public class CalibrationDirector : MonoBehaviour
                     }
                     else if (extra_btn_prev)
                     {
-                        exit_scene();
+                        mCalibStates--;
                     }
 
                     update_camera_look();
@@ -471,7 +475,7 @@ public class CalibrationDirector : MonoBehaviour
                     }
                     else if (extra_btn_prev)
                     {
-                        mCalibStates = CalibrationStates.PRE_CALIB;
+                        mCalibStates = CalibrationStates.CALIB_RIGHT_BOTTOM;
                     }
 
                     update_camera_look();
@@ -495,7 +499,7 @@ public class CalibrationDirector : MonoBehaviour
                     }
                     else if (extra_btn_prev)
                     {
-                        mCalibStates = CalibrationStates.PRE_CALIB;
+                        mCalibStates = CalibrationStates.CALIB_RIGHT_BOTTOM;
                     }
 
                     update_camera_look();
