@@ -1,4 +1,5 @@
 ﻿using System;
+using MultiplayerWithBindingsExample;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,8 +35,30 @@ namespace CardDirection {
 
 
         private void Awake() {
-            PlayerPrefs.SetString("P1Input", ControlScheme.Keyboard.ToString());
-            PlayerPrefs.SetString("P2Input", ControlScheme.Keyboard.ToString());
+            //PlayerPrefs.SetString("P1Input", ControlScheme.Keyboard.ToString());
+            //PlayerPrefs.SetString("P2Input", ControlScheme.Keyboard.ToString());
+            
+            //get the current input selection for player 1 and adjust the dropdown to match the value
+            //this stores the input type
+            if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.Keyboard.ToString()) { p1Option.value = 0; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.Traditional.ToString()) { p1Option.value = 1; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OdysseyCon.ToString()) { p1Option.value = 2; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OriginalConsole.ToString()) { p1Option.value = 3; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.AI.ToString()) { p1Option.value = 4; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OdysseyConLegacy.ToString()) { p1Option.value=5; }
+            else { p1Option.value = 0; }
+            
+            //get the current input selection for player 2 and adjust the dropdown to match the value
+            //this stores the input type
+            if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.Keyboard.ToString()) { p2Option.value = 0 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.Traditional.ToString()) { p2Option.value = 1 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OdysseyCon.ToString()) { p2Option.value = 2 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OriginalConsole.ToString()) { p2Option.value = 3 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.AI.ToString()) { p2Option.value = 4 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OdysseyConLegacy.ToString()) { p2Option.value = 5 ; }
+            else { p2Option.value = 0 ; }
+
+
             PlayerPrefs.SetInt("ai1", 1);
             PlayerPrefs.SetInt("ai2", 1);
         }
@@ -101,7 +124,9 @@ namespace CardDirection {
             }
         }
 
-        private void P2ControlChanged() {
+        private void P2ControlChanged()
+        {
+            Debug.Log("DEBUG: In control change method");
             switch (p2Option.value) {
                 case 0:
                     SetP2UserOptions(ControlScheme.Keyboard.ToString());
