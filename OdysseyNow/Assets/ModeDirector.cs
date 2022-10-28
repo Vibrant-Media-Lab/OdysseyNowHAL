@@ -11,7 +11,8 @@ public class ModeDirector : MonoBehaviour {
         switch (PlayerPrefs.GetString("game")) {
             case "Cat and Mouse":
                 // load cat and mouse after calibration
-                calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
+                //calibration.GetComponent<CalibrationDirectorNew>().afterCalibration.AddListener(StartCatAndMouse);
+                StartCatAndMouse();
                 break;
             case "Super Cat and Mouse":
                 break;
