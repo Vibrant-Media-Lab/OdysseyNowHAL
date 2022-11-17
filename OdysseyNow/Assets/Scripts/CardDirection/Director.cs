@@ -67,6 +67,8 @@ namespace CardDirection
                     break;
                 case 4:
                     menu.GetComponent<MenuDirector>().UpdateAll(true, false, false, 1, 1, "Pass", "Extinguish", "Bounce", false, "P2");
+                    GameObject p1 = FindFromNameAndTag("PlayerBody", "Player1");
+                    p1.transform.localScale = new Vector3(0.675f, 0.675f, 1.0f);
                     break;
                 case 5:
                     menu.GetComponent<MenuDirector>().UpdateAll(true, true, false, 1, 1, "Pass", "None", "Extinguish", false, "P2");
@@ -121,6 +123,19 @@ namespace CardDirection
             {
                 ElementSettings.instance.updateAllSizes();
             }
+        }
+        
+        public static GameObject FindFromNameAndTag(string name, string tag)
+        {
+            GameObject[] withTag = GameObject.FindGameObjectsWithTag(tag);
+            for (int i = 0; i < withTag.Length; i++)
+            {
+                if (withTag[i].name.Equals(name))
+                {
+                    return withTag[i];
+                }
+            }
+            return null;
         }
 
         /// <summary>
