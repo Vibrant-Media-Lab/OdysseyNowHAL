@@ -590,7 +590,7 @@ public class CalibrationDirector : MonoBehaviour
                     "";
                 Debug.Log("We are in the last state");
 
-                if (cancel_calibration || extra_btn_next)
+                if (cancel_calibration || extra_btn_next || Input.GetKeyUp(KeyCode.Return))
                 {
                     // Keep a note of the time the movement started.
                     mTextInstruction.text = "";
@@ -610,7 +610,7 @@ public class CalibrationDirector : MonoBehaviour
                     mCalibStates = CalibrationStates.ANIMATION_FINISH;
                 }
 
-                if (extra_btn_next)
+                if (extra_btn_next || Input.GetKeyUp(KeyCode.Return))
                 {
                     //old stuff--Ununsed
                     //consoleMirror._calib_votage_x_left = _calib_votage_x_left;
