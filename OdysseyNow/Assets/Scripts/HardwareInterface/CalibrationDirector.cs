@@ -25,7 +25,7 @@ public class CalibrationDirector : MonoBehaviour
     public float CamLookRate = 0.3f;
     public HardwareInterface.ConsoleMirror consoleMirror;
     //public HardwareInterface.ConsoleMirror consoleMirror = HardwareInterface.ConsoleMirror.Instance;
-    public GameCalibration gameCalibration = GameCalibration.Instance;
+    private GameCalibration gameCalibration = GameCalibration.Instance;
 
     private UnityEngine.UI.Text mTextInstruction;
     private Animation mPlayerBlinkAnimation;
