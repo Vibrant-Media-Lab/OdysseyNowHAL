@@ -111,9 +111,7 @@ namespace HardwareInterface {
 
         //Ardity Serial Controller object for communication with the arduino -> console
         SerialController sc;
-
-        //TODO: Handle sending messages back to the console. We want one to be able to play with one person playing through Unity and another through the console.
-
+        
         public void p1Reset() {
             _sendP1Reset = true;
         }
@@ -289,7 +287,6 @@ namespace HardwareInterface {
             return (y - _calib_write_y_offset) / _calib_write_y_mul;
         }
 
-        // TODO: Make proper abstrations of console-read,
         //    since we have a calibration routine that want to consume the data
         private ConsoleData mLastConsoleData;
 

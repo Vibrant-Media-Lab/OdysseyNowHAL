@@ -178,21 +178,8 @@ namespace Actors {
                     }
                     catch (Exception e) { }
                 }
-                //If you have a new OdysseyCon (the arduino one)
-                else if (GetControlScheme() == LocalInputManager.ControlScheme.OdysseyCon && player < 3) {
-                    //control for player target with OdysseyCon
-                    OdysseyConDirector.instance.pluggedIn = true;
-                    switch (player) {
-                        case 1:
-                            OdysseyConDirector.instance.p1Con = true;
-                            break;
-                        case 2:
-                            OdysseyConDirector.instance.p2Con = true;
-                            break;
-                    }
 
-                    //TODO: Handle reset buttons
-                }
+                
                 //If you're controlling with an original console.
                 //This basically just lets the console mirror handle everything. The Unity simulation is a slave.
                 else if (GetControlScheme() == LocalInputManager.ControlScheme.OriginalConsole && player < 3) {
@@ -203,19 +190,6 @@ namespace Actors {
                             break;
                         case 2:
                             ConsoleMirror.instance.p2Console = true;
-                            break;
-                    }
-                }
-                //If you have an older legacy OdysseyCon (the older arduino controller)
-                else if (GetControlScheme() == LocalInputManager.ControlScheme.OdysseyConLegacy && player < 3) {
-                    //control for player target with OdysseyCon
-                    OdysseyConLegacyDirector.instance.pluggedIn = true;
-                    switch (player) {
-                        case 1:
-                            OdysseyConLegacyDirector.instance.p1Con = true;
-                            break;
-                        case 2:
-                            OdysseyConLegacyDirector.instance.p2Con = true;
                             break;
                     }
                 }

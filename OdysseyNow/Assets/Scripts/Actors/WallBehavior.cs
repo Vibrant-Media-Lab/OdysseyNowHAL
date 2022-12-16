@@ -24,7 +24,7 @@ namespace Actors
         float z;
 
         //This is the offset from its central position. This is public so it can altered from another script, controlling user input, since wall offset was on a knob on the original odyssey.
-        //TODO: make some user input change this.
+        //TODO: make some user input change this. This would be for playing purely virtually
         public float xOffset;
 
         /// <summary>
