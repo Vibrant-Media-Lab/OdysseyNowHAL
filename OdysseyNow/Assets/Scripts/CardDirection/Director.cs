@@ -190,15 +190,5 @@ namespace CardDirection
             SceneManager.LoadScene("_MainMenu");
         }
 
-        /// <summary>
-        /// Redundant method; TODO: review code to check dependancies then remove
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="scheme"></param>
-        public void UpdateControls(int player, string scheme)
-        {
-
-        }
-
     }
 }

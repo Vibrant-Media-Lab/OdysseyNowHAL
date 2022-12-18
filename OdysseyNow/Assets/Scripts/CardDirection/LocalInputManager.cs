@@ -9,13 +9,19 @@ namespace CardDirection {
     /// </summary>
     public class LocalInputManager : MonoBehaviour {
         //The possible control schemes
+        // public enum ControlScheme {
+        //     Keyboard,
+        //     Traditional,
+        //     OdysseyCon,
+        //     OriginalConsole,
+        //     AI,
+        //     OdysseyConLegacy
+        // }
         public enum ControlScheme {
             Keyboard,
             Traditional,
-            OdysseyCon,
             OriginalConsole,
-            AI,
-            OdysseyConLegacy
+            AI
         }
 
         // Dropdowns for the two options
@@ -33,7 +39,7 @@ namespace CardDirection {
         //singleton instance
         //public static LocalInputManager instance;
 
-
+        //TODO: Remove unused numbers/enumerations in if statements
         private void Awake() {
             //PlayerPrefs.SetString("P1Input", ControlScheme.Keyboard.ToString());
             //PlayerPrefs.SetString("P2Input", ControlScheme.Keyboard.ToString());
@@ -42,20 +48,20 @@ namespace CardDirection {
             //this stores the input type
             if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.Keyboard.ToString()) { p1Option.value = 0; }
             else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.Traditional.ToString()) { p1Option.value = 1; }
-            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OdysseyCon.ToString()) { p1Option.value = 2; }
-            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OriginalConsole.ToString()) { p1Option.value = 3; }
-            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.AI.ToString()) { p1Option.value = 4; }
-            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OdysseyConLegacy.ToString()) { p1Option.value=5; }
+            // else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OdysseyCon.ToString()) { p1Option.value = 2; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OriginalConsole.ToString()) { p1Option.value = 2; }
+            else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.AI.ToString()) { p1Option.value = 3; }
+            // else if (PlayerPrefs.GetString("P1Input").ToString() == ControlScheme.OdysseyConLegacy.ToString()) { p1Option.value=5; }
             else { p1Option.value = 0; }
             
             //get the current input selection for player 2 and adjust the dropdown to match the value
             //this stores the input type
             if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.Keyboard.ToString()) { p2Option.value = 0 ; }
             else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.Traditional.ToString()) { p2Option.value = 1 ; }
-            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OdysseyCon.ToString()) { p2Option.value = 2 ; }
-            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OriginalConsole.ToString()) { p2Option.value = 3 ; }
-            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.AI.ToString()) { p2Option.value = 4 ; }
-            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OdysseyConLegacy.ToString()) { p2Option.value = 5 ; }
+            // else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OdysseyCon.ToString()) { p2Option.value = 2 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OriginalConsole.ToString()) { p2Option.value = 2 ; }
+            else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.AI.ToString()) { p2Option.value = 3 ; }
+            // else if (PlayerPrefs.GetString("P2Input").ToString() == ControlScheme.OdysseyConLegacy.ToString()) { p2Option.value = 5 ; }
             else { p2Option.value = 0 ; }
 
 
@@ -99,7 +105,8 @@ namespace CardDirection {
             PlayerPrefs.SetInt("ai2", value);
         }
 
-
+        
+        //TODO: Remove old unused numbers/enumerations in cases
         private void P1ControlChanged() {
             switch (p1Option.value) {
                 case 0:
@@ -109,21 +116,25 @@ namespace CardDirection {
                     SetP1UserOptions(ControlScheme.Traditional.ToString());
                     break;
                 case 2:
-                    SetP1UserOptions(ControlScheme.OdysseyCon.ToString());
-                    break;
-                case 3:
+                    // SetP1UserOptions(ControlScheme.OdysseyCon.ToString());
                     SetP1UserOptions(ControlScheme.OriginalConsole.ToString());
                     break;
-                case 4:
+                case 3:
+                    // SetP1UserOptions(ControlScheme.OriginalConsole.ToString());
                     PlayerPrefs.SetString("P1Input", ControlScheme.AI.ToString());
                     difficultySliderP1.transform.parent.gameObject.SetActive(true);
                     break;
+                case 4:
+                    // PlayerPrefs.SetString("P1Input", ControlScheme.AI.ToString());
+                    // difficultySliderP1.transform.parent.gameObject.SetActive(true);
+                    break;
                 case 5:
-                    SetP1UserOptions(ControlScheme.OdysseyConLegacy.ToString());
+                    // SetP1UserOptions(ControlScheme.OdysseyConLegacy.ToString());
                     break;
             }
         }
 
+        //TODO: Remove old unused numbers/enumerations in cases
         private void P2ControlChanged()
         {
             Debug.Log("DEBUG: In control change method");
@@ -135,17 +146,20 @@ namespace CardDirection {
                     SetP2UserOptions(ControlScheme.Traditional.ToString());
                     break;
                 case 2:
-                    SetP2UserOptions(ControlScheme.OdysseyCon.ToString());
-                    break;
-                case 3:
+                    // SetP1UserOptions(ControlScheme.OdysseyCon.ToString());
                     SetP2UserOptions(ControlScheme.OriginalConsole.ToString());
                     break;
-                case 4:
+                case 3:
+                    // SetP2UserOptions(ControlScheme.OriginalConsole.ToString());
                     PlayerPrefs.SetString("P2Input", ControlScheme.AI.ToString());
                     difficultySliderP2.transform.parent.gameObject.SetActive(true);
                     break;
+                case 4:
+                    // PlayerPrefs.SetString("P2Input", ControlScheme.AI.ToString());
+                    // difficultySliderP2.transform.parent.gameObject.SetActive(true);
+                    break;
                 case 5:
-                    SetP2UserOptions(ControlScheme.OdysseyConLegacy.ToString());
+                    // SetP2UserOptions(ControlScheme.OdysseyConLegacy.ToString());
                     break;
             }
         }

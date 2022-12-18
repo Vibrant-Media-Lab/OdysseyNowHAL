@@ -5778,7 +5778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundtimer: {fileID: 1709292820}
   player2: {fileID: 14452305}
-  p2CollisionsToWin: 30
+  p2CollisionsToWin: 40
   p1Score: 0
   p2Score: 0
   p1ScoreText: {fileID: 594302732}
@@ -5929,7 +5929,6 @@ PolygonCollider2D:
       - {x: 2.09, y: -0.155}
       - {x: 2.1499999, y: -0.085}
       - {x: 2.1499999, y: 0.175}
-  m_UseDelaunayMesh: 0
 --- !u!212 &631719358
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7109,7 +7108,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 6
   m_TargetDisplay: 0
@@ -8533,7 +8531,6 @@ PolygonCollider2D:
       - {x: 3.08, y: 4.9049997}
       - {x: 3.22, y: 5.015}
       - {x: 3.23, y: 5.045}
-  m_UseDelaunayMesh: 0
 --- !u!212 &1020702807
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8680,7 +8677,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
     m_TransformParent: {fileID: 759913976}
     m_Modifications:
     - target: {fileID: 3109111850425192981, guid: 0bc83027c69b4b04bb9940c635c0c6d6,
@@ -8904,7 +8900,6 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bc83027c69b4b04bb9940c635c0c6d6, type: 3}
 --- !u!224 &1088719434 stripped
 RectTransform:
@@ -9397,8 +9392,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240451797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.57, y: 0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 7.39, y: 0.2, z: 0}
+  m_LocalScale: {x: 1.39, y: 1.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -12047,7 +12042,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 621243042690390914, guid: 6335a3f5d84d6421eb04d6f447784f85,
@@ -12193,54 +12187,9 @@ PrefabInstance:
     - target: {fileID: 8034478068871909218, guid: 6335a3f5d84d6421eb04d6f447784f85,
         type: 3}
       propertyPath: portName
-      value: COM4
+      value: COM6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1763388330}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1803264495}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1969747231}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1490612272}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1431878620}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1656475041}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1555212095}
-    - targetCorrespondingSourceObject: {fileID: 7603633736747604150, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 662532605}
-    - targetCorrespondingSourceObject: {fileID: 5755280645081009832, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1320484364}
-    - targetCorrespondingSourceObject: {fileID: 5755280645081009832, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1709292819}
-    - targetCorrespondingSourceObject: {fileID: 5755280645081009832, guid: 6335a3f5d84d6421eb04d6f447784f85,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 602387378}
   m_SourcePrefab: {fileID: 100100000, guid: 6335a3f5d84d6421eb04d6f447784f85, type: 3}
 --- !u!114 &1609448705 stripped
 MonoBehaviour:
@@ -12891,7 +12840,6 @@ PolygonCollider2D:
       - {x: 26.369255, y: 16.831987}
       - {x: 26.395031, y: 16.857763}
       - {x: 26.395031, y: 20.75}
-  m_UseDelaunayMesh: 0
 --- !u!212 &1710291564
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14923,7 +14871,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
     m_TransformParent: {fileID: 759913976}
     m_Modifications:
     - target: {fileID: 3109111850425192981, guid: 0bc83027c69b4b04bb9940c635c0c6d6,
@@ -15137,7 +15084,6 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bc83027c69b4b04bb9940c635c0c6d6, type: 3}
 --- !u!114 &1917556502 stripped
 MonoBehaviour:
