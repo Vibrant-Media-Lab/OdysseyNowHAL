@@ -1,6 +1,0 @@
-{
-    "board": "arduino:avr:mega",
-    "configuration": "cpu=atmega2560",
-    "port": "/dev/cu.usbmodem14401",
-    "sketch": "Arduino/OdysseyConController/OdysseyConController.ino"
-}
